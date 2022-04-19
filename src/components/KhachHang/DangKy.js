@@ -6,8 +6,9 @@
 import React, {Component, useState} from 'react';
 import {Platform, StyleSheet, Text,Alert, View,TouchableOpacity, TextInput,Image,Dimensions, ImageBackground} from 'react-native';
 //import { TouchableOpacity } from 'react-native-gesture-handler';
+import { URL } from '../../../Ip';
 
-
+var URL_DK=URL.localhost+"/App_API/dangky.php"
 
 
 export default class DangKy extends Component{
@@ -27,7 +28,7 @@ export default class DangKy extends Component{
 
     const {navigation} = this.props;
    
-    fetch("http://10.2.7.38/App_API/dangky.php", {
+    fetch(URL_DK, {
       method:"POST",
       headers:{
        "Accept": "application/json",

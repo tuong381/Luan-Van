@@ -1,4 +1,4 @@
-import React, {useEffect, useState, Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
@@ -9,37 +9,33 @@ import {
   Button,
   StyleSheet,
   ImageBackground,
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 
-import {List, ListItem} from 'react-native-elements';
-import {color} from '@mui/system';
-import UITab from '../../../../navigation/UITab';
+
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Redeem, RedeemRounded } from '@material-ui/icons';
+import {URL} from '../../../../Ip';
 
-//class TaiKhoan extends React.Component {
-  const TaiKhoan = props => {
-
-  const [TenKH, setTenKH] = useState('');
-  const [id_KhachHang, setid_KhachHang] = useState('');
-  const [HinhAnh, setHinhAnh] = useState('');
-  const [Email, setEmail] = useState('');
-   const [DiaChi, setDiaChi] = useState('');
+const TaiKhoan = ({route, navigation}) => {
+  // const [TenKH, setTenKH] = useState('');
+   const [id_KhachHang, setid_KhachHang] = useState('');
+  // const [HinhAnh, setHinhAnh] = useState('');
+  // const [Email, setEmail] = useState('');
+  //  const [DiaChi, setDiaChi] = useState('');
   // const [GioiTinh, setGioiTinh] = useState('');
   // const [SoDienThoai, setSoDienThoai] = useState('');
   // const [NgaySinh, setNgaySinh] = useState('');
   // const [ChieuCao, setChieuCao] = useState('');
   // const [CanNang, setCanNang] = useState('');
 
-
   const [token, settoken] = useState('');
-// };
+  // };
 
-const [bio, setBio] = useState({});
-
+  const [bio, setBio] = useState({});
 
   useEffect(() => {
-
     AsyncStorage.getItem('token').then(responseJson => {
       settoken(responseJson);
     });
@@ -48,84 +44,85 @@ const [bio, setBio] = useState({});
     AsyncStorage.getItem('id_KhachHang').then(responseJSON => {
       setid_KhachHang(responseJSON);
     });
-
-    // lay ten khach hang
-    AsyncStorage.getItem('TenKH').then(responseJSON => {
-      setTenKH(responseJSON);
-    });
-     // lay email
-     AsyncStorage.getItem('Email').then(responseJSON => {
-      setEmail(responseJSON);
-    });
-    //lay so s=dien thoai
-    // AsyncStorage.getItem('SoDienThoai').then(responseJSON => {
-    //   setSoDienThoai(responseJSON);
-    // });
-    // lay hinh anh
-   
-    AsyncStorage.getItem('HinhAnh').then(responseJSON => {
-      setHinhAnh(responseJSON);
-    });
-  
-   
-    // lay dia chi
-    AsyncStorage.getItem('DiaChi').then(responseJSON => {
-      setDiaChi(responseJSON);
-    });
-    // // lay gioi tinh
-    // AsyncStorage.getItem('GioiTinh').then(responseJSON => {
-    //   setGioiTinh(responseJSON);
-    // });
-    
-    // // lay ngay sinh
-    // AsyncStorage.getItem('NgaySinh').then(responseJSON => {
-    //   setNgaySinh(responseJSON);
-    // });
-    // // lay chieu cao
-    // AsyncStorage.getItem('ChieuCao').then(responseJSON => {
-    //   setChieuCao(responseJSON);
-    // });
-    // // lay can nang
-    // AsyncStorage.getItem('CanNang').then(responseJSON => {
-    //   setCanNang(responseJSON);
-    // });
-
-
-    
-
-
-
-    
-
-
-
   }, []);
 
- 
-    
   const fetchData = async () => {
-    const response = await fetch("http://10.13.146.156/App_API/checkToken.php?token="+token);
+    const response = await fetch(
+      URL.localhost + '/App_API/checkToken.php?token=' + token,
+    );
     const data = await response.json();
-          console.log(data);
-          setBio(data);
-          
-         
-      };
-      fetchData();
-  
+    // console.log(data);
+    setBio(data);
+  };
+  fetchData();
 
 
+ 
+const data=[
+  {name:'Hồ sơ cá nhân'},
+  {name:'Lịch sử hoạt động'}
+]
 
-  
-    
-  //const {data}=route.params; <Text style={{color:'red'}}>id KH: {id_KhachHang}</Text>
+const pushView=(name,id)=>{
+  if(name=="Hồ sơ cá nhân"){
+    console.log(id);
+  //  navigation.navigate('vd');
+  fetch(URL.localhost+"/App_API/taiKhoan.php", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "id_KhachHang":id
+    })
+})
+ 
+
+    .then((response) => response.json())
+    .then((json) => {
+    //  const currentKH={data:json};
+      console.log(json);
+      
+     // console.log({data:json.TenKH});
+      navigation.navigate('HoSo',{
+        data:json
+        
+      })
+      
+    })
+
+  }else{
+    console.log('sai');
+  }
+}
+ 
+
+  // const suaThongTin = (id)=>{
+ 
+  //   navigation.navigate('SuaThongTin',{
+  //     Ten:bio.TenKH,
+  //     email:bio.Email,
+  //     diachi:bio.DiaChi,
+  //     sdt:bio.SoDienThoai,
+  //     date:bio.NgaySinh,
+  //     chieucao:bio.ChieuCao,
+  //     cannang:bio.CanNang,
+  //     anh:bio.HinhAnh,
+  //     gioitinh:bio.GioiTinh,
+  //     id:bio.id_KhachHang
+  //   });
+
+  // }
+
   return (
+   
     <View style={styles.container}>
+     
       <View style={styles.header}>
         <ImageBackground
           source={require('../../../images/gym.jpg')}
           resizeMode="cover"
-          style={{flex: 30}}>
+          style={{flex: 25}}>
           {/* <TouchableOpacity
               style={styles.backButton}
               onPress={() => {
@@ -135,95 +132,37 @@ const [bio, setBio] = useState({});
             </TouchableOpacity> */}
         </ImageBackground>
       </View>
-      {/* <Text style={styles.textTen}>{token}</Text> */}
-     
-      {/* <Image source={{uri: HinhAnh}} style={styles.coverImage} /> */}
 
-      {/* <FlatList
-           
-            horizontal
-            data={bio}
-            keyExtractor={({id_KhachHang}, index) => id_KhachHang}
-            renderItem={({item}) => (
+
+      <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <View style={styles.listItem}>
+              <TouchableOpacity 
+            onPress={()=>{pushView( item.name, bio.id_KhachHang)}}
+             >
               
-              <View >
-                <Text style={{color:'red'}}>{item.id_KhachHang}</Text>
-
-                
-
+              
+              <View style={{flexDirection:'row'}}>
+                <Text style={[styles.text, styles.textTen]} >{item.name}</Text>
+               <View style={{marginLeft:140}}>
+               <Icon name="angle-right" color="red" size={30} />
+               </View>
+               
+                 
               </View>
-             
+              </TouchableOpacity> 
 
-            )}
-
-          /> */}
-      <Text>{bio.id_KhachHang}</Text>
-
-      <Text style={styles.textTen}>{TenKH}</Text>
-
-      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 20}}>
-        <Icon name="envelope" size={22} />
-        <Text style={styles.text}>{Email}</Text>
-      </View>
-
-      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
-        <Icon name="map-marker" size={22} />
-        <Text style={styles.text}>{DiaChi}</Text>
-      </View>
-
-    {/*  <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
-        <Icon name="phone" size={22} />
-        <Text style={styles.text}>{SoDienThoai}</Text>
-      </View>
-
-      
-
-      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
-        <Icon name="user" size={22} />
-        <Text style={styles.text}>{GioiTinh}</Text>
-      </View>
-
-      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
-        <Icon name="birthday-cake" size={22} />
-        <Text style={styles.text}>{NgaySinh}</Text>
-      </View>
-
-      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
-        <Icon name="globe" size={22} />
-        <Text style={styles.text}>Cân nặng: {CanNang} kg</Text>
-        <Text style={styles.text}>Chiều cao: {ChieuCao} m</Text>
-      </View> */}
-      
-
-      <View style={{marginTop: 20, width: 150, marginLeft: 130}}>
-        <Button
-          style={{color: 'red', borderRadius: 20}}
-          onPress={() => {
-              fetch("http://10.2.7.38/App_API/checkToken.php?token="+token)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      // this.setState({
-      //   mang:responseJSON
-      // });
-      console.log(responseJSON);
-    })
-    .catch((e)=>{console.log(e)});
-            
-          
-        
-          }
-              
-          }
-          title="Them thong tin"
-          // disabled={true}
-          color="#a50000"
+            </View>
+          )}
         />
-      </View>
-    </View>
-  );
-// };
 
-}
+
+    </View>
+ 
+  );
+  // };
+};
 
 const styles = StyleSheet.create({
   listItem: {
@@ -236,10 +175,10 @@ const styles = StyleSheet.create({
   coverImage: {
     borderWidth: 5,
     borderColor: 'white',
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     borderRadius: 200 / 2,
-    marginLeft: 135,
+    marginLeft: 150,
     marginTop: -70,
   },
   metaInfo: {
@@ -252,8 +191,6 @@ const styles = StyleSheet.create({
 
   header: {
     flexDirection: 'row',
-    // flex:1,
-    // backgroundColor:'#a50000',
     height: 200,
   },
 
@@ -281,7 +218,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: 'white',
-    textAlign: 'center',
     fontStyle: 'italic',
     fontWeight: 'bold',
     marginTop: 40,
@@ -297,8 +233,16 @@ const styles = StyleSheet.create({
   textTen: {
     fontWeight: 'bold',
     color: '#a50000',
-    textAlign: 'center',
     fontSize: 22,
+    width:180
+  },
+
+  textSua: {
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 18,
+    flexDirection:'row'
   },
 
   image: {

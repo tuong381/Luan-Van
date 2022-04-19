@@ -2,10 +2,10 @@
 import React, { Component } from 'react'
 import {View , Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity} from 'react-native';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
+import { URL } from '../../../../Ip';
 
-
-var URL_DanhMuc= "http://192.168.1.3/App_API/danhmucbaiviet.php";
-var URL_BaiViet= "http://192.168.1.3/App_API/baiviet.php";
+var URL_DanhMuc= URL.localhost+"/App_API/danhmucbaiviet.php";
+var URL_BaiViet= URL.localhost+"/App_API/baiviet.php";
 export default class KhamPha extends Component {
 
   constructor(props) {

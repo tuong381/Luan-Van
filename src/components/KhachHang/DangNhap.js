@@ -196,14 +196,23 @@
 
 
 
-
-
 import React, {Component, useState} from 'react';
-import {StyleSheet, Text,Alert, View,TouchableOpacity, TextInput,Image,Dimensions, ImageBackground} from 'react-native';
+import {StyleSheet,
+        Text, 
+        View,
+        TouchableOpacity, 
+        TextInput,
+        Image,
+        Dimensions,
+         ImageBackground,
+         Alert,
+        } from 'react-native';
 //import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-var URL= "http://10.13.146.156/App_API/login.php";
+import {URL} from '../../../Ip'
+
+var URL_login= URL.localhost+"/App_API/login.php";
 
 export default class DangNhap extends Component{
   // const {navigation} = this.props;
@@ -219,14 +228,14 @@ export default class DangNhap extends Component{
       data:[]
      
     }
-   // this.vd = this.vd.bind(this);
+  //  this.vd = this.vd.bind(this);
   }
 
   login(){
 
     const {navigation} = this.props;
    
-    fetch(URL, {
+    fetch(URL_login, {
       method:"POST", 
       headers:{
        "Accept": "application/json",
@@ -240,7 +249,7 @@ export default class DangNhap extends Component{
     .then((response)=>response.json())
     .then((responseJson)=>{
       // console.log("++++");
-       console.log(responseJson);
+    //   console.log(responseJson);
      //  console.log(responseJson.length);
       this.setState({
        // result:responseJson.kq,
@@ -251,7 +260,7 @@ export default class DangNhap extends Component{
        
       }) 
 
-      console.log( responseJson.token);
+      //console.log( responseJson.token);
     
     //   if(this.state.result>0){
     //     //console.warn(responseJson);
@@ -278,13 +287,19 @@ export default class DangNhap extends Component{
   //    });
 
   if(responseJson.token!='ERROR'){
-  //console.log(responseJson.token);
+  console.log(responseJson.token);
    
-    const currentKH=responseJson;
-      console.log(currentKH);
+     const currentKH=responseJson;
+    //   console.log(currentKH);
       AsyncStorage.setItem('token',currentKH.token);
-    //  this.props.navigation.navigate('UITab');
-    this.vd(responseJson.token);
+
+      Alert.alert(
+        'Success!',
+        `User  has successfully signed in!`,
+      );
+
+     this.props.navigation.navigate('UITab');
+   // this.vd(responseJson.token);
    
 
   
@@ -298,42 +313,38 @@ export default class DangNhap extends Component{
     })
   } 
 
-  vd(data){
-    // this.props.navigation.navigate('TaiKhoan', {
-    //   data:data
-    // });
+  // vd(data){
+  //   // this.props.navigation.navigate('TaiKhoan', {
+  //   //   data:data
+  //   // });
 
-    fetch("http://10.13.146.156/App_API/checkToken.php?token="+data)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      this.setState({
-        vd:responseJSON
-      });
-      const currentKH=responseJSON;
-     // console.log(currentKH);
-      // luu du lieu
+  //   fetch("http://10.13.146.156/App_API/checkToken.php?token="+data)
+  //   .then((response)=>response.json())
+  //   .then((responseJSON)=>{
+  //     this.setState({
+  //       vd:responseJSON
+  //     });
+  //     const currentKH=responseJSON;
+  //    // console.log(currentKH);
+  //     // luu du lieu
      
-     AsyncStorage.setItem('id_KhachHang',currentKH.id_KhachHang);
-      AsyncStorage.setItem('TenKH',currentKH.TenKH);
-    //  AsyncStorage.setItem('SoDienThoai',currentKH.SoDienThoai);
-      AsyncStorage.setItem('Email',currentKH.Email);
-       AsyncStorage.setItem('HinhAnh',currentKH.HinhAnh);
-
-
-     AsyncStorage.setItem('DiaChi',currentKH.DiaChi);
-      // AsyncStorage.setItem('GioiTinh',currentKH.GioiTinh);
-      // AsyncStorage.setItem('ChieuCao',currentKH.ChieuCao);
-      // AsyncStorage.setItem('CanNang',currentKH.CanNang);
-      // AsyncStorage.setItem('NgaySinh',currentKH.NgaySinh);
+  //     AsyncStorage.setItem('id_KhachHang',currentKH.id_KhachHang);
+  //   //   AsyncStorage.setItem('TenKH',currentKH.TenKH);
+  //   //   AsyncStorage.setItem('Email',currentKH.Email);
+  //   //    AsyncStorage.setItem('HinhAnh',currentKH.HinhAnh);
+  //   //  AsyncStorage.setItem('DiaChi',currentKH.DiaChi);
+  //     // AsyncStorage.setItem('GioiTinh',currentKH.GioiTinh);
+  //     // AsyncStorage.setItem('ChieuCao',currentKH.ChieuCao);
+  //     // AsyncStorage.setItem('CanNang',currentKH.CanNang);
+  //     // AsyncStorage.setItem('NgaySinh',currentKH.NgaySinh);
+  //     //  AsyncStorage.setItem('SoDienThoai',currentKH.SoDienThoai);
       
 
-       this.props.navigation.navigate('UITab', {
-        data:responseJSON
-    });
-    })
-    .catch((e)=>{console.log(e)});
+  //      this.props.navigation.navigate('UITab');
+  //   })
+  //   .catch((e)=>{console.log(e)});
 
-  }
+  // }
 
 
 

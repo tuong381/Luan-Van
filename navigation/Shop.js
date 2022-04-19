@@ -17,7 +17,9 @@ import ThongTinNV from '../src/components/KhachHang/TrangChu/NhanVien/ThongTinNV
 import BaiViet from '../src/components/KhachHang/KhamPha/BaiViet/BaiViet';
 import ChiTietBV from '../src/components/KhachHang/KhamPha/BaiViet/ChiTietBV';
 import TaiKhoan from '../src/components/KhachHang/TaiKhoan/TaiKhoan';
-import ThemThongTin from '../src/components/KhachHang/TaiKhoan/ThemThongTin';
+import SuaThongTin from '../src/components/KhachHang/TaiKhoan/SuaThongTin';
+import HoSo from '../src/components/KhachHang/TaiKhoan/Thongtin/HoSo'
+import DoiMatKhau from '../src/components/KhachHang/TaiKhoan/Thongtin/DoiMatKhau';
 
 
 const Stack = createStackNavigator();
@@ -39,9 +41,12 @@ function StackNavigator() {
       <Stack.Screen name={"BaiViet"} component={BaiViet}  /> 
       <Stack.Screen name={"ChiTietBV"} component={ChiTietBV}  /> 
       <Stack.Screen name={"TaiKhoan"} component={TaiKhoan}  />
-      <Stack.Screen name={"ThemThongTin"} component={ThemThongTin}  />
+      <Stack.Screen name={"SuaThongTin"} component={SuaThongTin}  />
 
-      
+      <Stack.Screen name={"HoSo"} component={HoSo}  />
+      <Stack.Screen name={"DoiMatKhau"} component={DoiMatKhau}  />
+
+     
       {/* screenOptions={{headerShown:false}} */} 
 
     </Stack.Navigator>

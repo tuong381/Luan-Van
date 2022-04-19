@@ -68,9 +68,10 @@ import ThongTinNV from './KhachHang/TrangChu/NhanVien/ThongTinNV';
 import BaiViet from './KhachHang/KhamPha/BaiViet/BaiViet';
 import ChiTietBV from './KhachHang/KhamPha/BaiViet/ChiTietBV';
 import TaiKhoan from './KhachHang/TaiKhoan/TaiKhoan';
-import ThemThongTin from './KhachHang/TaiKhoan/ThemThongTin';
+import SuaThongTin from './KhachHang/TaiKhoan/SuaThongTin';
 
-
+import HoSo from '../components/KhachHang/TaiKhoan/Thongtin/HoSo'
+import DoiMatKhau from './KhachHang/TaiKhoan/Thongtin/DoiMatKhau';
  export default class App extends Component {
 
 	render() {
@@ -108,7 +109,10 @@ import ThemThongTin from './KhachHang/TaiKhoan/ThemThongTin';
 						case 'ChiTietBV': return  <ChiTietBV navigator={navigator} />;
 
 						case 'TaiKhoan': return  <TaiKhoan navigator={navigator} />;
-						case 'ThemThongTin': return  <ThemThongTin navigator={navigator} />;
+						case 'SuaThongTin': return  <SuaThongTin navigator={navigator} />;
+
+						case 'HoSo': return  <HoSo navigator={navigator} />;
+						case 'DoiMatKhau': return  <DoiMatKhau navigator={navigator} />;
 
 						default: return <Authentication />;
 					}

@@ -1,86 +1,3 @@
-// import React, { Component } from 'react'
-// import {View, Text, ImageBackground, StyleSheet, FlatList, Image, Dimensions,SafeAreaView, ScrollView} from 'react-native';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-
-// import  Icon  from 'react-native-vector-icons/FontAwesome';
-
-// import DichVu from '../API/DichVu';
-// import NhanVien from '../API/NhanVien';
-// export default class TrangChu extends Component {
-
-//   // constructor(props) {
-//   //   super(props);
-//   //   this.state={
-//   //     mang: []
-        
-//   //   }
-//   // }
-
-//   // componentDidMount(){
-//   //   fetch("http://192.168.1.5/App_API/danhmucsanpham.php")
-//   //   .then((response)=>response.json())
-//   //   .then((responseJSON)=>{
-//   //     this.setState({
-//   //       mang:responseJSON
-
-//   //     });
-//   //   })
-//   //   .catch((e)=>{console.log(e)});
-//   // }
-
- 
-
-
-//   render() {
-//     const {
-//       title, text
-//   } = styles;
-
-//   const {navigation} = this.props;
-  
-//     return (
-//       <ScrollView>
-//         <View style={{flex: 1}}>
-//           <View style={{flex: 30, height: 160}}>
-//             <ImageBackground
-//               source={require('../../../images/groupX.jpg')}
-//               resizeMode="cover"
-//               style={{flex: 30}}>
-//               <Text style={title}>THỂ DỤC VÀ DINH DƯỠNG TRỰC TUYẾN</Text>
-//             </ImageBackground>
-//           </View>
-
-
-//           {/* < TouchableOpacity onPress={() => navigation.navigate('NhanVien')}> */}
-//              <DichVu />
-//              {/* </TouchableOpacity> */}
-
-
-
-//           <NhanVien />
-//         </View>
-//       </ScrollView>
-//     );
-//   }
-// }
-
-
-// const styles = StyleSheet.create({
-//   title:{
-//     fontWeight: 'bold',
-//     color:'white',
-//     textAlign:'center',
-//     fontStyle: 'italic',
-//     fontWeight: 'bold',
-//     marginTop:55,
-//     fontSize:25
-//   },
-
- 
-
-// })
-
-
 
 
 
@@ -91,11 +8,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import DangNhap from '../DangNhap';
 
-var URL_DV= "http://10.13.146.156/App_API/dichvu.php";
-var URL_ChitietDV= "http://10.13.146.156/App_API/ChiTietDV.php";
-var URL_PT= "http://10.13.146.156/App_API/nhanvien.php";
+import { URL } from '../../../../Ip';
+
+var URL_DV= URL.localhost+"/App_API/dichvu.php";
+var URL_ChitietDV= URL.localhost+"/App_API/ChiTietDV.php";
+var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
 
 export default class TrangChu extends React.Component {
 
@@ -195,92 +113,84 @@ export default class TrangChu extends React.Component {
   const {navigation} = this.props;
   
     return (
-    //  <View style={styles.body}>
-          <ScrollView>
+      //  <View style={styles.body}>
+      <ScrollView>
         <View style={{flex: 1}}>
-        <View style={{flex: 30, height: 200}}>
-              <ImageBackground
-               source={require('../../../images/groupX.jpg')}
-                resizeMode="cover"
-               style={{flex: 30}}>
-               <Text style={title}>THỂ DỤC VÀ DINH DƯỠNG TRỰC TUYẾN</Text>
-             </ImageBackground>
-           </View>  
+          <View style={{flex: 30, height: 200}}>
+            <ImageBackground
+              source={require('../../../images/groupX.jpg')}
+              resizeMode="cover"
+              style={{flex: 30}}>
+              <Text style={title}>THỂ DỤC VÀ DINH DƯỠNG TRỰC TUYẾN</Text>
+            </ImageBackground>
+          </View>
 
+          <Text style={styles.text}>Dịch vụ </Text>
 
+          <SafeAreaView style={styles.container}>
+            <FlatList
+              style={styles.flatlist}
+              horizontal
+              data={this.state.mang}
+              keyExtractor={({id_DichVu}, index) => id_DichVu}
+              // renderItem={({item}) => (
+              //   <TouchableOpacity  onPress={() => {this.pushView(item.id_DichVu)}} >
+              //   <View style={styles.item}>
+              //     <Text>{item.id_DichVu}</Text>
 
-        <Text style={styles.text}>Dịch vụ </Text>
+              //     <ImageBackground
+              //       source={{uri: item.HinhAnh_DV}}
+              //       style={styles.image}
+              //       resizeMode="cover">
+              //       <Text style={styles.title}>{item.TenDichVu}</Text>
+              //     </ImageBackground>
 
-        <SafeAreaView style={styles.container}>
-          <FlatList
-            style={styles.flatlist}
-            horizontal
-            data={this.state.mang}
-            keyExtractor={({id_DichVu}, index) => id_DichVu}
-            // renderItem={({item}) => (
-            //   <TouchableOpacity  onPress={() => {this.pushView(item.id_DichVu)}} >
-            //   <View style={styles.item}>
-            //     <Text>{item.id_DichVu}</Text>
+              //   </View>
+              //   </TouchableOpacity>
 
-            //     <ImageBackground
-            //       source={{uri: item.HinhAnh_DV}}
-            //       style={styles.image}
-            //       resizeMode="cover">
-            //       <Text style={styles.title}>{item.TenDichVu}</Text>
-            //     </ImageBackground>
+              // )}
 
-            //   </View>
-            //   </TouchableOpacity>
+              renderItem={({item}) => this.renderItem(item)}
+            />
+          </SafeAreaView>
+        </View>
 
-            // )}
+        <View style={styles.body}>
+          <Text style={styles.text}>Đội ngũ PT</Text>
 
-            renderItem={({item}) => this.renderItem(item)}
-          />
-    
-        </SafeAreaView>
-       
-      </View>
-
-      <View style={styles.body}>
-        <Text style={styles.text}>Đội ngũ PT</Text>
-
-        <SafeAreaView style={styles.container}>
-          <FlatList
-            style={styles.flatlist}
-            horizontal
-            data={this.state.nhanvien}
-            keyExtractor={({id_NhanVien}, index) => id_NhanVien}
-            renderItem={({item}) => (
-              <TouchableOpacity 
-                    onPress={()=>{this.props.navigation.navigate("ThongTinNV",{
-                      Ten:item.TenNV,
+          <SafeAreaView style={styles.container}>
+            <FlatList
+              style={styles.flatlist}
+              horizontal
+              data={this.state.nhanvien}
+              keyExtractor={({id_NhanVien}, index) => id_NhanVien}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate('ThongTinNV', {
+                      Ten: item.TenNV,
                       email: item.Email,
-                      sdt:item.SoDienThoai,
+                      sdt: item.SoDienThoai,
                       anh: item.AnhDaiDien,
                       gioitinh: item.GioiTinh,
                       diachi: item.DiaChi,
                       date: item.NgaySinh,
-                      kinhnghiem: item.KinhNghiem
-                     
-                    })}}>
-                <View  style={styles.item}>
-               
-                <Image
-                  source={{uri: item.AnhDaiDien}}
-                  style={styles.image}
-                  resizeMode="cover">
-                 </Image>
-                <Text style={styles.textPT}>{item.TenNV}</Text> 
-                </View>
-              </TouchableOpacity>
-            )}
-            
-          />
-        </SafeAreaView>
-      </View>
-
-     </ ScrollView>
- 
+                      kinhnghiem: item.KinhNghiem,
+                    });
+                  }}>
+                  <View style={styles.item}>
+                    <Image
+                      source={{uri: item.AnhDaiDien}}
+                      style={styles.image}
+                      resizeMode="cover"></Image>
+                    <Text style={styles.textPT}>{item.TenNV}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </SafeAreaView>
+        </View>
+      </ScrollView>
     );
   }
 
