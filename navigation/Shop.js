@@ -12,7 +12,6 @@ import UITab from './UITab';
 import DangKy from '../src/components/KhachHang/DangKy';
 
 
-import ChiTietDV from '../src/components/KhachHang/TrangChu/ChiTietDV';
 import ThongTinNV from '../src/components/KhachHang/TrangChu/NhanVien/ThongTinNV';
 import BaiViet from '../src/components/KhachHang/KhamPha/BaiViet/BaiViet';
 import ChiTietBV from '../src/components/KhachHang/KhamPha/BaiViet/ChiTietBV';
@@ -20,6 +19,20 @@ import TaiKhoan from '../src/components/KhachHang/TaiKhoan/TaiKhoan';
 import SuaThongTin from '../src/components/KhachHang/TaiKhoan/SuaThongTin';
 import HoSo from '../src/components/KhachHang/TaiKhoan/Thongtin/HoSo'
 import DoiMatKhau from '../src/components/KhachHang/TaiKhoan/Thongtin/DoiMatKhau';
+
+// nhan vien
+import Login from '../src/components/NhanVien/Login';
+import NVTab from './NVTab';
+import HoSoNV from '../src/components/NhanVien/TaiKhoan/ThongTin/HoSoNV';
+import SuaThongTinNV from '../src/components/NhanVien/TaiKhoan/ThongTin/SuaThongTinNV';
+import DoiMatKhauNV from '../src/components/NhanVien/TaiKhoan/ThongTin/DoiMatKhauNV';
+import LoaiVe from '../src/components/KhachHang/TrangChu/DatLich/LoaiVe';
+import DatLich from '../src/components/KhachHang/TrangChu/DatLich/DatLich';
+import DangKyDL from '../src/components/KhachHang/TrangChu/DatLich/DangKyDL';
+import XacNhanDL from '../src/components/KhachHang/TrangChu/DatLich/XacNhanDL';
+import DanhSachNV from '../src/components/KhachHang/TrangChu/NhanVien/DanhSachNV';
+import DanhSachLH from '../src/components/KhachHang/TrangChu/LichHen/DanhSachLH';
+import DoiLichHen from '../src/components/KhachHang/TrangChu/LichHen/DoiLichHen';
 
 
 const Stack = createStackNavigator();
@@ -29,14 +42,14 @@ function StackNavigator() {
     <Stack.Navigator initialRouteName='Home' screenOptions={{headerShown:false}} >
      
       <Stack.Screen  name="Home" component={Home}  options={{ headerMode: 'none' }}/>
-      <Stack.Screen name="NhanVien" component={NhanVien} />
+      <Stack.Screen name="NhanVien" component={Login} />
       <Stack.Screen name={"Khách hàng"}component={DangNhap}  />
       <Stack.Screen name="UITab" component={UITab} options={{ headerMode: 'none' }} />   
 
       <Stack.Screen name="DangKy" component={DangKy}  /> 
       <Stack.Screen name="DangNhap" component={DangNhap}  />  
 
-      <Stack.Screen name={"ChiTietDV"} component={ChiTietDV}  /> 
+     
       <Stack.Screen name={"ThongTinNV"} component={ThongTinNV}  /> 
       <Stack.Screen name={"BaiViet"} component={BaiViet}  /> 
       <Stack.Screen name={"ChiTietBV"} component={ChiTietBV}  /> 
@@ -46,6 +59,26 @@ function StackNavigator() {
       <Stack.Screen name={"HoSo"} component={HoSo}  />
       <Stack.Screen name={"DoiMatKhau"} component={DoiMatKhau}  />
 
+      <Stack.Screen name={"LoaiVe"} component={LoaiVe}  />
+      <Stack.Screen name={"DatLich"} component={DatLich}  />
+      <Stack.Screen name={"DangKyDL"} component={DangKyDL}  />
+      <Stack.Screen name={"XacNhanDL"} component={XacNhanDL}  />
+
+    {/* // */}
+      <Stack.Screen name={"DanhSachNV"} component={DanhSachNV}  />
+      <Stack.Screen name={"DanhSachLH"} component={DanhSachLH}  />
+      <Stack.Screen name={"DoiLichHen"} component={DoiLichHen}  />
+
+
+
+
+      {/*     NHAN VIEN    */}
+      <Stack.Screen name={"Login"} component={Login}  />
+      <Stack.Screen name={"NVTab"} component={NVTab} options={{ headerMode: 'none' }}  />
+
+      <Stack.Screen name={"HoSoNV"} component={HoSoNV}  />
+      <Stack.Screen name={"SuaThongTinNV"} component={SuaThongTinNV}  />
+      <Stack.Screen name={"DoiMatKhauNV"} component={DoiMatKhauNV}  />
      
       {/* screenOptions={{headerShown:false}} */} 
 

@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL} from '../../../Ip'
 
-var URL_login= URL.localhost+"/App_API/login.php";
+var URL_login= URL.localhost+"/App_API/NhanVien/Login.php";
 
 export default class DangNhap extends Component{
   // const {navigation} = this.props;
@@ -32,7 +32,7 @@ export default class DangNhap extends Component{
       data:[]
      
     }
-   // this.vd = this.vd.bind(this);
+  //  this.vd = this.vd.bind(this);
   }
 
   login(){
@@ -64,73 +64,21 @@ export default class DangNhap extends Component{
        
       }) 
 
-      //console.log( responseJson.token);
-    
-    //   if(this.state.result>0){
-    //     //console.warn(responseJson);
-    //   //  this.props.navigation.navigate('UITab');
-    //     console.log({mang:responseJson});
-    // }
-    
-   // console.log({result:responseJson.kq});
-
-     //  if(this.state.result>0){
-        //console.warn(responseJson);
-        
-      //  console.log({mang:responseJson});
-       // console.log({result:responseJson.kq});
-       // this.props.navigation.navigate('UITab');
-   // }
-
-   
-  //  if(responseJson.length>0){
-  //   console.log({mang:responseJson});
-  //   this.props.navigation.navigate('UITab',{
-  //     data:responseJson
-    
-  //    });
 
   if(responseJson.token!='ERROR'){
   console.log(responseJson.token);
    
      const currentKH=responseJson;
     //   console.log(currentKH);
-     AsyncStorage.setItem('token',currentKH.token);
+      AsyncStorage.setItem('token',currentKH.token);
 
       Alert.alert(
         'Success!',
         `User  has successfully signed in!`,
       );
-    // this.props.navigation.navigate('UITab');
 
-
-      fetch(URL.localhost+"/App_API/checkToken.php?token="+responseJson.token)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      this.setState({
-        vd:responseJSON
-      });
-      console.log(responseJSON);
-      const currentKH=responseJSON;
-     // console.log(currentKH);
-      // luu du lieu
-    
-      AsyncStorage.setItem('id_KhachHang',currentKH.id_KhachHang);
-    //   AsyncStorage.setItem('TenKH',currentKH.TenKH);
-    //   AsyncStorage.setItem('Email',currentKH.Email);
-    //    AsyncStorage.setItem('HinhAnh',currentKH.HinhAnh);
-    //  AsyncStorage.setItem('DiaChi',currentKH.DiaChi);
-      // AsyncStorage.setItem('GioiTinh',currentKH.GioiTinh);
-      // AsyncStorage.setItem('ChieuCao',currentKH.ChieuCao);
-      // AsyncStorage.setItem('CanNang',currentKH.CanNang);
-      // AsyncStorage.setItem('NgaySinh',currentKH.NgaySinh);
-      //  AsyncStorage.setItem('SoDienThoai',currentKH.SoDienThoai);
-      
-
-       
-    })
-    .catch((e)=>{console.log(e)});
-    this.props.navigation.navigate('UITab');
+     this.props.navigation.navigate('NVTab');
+   // this.vd(responseJson.token);
    
 
   
@@ -211,7 +159,7 @@ export default class DangNhap extends Component{
             
         </View>
         <View style={{flex: 70, alignItems: 'center'}}>
-          <Text style={styles.title}>Khách hàng</Text>
+          <Text style={styles.title}>Nhan vien</Text>
           <TextInput
             placeholder="Email"
             placeholderTextColor="#cc0000"

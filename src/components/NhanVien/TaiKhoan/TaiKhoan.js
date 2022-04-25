@@ -41,14 +41,14 @@ const TaiKhoan = ({route, navigation}) => {
     });
 
     // lay id
-    // AsyncStorage.getItem('id_KhachHang').then(responseJSON => {
-    //   setid_KhachHang(responseJSON);
-    // });
+    AsyncStorage.getItem('id_NhanVien').then(responseJSON => {
+      setid_NhanVien(responseJSON);
+    });
   }, []);
 
   const fetchData = async () => {
     const response = await fetch(
-      URL.localhost + '/App_API/checkToken.php?token=' + token,
+      URL.localhost + '/App_API/NhanVien/checkToken.php?token=' + token,
     );
     const data = await response.json();
     // console.log(data);
@@ -67,13 +67,13 @@ const pushView=(name,id)=>{
   if(name=="Hồ sơ cá nhân"){
     console.log(id);
   //  navigation.navigate('vd');
-  fetch(URL.localhost+"/App_API/taiKhoan.php", {
+  fetch(URL.localhost+"/App_API/NhanVien/TaiKhoanNV.php", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "id_KhachHang":id
+      "id_NhanVien":id
     })
 })
  
@@ -81,10 +81,10 @@ const pushView=(name,id)=>{
     .then((response) => response.json())
     .then((json) => {
     //  const currentKH={data:json};
-   //   console.log(json);
+      console.log(json);
       
      // console.log({data:json.TenKH});
-      navigation.navigate('HoSo',{
+      navigation.navigate('HoSoNV',{
         data:json
         
       })
@@ -95,24 +95,6 @@ const pushView=(name,id)=>{
     console.log('sai');
   }
 }
- 
-
-  // const suaThongTin = (id)=>{
- 
-  //   navigation.navigate('SuaThongTin',{
-  //     Ten:bio.TenKH,
-  //     email:bio.Email,
-  //     diachi:bio.DiaChi,
-  //     sdt:bio.SoDienThoai,
-  //     date:bio.NgaySinh,
-  //     chieucao:bio.ChieuCao,
-  //     cannang:bio.CanNang,
-  //     anh:bio.HinhAnh,
-  //     gioitinh:bio.GioiTinh,
-  //     id:bio.id_KhachHang
-  //   });
-
-  // }
 
   return (
    
@@ -120,7 +102,7 @@ const pushView=(name,id)=>{
      
       <View style={styles.header}>
         <ImageBackground
-          source={require('../../../images/gym.jpg')}
+          source={require('../../../images/background_taikhoanNV.jpg')}
           resizeMode="cover"
           style={{flex: 25}}>
           {/* <TouchableOpacity
@@ -139,7 +121,7 @@ const pushView=(name,id)=>{
           renderItem={({item}) => (
             <View style={styles.listItem}>
               <TouchableOpacity 
-            onPress={()=>{pushView( item.name, bio.id_KhachHang)}}
+            onPress={()=>{pushView( item.name, bio.id_NhanVien)}}
              >
               
               

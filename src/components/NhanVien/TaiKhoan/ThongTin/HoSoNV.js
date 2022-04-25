@@ -18,31 +18,24 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Redeem, RedeemRounded} from '@material-ui/icons';
 import {URL} from '../../../../Ip';
-import DoiMatKhau from './DoiMatKhau';
 
-const HoSo = ({route, navigation}) => {
+const HoSoNV = ({route, navigation}) => {
 
     const {data}=route.params;
   
-   const [id_KhachHang, setid_KhachHang] = useState('');
-
-
-  const [token, settoken] = useState('');
-  // };
-
-  const [bio, setBio] = useState({});
+ 
 
 
   return (
     <View>
       <FlatList
         data={data}
-        keyExtractor={({id_KhachHang}, index) => id_KhachHang}
+        keyExtractor={({id_NhanVien}, index) => id_NhanVien}
         renderItem={({item}) => (
           <TouchableOpacity style={styles.container}>
             <View style={styles.header}>
               <ImageBackground
-                source={require('../../../../images/gym.jpg')}
+                source={require('../../../../images/background_taikhoanNV.jpg')}
                 resizeMode="cover"
                 style={{flex: 30}}>
                 <TouchableOpacity
@@ -50,28 +43,25 @@ const HoSo = ({route, navigation}) => {
                   onPress={() => {
                     navigation.pop();
                   }}>
-                  <Icon name="angle-left" color="#334d4d" size={30} />
+                  <Icon name="angle-left" color="white" size={30} />
                 </TouchableOpacity>
               </ImageBackground>
             </View>
 
-            <Image source={{uri: item.HinhAnh}} style={styles.coverImage} />
+            <Image source={{uri: item.AnhDaiDien}} style={styles.coverImage} />
 
-            <Text style={styles.textTen}>{item.TenKH}</Text>
+            <Text style={styles.textTen}>{item.TenNV}</Text>
 
             <TouchableOpacity 
                 style={{flexDirection: 'row', marginLeft: 120, marginTop: 10}}
-                onPress={() =>navigation.navigate('SuaThongTin',{
-                    ten:item.TenKH,
+                onPress={() =>navigation.navigate('SuaThongTinNV',{
+                    ten:item.TenNV,
                     email:item.Email,
                     diachi:item.DiaChi,
                     sdt:item.SoDienThoai,
-                   // date:bio.NgaySinh,
-                    chieucao:item.ChieuCao,
-                    cannang:item.CanNang,
-                    anh:item.HinhAnh,
-                    gioitinh:item.GioiTinh,
-                    id:item.id_KhachHang
+                    kinhnghiem:item.KinhNghiem,
+                    id:item.id_NhanVien,
+                    gioitinh:item.GioiTinh
                 })}
                 >
                 <Text style={styles.textSua}>Thông tin chi tiết  </Text>
@@ -100,8 +90,8 @@ const HoSo = ({route, navigation}) => {
 
             <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
               <Icon name="globe" size={22} />
-              <Text style={styles.text}>Cân nặng: {item.CanNang} kg</Text>
-              <Text style={styles.text}>Chiều cao: {item.ChieuCao} m</Text>
+              <Text style={styles.text}>Kinh nghiem: {item.KinhNghiem} nam</Text>
+             
             </View>
 
             <View
@@ -115,8 +105,8 @@ const HoSo = ({route, navigation}) => {
               <Button
                  style={{color: 'red', borderRadius: 20, fontWeight: 'bold'}}
                 onPress={() => {
-                  navigation.navigate('DoiMatKhau', {
-                    id:item.id_KhachHang,
+                  navigation.navigate('DoiMatKhauNV', {
+                    id:item.id_NhanVien,
                     matkhau:item.MatKhau
                   });
                 }}
@@ -253,4 +243,4 @@ const styles = StyleSheet.create({
     
   })
 
-export default HoSo;
+export default HoSoNV;

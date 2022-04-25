@@ -62,7 +62,7 @@ import UITab from '../../navigation/UITab';
 
 import TrangChu from './KhachHang/TrangChu/TrangChu';
 
-import ChiTietDV from './KhachHang/TrangChu/ChiTietDV';
+
 import ThongTinNV from './KhachHang/TrangChu/NhanVien/ThongTinNV';
 
 import BaiViet from './KhachHang/KhamPha/BaiViet/BaiViet';
@@ -72,6 +72,23 @@ import SuaThongTin from './KhachHang/TaiKhoan/SuaThongTin';
 
 import HoSo from '../components/KhachHang/TaiKhoan/Thongtin/HoSo'
 import DoiMatKhau from './KhachHang/TaiKhoan/Thongtin/DoiMatKhau';
+
+import DangKyDL from './KhachHang/TrangChu/DatLich/DangKyDL';
+
+
+
+// nhan vien
+import Login from '../components/NhanVien/Login';
+import NVTab from '../../navigation/NVTab';
+import HoSoNV from './NhanVien/TaiKhoan/ThongTin/HoSoNV';
+import SuaThongTinNV from './NhanVien/TaiKhoan/ThongTin/SuaThongTinNV';
+import DoiMatKhauNV from './NhanVien/TaiKhoan/ThongTin/DoiMatKhauNV';
+import LoaiVe from './KhachHang/TrangChu/DatLich/LoaiVe';
+import XacNhanDL from './KhachHang/TrangChu/DatLich/XacNhanDL';
+import DanhSachNV from './KhachHang/TrangChu/NhanVien/DanhSachNV';
+import DanhSachLH from './KhachHang/TrangChu/LichHen/DanhSachLH';
+import DoiLichHen from './KhachHang/TrangChu/LichHen/DoiLichHen';
+
  export default class App extends Component {
 
 	render() {
@@ -102,7 +119,7 @@ import DoiMatKhau from './KhachHang/TaiKhoan/Thongtin/DoiMatKhau';
 						case 'KHACHHANG': return  <KhachHang   />;
 						case 'UITab': return  <UITab  navigator={navigator} />;
 
-						case 'ChiTietDV': return  <ChiTietDV navigator={navigator} />;
+						
 						case 'TrangChu': return  <TrangChu navigator={navigator} />;
 						case 'ThongTinNV': return  <ThongTinNV navigator={navigator} />;
 						case 'BaiViet': return  <BaiViet navigator={navigator} />;
@@ -113,6 +130,28 @@ import DoiMatKhau from './KhachHang/TaiKhoan/Thongtin/DoiMatKhau';
 
 						case 'HoSo': return  <HoSo navigator={navigator} />;
 						case 'DoiMatKhau': return  <DoiMatKhau navigator={navigator} />;
+
+						
+						// case 'LoaiDV': return  <LoaiDV navigator={navigator} />;
+						case 'LoaiVe': return  <LoaiVe navigator={navigator} />;
+						case 'DangKyDL': return  <DangKyDL navigator={navigator} />;
+						case 'XacNhanDL': return  <XacNhanDL navigator={navigator} />;
+
+						//
+						case 'DanhSachNV': return  <DanhSachNV navigator={navigator} />;
+						case 'DanhSachLH': return  <DanhSachLH navigator={navigator} />;
+						case 'DoiLichHen': return  <DoiLichHen navigator={navigator} />;
+
+						
+						// NHAN VIEN
+						case 'Login': return  <Login navigator={navigator} />;
+						case 'NVTab': return  <NVTab navigator={navigator} />;
+
+						case 'HoSoNV': return  <HoSoNV navigator={navigator} />;
+						case 'SuaThongTinNV': return  <SuaThongTinNV navigator={navigator} />;
+						case 'DoiMatKhauNV': return  <DoiMatKhauNV navigator={navigator} />;
+
+
 
 						default: return <Authentication />;
 					}

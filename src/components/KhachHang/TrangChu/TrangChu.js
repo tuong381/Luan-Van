@@ -1,164 +1,146 @@
 
 
 
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import {View, Text, ImageBackground, StyleSheet, FlatList, ScrollView, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { URL } from '../../../../Ip';
 
-var URL_DV= URL.localhost+"/App_API/dichvu.php";
-var URL_ChitietDV= URL.localhost+"/App_API/ChiTietDV.php";
+ var URL_DV= URL.localhost+"/App_API/dichvu.php";
+//var URL_ChitietDV= URL.localhost+"/App_API/ChiTietDV.php";
+ var URL_ChitietDV= URL.localhost+"/App_API/LoaiVeDV.php";
 var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
 
-export default class TrangChu extends React.Component {
+// export default class TrangChu extends React.Component {
+  const TrangChu= ({route,navigation}) => {
 
-  constructor(props) {
-    super(props);
-    this.state={
-      mang: [],
-     data:[],
-     nhanvien:[]
-      
-    }   
-    this.pushView = this.pushView.bind(this);
-    
-  }
+    const [token, settoken] = useState('');
+  // };
 
-  componentDidMount(){
-    fetch(URL_DV)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      this.setState({
-        mang:responseJSON
-      });
+  const [bio, setBio] = useState({});
+
+  useEffect(() => {
+    AsyncStorage.getItem('token').then(responseJson => {
+      settoken(responseJson);
+    });
+  }, []);
+
+
+    const fetchData = async () => {
+      const response = await fetch(
+        URL.localhost + '/App_API/checkToken.php?token=' + token,
+      );
+      const data = await response.json();
+      // console.log(data);
+      setBio(data);
+    };
+    fetchData();
+
+
+    const lichhen= (id) =>{
+      console.log(id);
+   // values.roleId = 4;
+  //  let req = JSON.stringify({id_KhachHang:id});
+   fetch(URL.localhost+"/App_API/LichHen.php", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "id_KhachHang":id,      
     })
-    .catch((e)=>{console.log(e)});
-
-    fetch(URL_PT)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      this.setState({
-       nhanvien:responseJSON
-
-      });
-    })
-    .catch((e)=>{console.log(e)});
-
-  }
-
-
-  renderItem(item) {
-    return(
-    // <TouchableOpacity  onPress={()=>{this.pushView(item.id_DichVu)}} >
-    // this.props.navigation.navigate('VD',{
-    //   MaSV:1,
-    //   TenSV:'tuong',
-    // })
-
-    <TouchableOpacity  onPress={()=>{this.pushView(item.id_DichVu, item.TenDichVu) }} >
-    <View style={styles.item}>
-
-      <ImageBackground
-        source={{uri: item.HinhAnh_DV}}
-        style={styles.image}
-        resizeMode="cover">
-        <Text style={styles.titleDV}>{item.TenDichVu}</Text>
-      </ImageBackground>
-
-    </View>
-    </TouchableOpacity>
-    );
-  }
-
-
-  pushView(id, name){
+}) 
    
-    fetch(URL_ChitietDV,{
-      method:"POST",
-      headers:{
-        "Accept": "application/json",
-         "Content-Type": "application/json"
-       },
-       body: JSON.stringify({
-        id_DichVu:id
-       
-       })
-      
-    })
-    .then((response)=>response.json())
-    .then((responseJson)=>{
-   // console.log({mang:responseJson});
-  // console.log(responseJson);
-    this.props.navigation.navigate('ChiTietDV',{
-      
-      tenDV:name,
-      data:responseJson
-    })
-    
-    })
-    .done() 
-    
-  }
 
-  render() {
+    .then((response) => response.json())
+    .then((json) => {
+  // console.log({data:json});
+      navigation.navigate('DanhSachLH',{
+        data:json
+      })
+    
+      
+    })
+    }
+
+
+
+
+
+
+  // render() { 
     const {
       image, text, flatlist, body,item,title,
   } = styles;
 
-  const {navigation} = this.props;
+
   
     return (
       //  <View style={styles.body}>
       <ScrollView>
         <View style={{flex: 1}}>
+
+        <View style={styles.header}>
+
+          <View style={styles.baoTitle}>
+            <Text style={styles.titleHeader}> Ten APP</Text>
+          </View>
+        </View>
+
           <View style={{flex: 30, height: 200}}>
             <ImageBackground
-              source={require('../../../images/groupX.jpg')}
+              source={require('../../../images/background_khachhang.png')}
               resizeMode="cover"
               style={{flex: 30}}>
-              <Text style={title}>THỂ DỤC VÀ DINH DƯỠNG TRỰC TUYẾN</Text>
             </ImageBackground>
           </View>
+          
+          <Text style={styles.title}>Tùy chọn </Text>
+          
+          <View style={{flexDirection:'row', marginLeft:60, marginTop:25, marginBottom:25}}>
+            <TouchableOpacity 
+              onPress={()=> navigation.navigate('LoaiVe')}        
+            >
+              <View style={{marginRight:30}}>
+              <Icon name="calendar" color="#a50000" size={50} />
+              <Text style={styles.text} >Đặt lịch</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={()=> navigation.navigate('DanhSachNV')}          
+            >
+            <View style={{marginLeft:30}}>
+            <Icon name="users" color="#a50000" size={50} />
+            <Text style={styles.text} >Nhân viên</Text>
+            </View>
+            </TouchableOpacity>
 
-          <Text style={styles.text}>Dịch vụ </Text>
+            <TouchableOpacity 
+              onPress={()=> {lichhen(bio.id_KhachHang)}}          
+            >
+            <View style={{marginLeft:50}}>
+            <Icon name="history" color="#a50000" size={50} />
+            <Text style={styles.text} >Lịch hẹn</Text>
+            </View>
+         
+            </TouchableOpacity>
+            
 
-          <SafeAreaView style={styles.container}>
-            <FlatList
-              style={styles.flatlist}
-              horizontal
-              data={this.state.mang}
-              keyExtractor={({id_DichVu}, index) => id_DichVu}
-              // renderItem={({item}) => (
-              //   <TouchableOpacity  onPress={() => {this.pushView(item.id_DichVu)}} >
-              //   <View style={styles.item}>
-              //     <Text>{item.id_DichVu}</Text>
+          </View>
 
-              //     <ImageBackground
-              //       source={{uri: item.HinhAnh_DV}}
-              //       style={styles.image}
-              //       resizeMode="cover">
-              //       <Text style={styles.title}>{item.TenDichVu}</Text>
-              //     </ImageBackground>
-
-              //   </View>
-              //   </TouchableOpacity>
-
-              // )}
-
-              renderItem={({item}) => this.renderItem(item)}
-            />
-          </SafeAreaView>
+          
         </View>
 
         <View style={styles.body}>
-          <Text style={styles.text}>Đội ngũ PT</Text>
+        <Text style={styles.title}>Sản phẩm mới nhất </Text>
 
-          <SafeAreaView style={styles.container}>
+          {/* <SafeAreaView style={styles.container}>
             <FlatList
               style={styles.flatlist}
               horizontal
@@ -188,11 +170,11 @@ export default class TrangChu extends React.Component {
                 </TouchableOpacity>
               )}
             />
-          </SafeAreaView>
+          </SafeAreaView> */}
         </View>
       </ScrollView>
     );
-  }
+ // }
 
 }
 
@@ -224,13 +206,20 @@ const styles = StyleSheet.create({
   },
 
 
-  text: {
+  title: {
     fontSize: 20,
-    color: '#a50000',
+    color: 'black',
     fontWeight: 'bold',
     marginTop: 10,
+    marginLeft:10
    // fontFamily:'PlayfairDisplay-Regular'
   },
+
+  text:{
+    fontSize:16,
+    color:'black'
+  },
+
 
   image: {
     //  marginTop:5,
@@ -265,19 +254,37 @@ const styles = StyleSheet.create({
     flex: 70,
     //justifyContent: 'center',
   },
-  // title: {
-  //   fontWeight: 'bold',
-  //   color: 'white',
-  //   textAlign: 'center',
-  //   fontStyle: 'italic',
-  //   fontWeight: 'bold',
-  //    marginTop:30,
-  //   fontSize: 18,
-  // },
+
+  header:{
+    flexDirection:'row',
+   // flex:1,
+   backgroundColor:'white',
+    height:60,
+  },
+
+
+
+  baoTitle:{
+   // flex:6,
+    justifyContent:'center',
+    alignItems:'center',
+   // marginRight: 200,
+    backgroundColor:'white',
+    marginLeft:100
+  },
+
+  titleHeader:{
+    color:'#a50000',
+    fontSize:22,
+    fontWeight:'bold',
+  },
+
+ 
+
 })
 
 
-
+export default TrangChu;
 
 
 

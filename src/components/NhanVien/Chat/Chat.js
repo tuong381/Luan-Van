@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {View, Text} from 'react-native';
-export default class vd extends Component {
+
+export default class Chat extends Component {
   render() {
     return (
       <View>
-          <Text>Vd</Text>
+          <Text>trang chu nhan vien</Text>
       </View>
     )
   }

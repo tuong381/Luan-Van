@@ -16,10 +16,10 @@ import {
 
 
  
-import {URL} from '../../../../../Ip';
+import { URL } from "../../../../../Ip";
 
 
-const DoiMatKhau = ({route, navigation}) => {
+const DoiMatKhauNV = ({route, navigation}) => {
     const {id}=route.params;
     const {matkhau}=route.params;
 
@@ -28,14 +28,14 @@ const DoiMatKhau = ({route, navigation}) => {
     
 
     const datlai = (id) => { 
-        //console.log(id);
-        fetch(URL.localhost+"/App_API/DoiMatKhau.php", {
+        console.log(id);
+        fetch(URL.localhost+"/App_API/NhanVien/DoiMatKhauNV.php", {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            "id_KhachHang":id,
+            "id_NhanVien":id,
             "MatKhau":MatKhau
            
           })
@@ -46,8 +46,8 @@ const DoiMatKhau = ({route, navigation}) => {
           //  console.log(json);
             // console.log({result:json.kq});
             if(json.kq>0){ 
-            //  console.log('xong');
-              navigation.navigate('DangNhap');
+              console.log('xong');
+              navigation.navigate('Login');
            //   navigation.pop();
            }
             
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
     
   })
 
-export default DoiMatKhau;
+export default DoiMatKhauNV;

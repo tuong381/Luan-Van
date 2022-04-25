@@ -1,8 +1,7 @@
 
 import React, {useState} from "react";
 import  Icon  from 'react-native-vector-icons/FontAwesome';
-
-import {URL} from '../../../../Ip';
+import { URL } from "../../../../../Ip";
 
 import {View ,
        Text, 
@@ -13,7 +12,7 @@ import {View ,
        ScrollView
       } from 'react-native';
 
-const SuaThongTin= ({route,navigation}) => {
+const SuaThongTinNV= ({route,navigation}) => {
 
   const {
     image, text, flatlist, body,item,title,
@@ -22,16 +21,14 @@ const SuaThongTin= ({route,navigation}) => {
     const {email}= route.params; 
     const {sdt}=route.params;
     const {diachi}=route.params;
-    const {chieucao}=route.params;
-    const {cannang}=route.params;
+    const {kinhnghiem}=route.params;
     const {gioitinh}=route.params;
     const {id}=route.params;
 
-    const [TenKH, setTenKH] = useState(ten);
+    const [TenNV, setTenNV] = useState(ten);
     const [Email, setEmail] = useState(email);
     const [SoDienThoai, setSoDienThoai] = useState(sdt);
-    const [ChieuCao, setChieuCao] = useState(chieucao);
-    const [CanNang, setCanNang] = useState(cannang);
+    const [KinhNghiem, setKinhNghiem] = useState(kinhnghiem);
     const [GioiTinh, setGioiTinh] = useState(gioitinh);
     const [DiaChi, setDiaChi] = useState(diachi);
 
@@ -42,20 +39,19 @@ const SuaThongTin= ({route,navigation}) => {
     console.log(id);
    // values.roleId = 4;
   //  let req = JSON.stringify({id_KhachHang:id});
-   fetch(URL.localhost+"/App_API/SuaThongTin.php", {
+   fetch(URL.localhost+"/App_API/NhanVien/SuaThongTinNV.php", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "id_KhachHang":id,
-      "TenKH":TenKH,
+      "id_NhanVien":id,
+      "TenNV":TenNV,
       "SoDienThoai":SoDienThoai,
       "DiaChi":DiaChi, 
       "Email":Email,
-      "ChieuCao":ChieuCao,
+      "KinhNghiem":KinhNghiem,
       "GioiTinh":GioiTinh,
-      "CanNang":CanNang 
      
     })
 })
@@ -93,9 +89,6 @@ const SuaThongTin= ({route,navigation}) => {
         </View>
 
         <View style={{flex: 70, marginTop: 20}}>
-          
-          
-            <Text style={{color:'red'}}>{id}</Text>
 
 
           <View style={{flexDirection: 'row', marginTop: 5}}>
@@ -103,8 +96,8 @@ const SuaThongTin= ({route,navigation}) => {
             <TextInput
               style={styles.txtInput}
               underlineColorAndroid="transparent"
-             onChangeText={(TenKH) => setTenKH(TenKH)}
-              value={TenKH}
+             onChangeText={(TenNV) => setTenNV(TenNV)}
+              value={TenNV}
             />
           </View>
 
@@ -150,26 +143,17 @@ const SuaThongTin= ({route,navigation}) => {
           </View>
 
           <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text style={styles.text}>Chiều cao</Text>
+            <Text style={styles.text}>Kinh nghiệm</Text>
             <TextInput
               style={styles.txtInput1}
               underlineColorAndroid="transparent"
-              onChangeText={(ChieuCao) => setChieuCao(ChieuCao)}
-              value={ChieuCao}
+              onChangeText={(KinhNghiem) => setKinhNghiem(KinhNghiem)}
+              value={KinhNghiem}
             />
-            <Text style={{marginTop:20, color:'black'}}>m</Text>
+            <Text style={{marginTop:20, color:'black'}}>năm</Text>
           </View>
 
-          <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text style={styles.text}>Cân nặng</Text>
-            <TextInput
-              style={styles.txtInput1}
-              underlineColorAndroid="transparent"
-              onChangeText={(CanNang) => setCanNang(CanNang)}
-              value={CanNang}
-            />
-            <Text style={{marginTop:20, color:'black'}}>Kg</Text>
-          </View>
+          
 
           <TouchableOpacity  style={styles.btnLogin}
             onPress={() => {capnhat(id)}}
@@ -284,5 +268,5 @@ const SuaThongTin= ({route,navigation}) => {
   })
   
 
-  export default SuaThongTin;
+  export default SuaThongTinNV;
 

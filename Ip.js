@@ -1,3 +1,3 @@
 export const URL={
-    localhost:"http://10.2.7.38"
+    localhost:"http://192.168.1.10"
 }
