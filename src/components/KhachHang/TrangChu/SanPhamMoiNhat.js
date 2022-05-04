@@ -6,7 +6,7 @@ import {
   StyleSheet,
   FlatList,
   ScrollView,
-  Image, 
+  Image,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -17,127 +17,75 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {URL} from '../../../../Ip';
 
-export default class Shop extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      danhmuc: [],
-      sanpham:[]
-    };
-    this.danhmuc= this.danhmuc.bind(this);
+// export default class SanPhamMoiNhat extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       danhmuc: [],
+//       sanpham:[]
+//     };
+//   }
+
+//   componentDidMount() {
     
-  }
 
-  componentDidMount() {
-    fetch(URL.localhost + '/App_API/Shop/danhmucsanpham.php')
-      .then(response => response.json())
-      .then(responseJSON => {
-        this.setState({ 
-          danhmuc: responseJSON,
-        });
-        //   console.log(responseJSON);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+//       fetch(URL.localhost + '/App_API/Shop/SanPham.php')
+//       .then(response => response.json())
+//       .then(responseJSON => {
+//         this.setState({
+//           sanpham: responseJSON,
+//         });
+//         //   console.log(responseJSON);
+//       })
+//       .catch(e => {
+//         console.log(e);
+//       });
 
-      fetch(URL.localhost + '/App_API/Shop/SanPham.php')
-      .then(response => response.json())
-      .then(responseJSON => {
-        this.setState({
-          sanpham: responseJSON,
-        });
-         //  console.log(responseJSON);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+//   }
 
-  }
+//   render() {
+  const SanPhamMoiNhat= ({route,navigation}) => {
 
-  danhmuc(id, tenDM){
-    fetch(URL.localhost + '/App_API/Shop/ShowSanPham.php', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "id_DanhMuc":id,       
-      }) 
-    }) 
-      .then((response) => response.json())
-      .then((json) => {
-    // console.log({data:json});
-       this.props.navigation.navigate('DanhSachSP',{
-         data:json,
-         tenDM:tenDM
-       });
+    const [token, settoken] = useState('');
+  // };
 
-      })
-  }
+  const [bio, setBio] = useState({});
+    
+  const fetchData = async () => {
+    const response = await fetch(
+      URL.localhost + '/App_API/Shop/SanPham.php'
+    );
+    const data = await response.json();
+    // console.log(data);
+    setBio(data);
+  };
+  fetchData();
 
-  
 
-  render() {
     return (
       //  <View style={styles.body}>
-        <ScrollView>
-      <View style={{flex: 1}}>
-        <View style={{flex: 30, height: 200}}>
-          <ImageBackground
-            source={require('../../../images/background_shop.jpg')}
-            resizeMode="cover"
-            style={{flex: 30}}></ImageBackground>
-        </View>
+      
 
-        <View style={{flex:70}}>
-          <Text style={styles.title}>Danh mục sản phẩm </Text>
+          
 
           <SafeAreaView style={styles.container}>
             <FlatList
               style={styles.flatlist}
               horizontal
-              data={this.state.danhmuc}
-              keyExtractor={({id_DanhMuc}, index) => id_DanhMuc}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  onPress={()=> this.danhmuc(item.id_DanhMuc, item.TenDanhMuc)}
-                  >
-                  <View style={styles.item}>
-                    <Image
-                      source={{uri: item.HinhAnh}}
-                      style={styles.image}
-                      resizeMode="cover">
- 
-                      </Image>
-                      <Text style={styles.textPT}>{item.TenDanhMuc}</Text>
-                   
-                    </View>
-                </TouchableOpacity>
-                
-              )}
-            />
-          </SafeAreaView>
-
-          <Text style={styles.titleSP}>Sản phẩm mới nhất</Text>
-
-          <SafeAreaView style={styles.container}>
-            <FlatList
-              style={styles.flatlist}
-              horizontal
-              data={this.state.sanpham}
+              data={bio}
+             //  data={this.state.sanpham}
               keyExtractor={({id_SanPham}, index) => id_SanPham}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('ChiTietSP',{
-                    idSP:item.id_SanPham,
-                    tenSP:item.TenSanPham,
-                    tenDM:item.TenDanhMuc,
-                    gia:item.Gia,
-                    soluong:item.SoLuong_SP,
-                    mota:item.MoTaSanPham,
-                    anh:item.HinhAnh_SP
-                  })}
+                onPress={() => navigation.navigate('ChiTietSP',{
+                  idSP:item.id_SanPham,
+                  tenSP:item.TenSanPham,
+                  tenDM:item.TenDanhMuc,
+                  gia:item.Gia,
+                  soluong:item.SoLuong_SP,
+                  mota:item.MoTaSanPham,
+                  anh:item.HinhAnh_SP
+              })}
                   >
                   <View style={styles.item}>
                     <Image
@@ -155,12 +103,9 @@ export default class Shop extends React.Component {
             />
           </SafeAreaView>
 
-        </View>
-      </View>
-
-    </ScrollView>
+        
     );
-  }
+ //}
 }
 
 const styles = StyleSheet.create({
@@ -216,6 +161,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
     flexDirection: 'row',
+    
   },
 
   container: {
@@ -305,3 +251,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+export default SanPhamMoiNhat;

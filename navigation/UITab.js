@@ -35,9 +35,15 @@ function UITab(props) {
                 iconName="bandcamp" 
               }else if (route.name === 'Shop') {
                 iconName="shopping-bag" 
-              }else if (route.name === 'Tài khoản') {
+              }
+              
+              else if (route.name === 'Thông báo') {
+                iconName="bell" 
+              }
+              else if (route.name === 'Tài khoản') {
                 iconName="user" 
               }
+
               return <Icon 
               name={iconName}
                size={23} 
@@ -57,7 +63,7 @@ function UITab(props) {
           <Tab.Screen name={"Trang chủ"} component={TrangChu} />
           <Tab.Screen name={"Khám phá"} component={KhamPha} />
           <Tab.Screen name={"Shop"} component={Shop} />
-
+          {/* <Tab.Screen name={"Thông báo"} component={ThongBao} /> */}
 
           <Tab.Screen name={"Tài khoản"} component={TaiKhoan} />
 

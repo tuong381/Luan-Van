@@ -1,168 +1,212 @@
 
 
 
-import React, { Component } from 'react'
+import React, { Component, useEffect,useState } from 'react'
 import {View, Text, ImageBackground, StyleSheet, FlatList, ScrollView, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { URL } from '../../../../Ip';
 
-var URL_DV= URL.localhost+"/App_API/dichvu.php";
-//var URL_ChitietDV= URL.localhost+"/App_API/ChiTietDV.php";
- var URL_ChitietDV= URL.localhost+"/App_API/LoaiVeDV.php";
-var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
 
-var data=[
-  {name:'Lịch làm việc'},
-  {name:'Khách hàng của tôi '}
-]
 
-export default class TrangChu extends React.Component {
+const TrangChu= ({route,navigation}) => {
 
-  constructor(props) {
-    super(props);
-    this.state={
-      mang: [],
-     data:[],
-     nhanvien:[]
-      
-    }   
-    this.pushView = this.pushView.bind(this);
-    
-  }
-
+  const [token, settoken] = useState('');
   
+  const [bio, setBio] = useState({});
 
-  componentDidMount(){
-    fetch(URL_DV)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      this.setState({
-        mang:responseJSON
-      });
-    })
-    .catch((e)=>{console.log(e)});
+  useEffect(() => {
+    AsyncStorage.getItem('token').then(responseJson => {
+      settoken(responseJson);
+    });
+  }, []); 
 
-    fetch(URL_PT)
-    .then((response)=>response.json())
-    .then((responseJSON)=>{
-      this.setState({
-       nhanvien:responseJSON
-
-      });
-    })
-    .catch((e)=>{console.log(e)});
-
-  }
-
-
-  renderItem(item) {
-    return(
-    // <TouchableOpacity  onPress={()=>{this.pushView(item.id_DichVu)}} >
-    // this.props.navigation.navigate('VD',{
-    //   MaSV:1,
-    //   TenSV:'tuong',
-    // })
-
-    <TouchableOpacity  onPress={()=>{this.pushView(item.id_DichVu, item.TenDichVu) }} >
-    <View style={styles.item}>
-
-      <ImageBackground
-        source={{uri: item.HinhAnh_DV}}
-        style={styles.image}
-        resizeMode="cover">
-        <Text style={styles.titleDV}>{item.TenDichVu}</Text>
-      </ImageBackground>
-
-    </View>
-    </TouchableOpacity>
+  const fetchData = async () => {
+    const response = await fetch(
+      URL.localhost + '/App_API/NhanVien/checkToken.php?token=' + token,
     );
+    const data = await response.json();
+    // console.log(data);
+    setBio(data);
+  };
+  fetchData();
+ 
+
+  const lichlamviec= (id) =>{
+   // console.log(id);
+ // values.roleId = 4;
+//  let req = JSON.stringify({id_KhachHang:id});
+ fetch(URL.localhost+"/App_API/NhanVien/LichLamViec/LichLamViec.php", {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+  }, 
+  body: JSON.stringify({
+    "id_NhanVien":id,      
+  }) 
+}) 
+ 
+  .then((response) => response.json())
+  .then((json) => {
+     
+    navigation.navigate('LichLamViec',{
+      data:json,
+      id_NhanVien:id
+    })
+  })
+
+ 
   }
 
 
-  pushView(id, name){
+  const khachhangcuatoi= (id) =>{
+    console.log(id);
+ // values.roleId = 4;
+//  let req = JSON.stringify({id_KhachHang:id});
+ fetch(URL.localhost+"/App_API/NhanVien/LichLamViec/LichLamViec.php", {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+  }, 
+  body: JSON.stringify({
+    "id_NhanVien":id,      
+  }) 
+}) 
+ 
+
+  .then((response) => response.json())
+  .then((json) => {
+     //console.log({data:json});
+    navigation.navigate('KhachHangCuaToi',{
+      data:json
+    })
+  
+    
+  })
+  }
+
+
+  const tinnhan= (id) =>{
+    console.log(id);
+ fetch(URL.localhost+"/App_API/NhanVien/Chat/ListChat.php", {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    "id_NhanVien":id,       
+  })
+}) 
+  .then((response) => response.json())
+  .then((json) => {
+ console.log({data:json});
+    navigation.navigate('ListChat',{
+      data:json,
+      id_NhanVien:id
+    })
    
-    fetch(URL_ChitietDV,{
-      method:"POST",
-      headers:{
-        "Accept": "application/json",
-         "Content-Type": "application/json"
-       },
-       body: JSON.stringify({
-        id_DichVu:id
-       
-       })
-      
+
+  })
+  }
+ 
+  const thongbao= (id) =>{
+   // console.log(id);
+ fetch(URL.localhost+"/App_API/NhanVien/ThongBao/ListThongBao.php", {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    "id_NhanVien":id,       
+  })
+}) 
+  .then((response) => response.json())
+  .then((json) => {
+ //console.log({data:json});
+    navigation.navigate('ThongBao',{
+      data:json,
+      id_NhanVien:id
     })
-    .then((response)=>response.json())
-    .then((responseJson)=>{
-   // console.log({mang:responseJson});
-   console.log(responseJson);
-    this.props.navigation.navigate('LoaiDV',{
-      
-      tenDV:name,
-      data:responseJson
-    })
-    
-    })
-    .done() 
-    
+   
+
+  })
   }
 
-  render() {
+
     const {
-      image, text, flatlist, body,item,title,
+      image, text, flatlist, body,item,title,btnHuy
   } = styles;
 
-  const {navigation} = this.props;
-  
     return (
       //  <View style={styles.body}>
+
+      <View style={{flex: 1}}>
+        <View style={{height: 200, marginBottom: 40}}>
+          <ImageBackground
+            source={require('../../../images/background_nhanvien.jpg')}
+            resizeMode="cover"
+           style={{flex: 2}}>
+            <Text style={title}>THỂ DỤC VÀ DINH DƯỠNG TRỰC TUYẾN</Text>
+          </ImageBackground>
+        </View>
+
+        <View style={{flex:8}}>
       
-        <View style={{flex: 1}}>
-          <View style={{flex: 2, height: 250, marginBottom:90}}>
-            <ImageBackground
-              source={require('../../../images/background_nhanvien.jpg')}
-              resizeMode="cover"
-              style={{flex: 30}}>
-              <Text style={title}>THỂ DỤC VÀ DINH DƯỠNG TRỰC TUYẾN</Text>
-            </ImageBackground>
-          </View>
-
-          <FlatList
-          style={{width:300, marginLeft:60}}
-          data={data}
-          renderItem={({item}) => (
-            <View style={styles.listItem}>
-              <TouchableOpacity 
-            onPress={()=>{pushView( item.name, bio.id_KhachHang)}}
-             >
-              
-              
-              <View style={{flexDirection:'row'}}>
-                <Text style={[styles.text, styles.textTen]} >{item.name}</Text>
-               <View style={{marginLeft:15}}>
-               <Icon name="angle-right" color="#a50000" size={30} />
-               </View>
-               
-                 
-              </View>
-              </TouchableOpacity> 
-
+        <View style={{width: 300}}>
+          <TouchableOpacity style={styles.listItem}
+            onPress={() => {lichlamviec(bio.id_NhanVien)}}
+          >
+            <Text style={[styles.text, styles.textTen]}>Lịch làm việc</Text>
+            <View style={{marginLeft: 15}}>
+              <Icon name="angle-right" color="#a50000" size={30} />
             </View>
-          )}
-        />
+          </TouchableOpacity>
+        </View>
 
-          </View>
-    
+        <View style={{width: 300}}>
+          <TouchableOpacity style={styles.listItem}
+            onPress={() => {khachhangcuatoi(bio.id_NhanVien)}}
+          >
+            <Text style={[styles.text, styles.textTen]}>Khách hàng của tôi</Text>
+            <View style={{marginLeft: 15}}>
+              <Icon name="angle-right" color="#a50000" size={30} />
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{width: 300}}>
+          <TouchableOpacity style={styles.listItem}
+            onPress={() => {tinnhan(bio.id_NhanVien)}}
+          >
+            <Text style={[styles.text, styles.textTen]}>Tin nhắn</Text>
+            <View style={{marginLeft: 15}}>
+              <Icon name="angle-right" color="#a50000" size={30} />
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{width: 300}}>
+          <TouchableOpacity style={styles.listItem}
+            onPress={() => {thongbao(bio.id_NhanVien)}}
+          >
+            <Text style={[styles.text, styles.textTen]}>Thông báo</Text>
+            <View style={{marginLeft: 15}}>
+              <Icon name="angle-right" color="#a50000" size={30} />
+            </View>
+          </TouchableOpacity>
+        </View>
+        </View>
+
+      </View>
     );
   }
 
-}
+
 
 const styles = StyleSheet.create({
 
@@ -175,6 +219,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop:80,
     fontSize: 22,
+    
   },
 
   listItem: {
@@ -183,6 +228,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#fff',
     flexDirection: 'row',
+   //  flex:2,
+    width:300, 
+    marginLeft:60,
+    
     
   },
 
@@ -202,7 +251,7 @@ const styles = StyleSheet.create({
 })
 
 
-
+export default TrangChu;
 
 
 

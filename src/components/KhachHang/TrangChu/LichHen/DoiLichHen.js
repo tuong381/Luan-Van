@@ -69,20 +69,21 @@ export default class DoiLichHen extends Component {
     this.setState({
       isVisible: true,
     });
-  };
+  }; 
 
-  doilich( id, ngaymoi,giomoi,ngaycu,giocu) {
-    console.log(id, ngaymoi,giomoi,ngaycu,giocu);
-    fetch(URL.localhost+"/App_API/DoiLich.php", {
+  doilich( idLH,idNV, ngaymoi,giomoi,  idKH) {
+    console.log(idLH, idNV, ngaymoi,giomoi,  idKH);
+    fetch(URL.localhost+"/App_API/LichHen/DoiLich.php", {
       method:"POST",
-      headers:{
+      headers:{ 
        "Accept": "application/json",
         "Content-Type": "application/json" 
       },
       body: JSON.stringify({
-        "id_LichHen":id, 
-        "NgayDK":ngaymoi,
-        "GioDK":giomoi
+        "id_LichHen":idLH, 
+        "NgayDK":ngaymoi,  
+        "GioDK":giomoi,
+        "id_NhanVien":idNV
       })
     })
     .then((response)=>response.json())
@@ -96,19 +97,34 @@ export default class DoiLichHen extends Component {
         `Vui lòng chọn giờ !`,
       );
      }else{
-    
       Alert.alert(
-        'success!',
-        `Dời lịch thành công !`,
+        'Thông báo!',
+        `Đã gửi yêu cầu dời lịch thành công !`,
       );
-
+      this.props.navigation.pop();
      }
+
  
     })
     .catch((error) => {
       console.error(error);
 
     })
+
+
+    // thong bao
+    fetch(URL.localhost+"/App_API/LichHen/ThongBaoDoiLich.php", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "id_LichHen":idLH,
+        "id_NhanVien":idNV,
+        "id_KhachHang":idKH,
+      })
+  })
+      .then((response) => response.json())
 
   }
 
@@ -123,6 +139,7 @@ export default class DoiLichHen extends Component {
     const {tenve} = this.props.route.params;
     const {gia} = this.props.route.params;
     const {id} = this.props.route.params;
+    const {idNV} = this.props.route.params;
 
     const {Ten} = this.props.route.params;
     const {anh} = this.props.route.params;
@@ -130,6 +147,9 @@ export default class DoiLichHen extends Component {
     const {kinhnghiem} = this.props.route.params;
     const {ngay} = this.props.route.params;
     const {gio} = this.props.route.params;
+    const {id_KhachHang}=this.props.route.params;
+    const {id_LichHen}= this.props.route.params;
+ 
 
     
 
@@ -226,7 +246,7 @@ export default class DoiLichHen extends Component {
         <TouchableOpacity
           style={styles.btnLogin}
           onPress={() => { 
-            this.doilich(id,this.state.ngay, this.state.gio,ngay, gio);
+            this.doilich(id,idNV,this.state.ngay, this.state.gio,id_KhachHang);
           }}
           
           >

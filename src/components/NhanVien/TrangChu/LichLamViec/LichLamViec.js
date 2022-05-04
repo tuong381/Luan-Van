@@ -15,7 +15,7 @@ import {URL} from '../../../../../Ip';
 
 var URL_PT=  URL.localhost+"/App_API/LichHen.php";
 
-export default class DanhSachLH extends Component {
+export default class LichLamViec extends Component {
 
   
 
@@ -32,13 +32,8 @@ export default class DanhSachLH extends Component {
      
   }
 
-  componentWillUnmount() {
-    clearInterval(this.refresh);
-  }
 
-
-  huy(id, idNV, idKH){
-  //   console.log(id, idNV,idKH);
+  huy(id, idNV,idKH){
     
     fetch(URL.localhost+"/App_API/LichHen/HuyLichHen.php", {
       method: 'POST',
@@ -55,7 +50,7 @@ export default class DanhSachLH extends Component {
           console.log('ok');
           Alert.alert(
             'Thông báo!',
-            `Đã gửi yêu cầu hủy lịch thành công !`,
+            `Hủy lịch thành công !`,
           );
           this.props.navigation.pop();
 
@@ -63,9 +58,8 @@ export default class DanhSachLH extends Component {
         
       })
 
-  //     // thong bao
-console.log(id,idNV,idKH);
-      fetch(URL.localhost+"/App_API/LichHen/ThongBao.php", {
+      // thong bao 
+      fetch(URL.localhost+"/App_API/NhanVien/ThongBao/ThongBaoHuy.php", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -77,13 +71,7 @@ console.log(id,idNV,idKH);
         })
     })
         .then((response) => response.json())
-        // .then((json) => {
-          
-  
-        //  }
-          
-      //  )
-        }   
+  }
 
   render() {
 
@@ -99,7 +87,7 @@ console.log(id,idNV,idKH);
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
-            style={styles.backButton} 
+            style={styles.backButton}
             onPress={() => {
               navigation.pop();
             }}>
@@ -130,17 +118,14 @@ console.log(id,idNV,idKH);
               //   })}
             >
               <Image
-                source={{uri: item.AnhDaiDien}}
+                source={{uri: item.HinhAnh}}
                 style={styles.coverImage}
               />
-              {/* <Text>{item.id_KhachHang}</Text> */}
+
               <View style={styles.metaInfo}>
-                <Text style={[styles.text, styles.textTen]}>{item.TenNV}</Text>
+                <Text style={[styles.text, styles.textTen]}>{item.TenKH}</Text>
                 <Text style={styles.text}>
                   Số điện thoại: {item.SoDienThoai}
-                </Text>
-                <Text style={styles.text}>
-                  Kinh nghiệm: {item.KinhNghiem} năm
                 </Text>
 
                 <View
@@ -177,27 +162,25 @@ console.log(id,idNV,idKH);
                 {item.TrangThaiLichHen == 1 && (
                   <View style={styles.btnHuy}>
                     <View >
-                      <Button onPress={()=>navigation.navigate('DoiLichHen',{
-                        id:item.id_LichHen,
-                        sdt:item.SoDienThoai,
-                        kinhnghien:item.KinhNghiem,
-                        tenve:item.TenDichVu,
-                        ngay:item.NgayDK,
-                        gio:item.GioDK,
-                        anh:item.AnhDaiDien,
-                        Ten:item.TenNV,
-                        gia:item.TongTien,
-                        idNV:item.id_NhanVien,
-                        id_KhachHang:item.id_KhachHang
-                     
+                      <Button 
+                      // onPress={()=>navigation.navigate('DoiLichHen',{
+                      //   id:item.id_LichHen,
+                      //   sdt:item.SoDienThoai,
+                      //   tenve:item.TenDichVu,
+                      //   ngay:item.NgayDK,
+                      //   gio:item.GioDK,
+                      //   anh:item.AnhDaiDien,
+                      //   Ten:item.TenNV,
+                      //   gia:item.TongTien,
+                      //   idNV:item.id_NhanVien
 
-                      })}
+                      // })}
                           title="dời lịch" color="#26734d" />
                     </View>
 
                     <View  style={{marginLeft:10}} >
                       <Button  
-                          onPress={()=>this.huy(item.id_LichHen, item.id_NhanVien, item.id_KhachHang)} 
+                          onPress={()=>this.huy(item.id_LichHen, item.id_NhanVien,item.id_KhachHang)} 
                             title="Hủy" color="#a50000" 
                         
                             />
@@ -219,7 +202,15 @@ console.log(id,idNV,idKH);
                       <Button title="Đang chờ xác nhận" color="#663300" />
                     </View>
                   </View>
-                )} 
+                )}
+
+                {/* {item.TrangThaiLichHen == 0 && (
+                  <View style={styles.btnHuy}>
+                    <View >
+                      <Button title="hết hạn" color="#663300" />
+                    </View>
+                  </View>
+                )} */}
 
                 {item.TrangThaiLichHen == -1 && (
                   <View style={styles.btnHuy}>
@@ -227,9 +218,7 @@ console.log(id,idNV,idKH);
                       <Button title="đã hủy" color="#55552b" />
                     </View>
                   </View>
-                )}
-
-              
+                )} 
 
               </View>
             </TouchableOpacity>

@@ -11,14 +11,19 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
-  Modal
+  Modal,
+  RefreshControl
 } from 'react-native';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Redeem, RedeemRounded} from '@material-ui/icons';
-import {URL} from '../../../../Ip';
+import { URL } from '../../../../../Ip';
 import DoiMatKhau from './DoiMatKhau';
+import { red } from '@mui/material/colors';
+
+
+
 
 const HoSo = ({route, navigation}) => {
 
@@ -26,15 +31,22 @@ const HoSo = ({route, navigation}) => {
   
    const [id_KhachHang, setid_KhachHang] = useState('');
 
-
   const [token, settoken] = useState('');
   // };
 
   const [bio, setBio] = useState({});
 
 
+  const [refreshing, setRefreshing] = React.useState(false);
+
+ 
+
+ 
   return (
+   
     <View>
+ 
+
       <FlatList
         data={data}
         keyExtractor={({id_KhachHang}, index) => id_KhachHang}
@@ -146,7 +158,18 @@ const HoSo = ({route, navigation}) => {
             </TouchableOpacity>
           // </View> 
         )}
+
+
+
+        
+
+
+
       />
+
+
+
+
     </View>
   );
   

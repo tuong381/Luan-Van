@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL} from '../../../Ip'
 
+
 var URL_login= URL.localhost+"/App_API/login.php";
 
 export default class DangNhap extends Component{
@@ -29,13 +30,35 @@ export default class DangNhap extends Component{
       token:'...',
       mang:[],
       vd:[],
-      data:[]
+      data:[],
+      hidepassword: true
+
+      
      
     }
    // this.vd = this.vd.bind(this);
   }
 
+  setPasswordVisibility = () => {
+    this.setState({hidepassword: !this.state.hidepassword});
+  }
+
+
+
   login(){
+
+    if (!this.state.Email.trim() && !this.state.MatKhau.trim() ){
+      alert('Vui lòng nhập Email và mật khẩu');
+      return;
+    }
+    else if (!this.state.Email.trim()) {
+      alert('Vui lòng nhập Email');
+      return;
+    }
+    else if (!this.state.MatKhau.trim()) {
+      alert('Vui lòng nhập mật khẩu');
+      return;
+    }
 
     const {navigation} = this.props;
    
@@ -52,43 +75,11 @@ export default class DangNhap extends Component{
     })
     .then((response)=>response.json())
     .then((responseJson)=>{
-      // console.log("++++");
-    //   console.log(responseJson);
-     //  console.log(responseJson.length);
       this.setState({
-       // result:responseJson.kq,
-     //  mang:responseJson
+       
      result:responseJson.token
-      
-       
-       
+                 
       }) 
-
-      //console.log( responseJson.token);
-    
-    //   if(this.state.result>0){
-    //     //console.warn(responseJson);
-    //   //  this.props.navigation.navigate('UITab');
-    //     console.log({mang:responseJson});
-    // }
-    
-   // console.log({result:responseJson.kq});
-
-     //  if(this.state.result>0){
-        //console.warn(responseJson);
-        
-      //  console.log({mang:responseJson});
-       // console.log({result:responseJson.kq});
-       // this.props.navigation.navigate('UITab');
-   // }
-
-   
-  //  if(responseJson.length>0){
-  //   console.log({mang:responseJson});
-  //   this.props.navigation.navigate('UITab',{
-  //     data:responseJson
-    
-  //    });
 
   if(responseJson.token!='ERROR'){
   console.log(responseJson.token);
@@ -98,11 +89,9 @@ export default class DangNhap extends Component{
      AsyncStorage.setItem('token',currentKH.token);
 
       Alert.alert(
-        'Success!',
-        `User  has successfully signed in!`,
+        'Thông báo',
+        `Đăng nhập thành công`,
       );
-    // this.props.navigation.navigate('UITab');
-
 
       fetch(URL.localhost+"/App_API/checkToken.php?token="+responseJson.token)
     .then((response)=>response.json())
@@ -112,8 +101,6 @@ export default class DangNhap extends Component{
       });
       console.log(responseJSON);
       const currentKH=responseJSON;
-     // console.log(currentKH);
-      // luu du lieu
     
       AsyncStorage.setItem('id_KhachHang',currentKH.id_KhachHang);
     //   AsyncStorage.setItem('TenKH',currentKH.TenKH);
@@ -129,17 +116,21 @@ export default class DangNhap extends Component{
 
        
     })
-    .catch((e)=>{console.log(e)});
+    //.catch((e)=>{console.log(e)});
     this.props.navigation.navigate('UITab');
-   
-
-  
+ 
    }
-
+  
+   
 
     })
     .catch((error) => {
-      console.error(error);
+     // console.error(error);
+     Alert.alert(
+      'Thông báo!',
+      `Email hoặc mật khẩu chưa đúng! 
+      Vui lòng kiểm tra lại`,
+    );
 
     })
   } 
@@ -184,31 +175,34 @@ export default class DangNhap extends Component{
  
   render() {
 
-    
+   
     // const [Email,setEmail] = useState();
     // const [MatKhau, setMatKhau] = useState();
 
     const {navigation} = this.props;
 
+   
+
     return (
       <View style={styles.container}>
-        <View style={{flex: 30, }}>
+        <View style={{flex: 30}}>
           <ImageBackground
-
             source={require('../../images/login.jpg')}
             resizeMode="cover"
             // style={{flex: 30}}
-            style={{width:150, marginTop:100, height:100, marginLeft:120}}
-            >
-</ImageBackground>
-            <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.pop();
-          }}>
-          <Icon name="angle-left" color="red" size={30} />
-        </TouchableOpacity>
-            
+            style={{
+              width: 150,
+              marginTop: 100,
+              height: 100,
+              marginLeft: 120,
+            }}></ImageBackground>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => {
+              navigation.pop();
+            }}>
+            <Icon name="angle-left" color="red" size={30} />
+          </TouchableOpacity>
         </View>
         <View style={{flex: 70, alignItems: 'center'}}>
           <Text style={styles.title}>Khách hàng</Text>
@@ -217,35 +211,53 @@ export default class DangNhap extends Component{
             placeholderTextColor="#cc0000"
             underlineColorAndroid="transparent"
             style={styles.txtInput}
-            
-            onChangeText={(Email) => this.setState({Email})}
+            onChangeText={Email => this.setState({Email})}
             value={this.state.Email}
           />
+
+<TouchableOpacity onPress={this.setPasswordVisibility}  style={styles.txtInputPW}>
           <TextInput
             placeholder="Password"
             underlineColorAndroid="transparent"
             placeholderTextColor="#cc0000"
-            secureTextEntry={true}
-            style={styles.txtInput}
-            
-            onChangeText={(MatKhau) => this.setState({MatKhau})}
+           // secureTextEntry={true}
+             style={{color:'#cc0000'}}
+            onChangeText={MatKhau => this.setState({MatKhau})}
             value={this.state.MatKhau}
+
+            secureTextEntry={this.state.hidepassword}
+
+            
           />
-          <TouchableOpacity onPress={() =>this.login() } style={styles.btnLogin}>
+
+
+            <Text style={styles.icon} >
+              {!this.state.hidepassword ? 
+                  <Icon name="eye" color="#cc0000" size={20} /> :
+                  <Icon name="eye-slash" color="#cc0000" size={20} />}
+            </Text>
+        
+          </TouchableOpacity>
+
+          
+
+          <TouchableOpacity
+            onPress={() => this.login()}
+            // onPress={checkTextInput}
+            style={styles.btnLogin}>
             <Text style={styles.txtLogin}>Đăng nhập</Text>
           </TouchableOpacity>
 
           <View>
-            <Text style={{color:'white'}}>{this.state.result}</Text>
-            <Text style={{color:'white'}}>{this.state.token}</Text>
-           
+            <Text style={{color: 'white'}}>{this.state.result}</Text>
+            <Text style={{color: 'white'}}>{this.state.token}</Text>
           </View>
 
           <TouchableOpacity onPress={() => navigation.navigate('DangKy')}>
-              <Text style={styles.text}>Nếu bạn chưa có tài khoản? 
-                  <Text style={{color:'red'}}> Đăng Ký</Text>
-              </Text>
-              
+            <Text style={styles.text}>
+              Nếu bạn chưa có tài khoản?
+              <Text style={{color: 'red'}}> Đăng Ký</Text>
+            </Text>
           </TouchableOpacity>
           {/* <Text>Bạn chưa có tài khoản?</Text> */}
         </View>
@@ -289,6 +301,20 @@ const styles = StyleSheet.create({
     color: '#cc0000',
     marginTop:20
   },
+
+  txtInputPW:{
+    backgroundColor: '#e6e6e6',
+    width: DEVICE_WIDTH - 40,
+    marginHorizontal: 20,
+   // padding:10,
+    borderRadius: 20,
+    color: '#cc0000',
+    marginTop:20,
+    flexDirection:'row',
+    paddingLeft:10
+    
+  },
+
   btnLogin:{
      width: DEVICE_WIDTH - 40,
      backgroundColor:'#cc0000',
@@ -308,7 +334,13 @@ const styles = StyleSheet.create({
   text:{
     fontSize:16,
     
-  }
+  },
+
+  icon:{
+    marginLeft:220,
+    marginTop:12
+  },
+
   
 });
 

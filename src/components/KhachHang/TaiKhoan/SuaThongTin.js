@@ -10,7 +10,8 @@ import {View ,
        TouchableOpacity, 
        TextInput,
        Dimensions,
-       ScrollView
+       ScrollView,
+       Alert
       } from 'react-native';
 
 const SuaThongTin= ({route,navigation}) => {
@@ -67,7 +68,12 @@ const SuaThongTin= ({route,navigation}) => {
       // console.log({result:json.kq});
       if(json.kq>0){ 
         console.log('ding');
-      //  navigation.navigate('TaiKhoan');
+       // navigation.navigate('HoSo');
+       Alert.alert(
+        'Thông báo',
+        `Cập nhật thông tin thành công`,
+      );
+        navigation.pop();
         navigation.pop();
      }
       

@@ -88,6 +88,19 @@ import XacNhanDL from './KhachHang/TrangChu/DatLich/XacNhanDL';
 import DanhSachNV from './KhachHang/TrangChu/NhanVien/DanhSachNV';
 import DanhSachLH from './KhachHang/TrangChu/LichHen/DanhSachLH';
 import DoiLichHen from './KhachHang/TrangChu/LichHen/DoiLichHen';
+import TimKiemNV from './KhachHang/TrangChu/NhanVien/TimKiemNV';
+import LichLamViec from './NhanVien/TrangChu/LichLamViec/LichLamViec';
+import KhachHangCuaToi from './NhanVien/TrangChu/KhachHangCuaToi/KhachHangCuaToi';
+
+import TinNhan from './KhachHang/TrangChu/TinNhan/TinNhan';
+import Chat from './KhachHang/TrangChu/TinNhan/Chat';
+import ListChat from './NhanVien/TrangChu/TinNhan/ListChat';
+import ChatNV from './NhanVien/Chat/ChatNV';
+import ListThongBao from './KhachHang/TrangChu/ThongBao/ListThongBao';
+import ThongBao from './NhanVien/TrangChu/ThongBao/ThongBao';
+import ChiTietSP from './KhachHang/Shop/SanPham/ChiTietSP';
+import DanhSachSP from './KhachHang/Shop/SanPham/DanhSachSP';
+import SanPhamMoiNhat from './KhachHang/TrangChu/SanPhamMoiNhat';
 
  export default class App extends Component {
 
@@ -142,7 +155,23 @@ import DoiLichHen from './KhachHang/TrangChu/LichHen/DoiLichHen';
 						case 'DanhSachLH': return  <DanhSachLH navigator={navigator} />;
 						case 'DoiLichHen': return  <DoiLichHen navigator={navigator} />;
 
-						
+						case 'TimKiemNV': return  <TimKiemNV navigator={navigator} />;
+
+						case 'Chat': return  <Chat navigator={navigator} />;
+
+						case 'TinNhan': return  <TinNhan navigator={navigator} />;
+
+						case 'ListThongBao': return  <ListThongBao navigator={navigator} />;						
+
+						// shop
+						case 'ChiTietSP': return  <ChiTietSP navigator={navigator} />;
+						case 'DanhSachSP': return  <DanhSachSP navigator={navigator} />;
+						case 'SanPhamMoiNhat': return  <SanPhamMoiNhat navigator={navigator} />;
+
+
+
+
+
 						// NHAN VIEN
 						case 'Login': return  <Login navigator={navigator} />;
 						case 'NVTab': return  <NVTab navigator={navigator} />;
@@ -151,6 +180,16 @@ import DoiLichHen from './KhachHang/TrangChu/LichHen/DoiLichHen';
 						case 'SuaThongTinNV': return  <SuaThongTinNV navigator={navigator} />;
 						case 'DoiMatKhauNV': return  <DoiMatKhauNV navigator={navigator} />;
 
+						case 'LichLamViec': return  <LichLamViec navigator={navigator} />;
+
+						case 'KhachHangCuaToi': return  <KhachHangCuaToi navigator={navigator} />;
+
+						case 'ListChat': return  <ListChat navigator={navigator} />;
+
+
+						case 'ChatNV': return  <ChatNV navigator={navigator} />;
+
+						case 'ThongBao': return  <ThongBao navigator={navigator} />;
 
 
 						default: return <Authentication />;

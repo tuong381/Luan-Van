@@ -12,6 +12,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { URL } from '../../../../Ip';
 
+
+import SanPhamMoiNhat from './SanPhamMoiNhat';
+
  var URL_DV= URL.localhost+"/App_API/dichvu.php";
 //var URL_ChitietDV= URL.localhost+"/App_API/ChiTietDV.php";
  var URL_ChitietDV= URL.localhost+"/App_API/LoaiVeDV.php";
@@ -55,26 +58,63 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
     body: JSON.stringify({
       "id_KhachHang":id,      
     })
-}) 
-   
+})  
 
     .then((response) => response.json())
     .then((json) => {
   // console.log({data:json});
       navigation.navigate('DanhSachLH',{
+        data:json ,
+     //   idKH:id
+      })
+    }) 
+    }
+
+    const tinnhan= (id) =>{
+      console.log(id);
+   fetch(URL.localhost+"/App_API/Chat/DanhSachChat.php", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "id_KhachHang":id,       
+    })
+  }) 
+    .then((response) => response.json())
+    .then((json) => {
+   console.log({data:json});
+      navigation.navigate('TinNhan',{
+        data:json
+      }) 
+     
+   
+    })
+    }
+ 
+    const thongbao= (id) =>{
+      console.log(id);
+   fetch(URL.localhost+"/App_API/ThongBao/ListThongBao.php", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "id_KhachHang":id,       
+    }) 
+  }) 
+    .then((response) => response.json())
+    .then((json) => {
+   //console.log({data:json});
+      navigation.navigate('ListThongBao',{
         data:json
       })
-    
-      
+     
+  
     })
     }
 
 
-
-
-
-
-  // render() { 
     const {
       image, text, flatlist, body,item,title,
   } = styles;
@@ -89,7 +129,13 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
         <View style={styles.header}>
 
           <View style={styles.baoTitle}>
-            <Text style={styles.titleHeader}> Ten APP</Text>
+            <Text style={styles.titleHeader}>BodyFit  Fitness</Text>
+            <TouchableOpacity style={{marginLeft:90}}
+              onPress= {() => thongbao(bio.id_KhachHang)}
+            >
+              <Icon name="bell" color="#a50000" size={25} />
+            </TouchableOpacity>
+
           </View>
         </View>
 
@@ -107,16 +153,18 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
             <TouchableOpacity 
               onPress={()=> navigation.navigate('LoaiVe')}        
             >
-              <View style={{marginRight:30}}>
-              <Icon name="calendar" color="#a50000" size={50} />
+              <View style={{marginRight:10}}>
+              <Icon name="calendar" color="#a50000" size={40} />
               <Text style={styles.text} >Đặt lịch</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity 
-              onPress={()=> navigation.navigate('DanhSachNV')}          
+              onPress={()=> navigation.navigate('DanhSachNV',{
+                idKH:bio.id_KhachHang
+              })}          
             >
-            <View style={{marginLeft:30}}>
-            <Icon name="users" color="#a50000" size={50} />
+            <View style={{marginLeft:20}}>
+            <Icon name="users" color="#a50000" size={40} />
             <Text style={styles.text} >Nhân viên</Text>
             </View>
             </TouchableOpacity>
@@ -124,53 +172,35 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
             <TouchableOpacity 
               onPress={()=> {lichhen(bio.id_KhachHang)}}          
             >
-            <View style={{marginLeft:50}}>
-            <Icon name="history" color="#a50000" size={50} />
+            <View style={{marginLeft:20}}>
+            <Icon name="history" color="#a50000" size={40} />
             <Text style={styles.text} >Lịch hẹn</Text>
             </View>
          
             </TouchableOpacity>
-            
 
-          </View>
+
+            <TouchableOpacity 
+              onPress={()=> {tinnhan(bio.id_KhachHang)}}          
+            >
+            <View style={{marginLeft:20}}>
+            <Icon name="comment" color="#a50000" size={40} />
+            <Text style={styles.text} >Tin nhắn</Text>
+            </View>
+         
+            </TouchableOpacity> 
+             
+
+          </View>  
 
           
         </View>
 
         <View style={styles.body}>
         <Text style={styles.title}>Sản phẩm mới nhất </Text>
+        
+        <SanPhamMoiNhat navigation={navigation} />
 
-          {/* <SafeAreaView style={styles.container}>
-            <FlatList
-              style={styles.flatlist}
-              horizontal
-              data={this.state.nhanvien}
-              keyExtractor={({id_NhanVien}, index) => id_NhanVien}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.navigate('ThongTinNV', {
-                      Ten: item.TenNV,
-                      email: item.Email,
-                      sdt: item.SoDienThoai,
-                      anh: item.AnhDaiDien,
-                      gioitinh: item.GioiTinh,
-                      diachi: item.DiaChi,
-                      date: item.NgaySinh,
-                      kinhnghiem: item.KinhNghiem,
-                    });
-                  }}>
-                  <View style={styles.item}>
-                    <Image
-                      source={{uri: item.AnhDaiDien}}
-                      style={styles.image}
-                      resizeMode="cover"></Image>
-                    <Text style={styles.textPT}>{item.TenNV}</Text>
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
-          </SafeAreaView> */}
         </View>
       </ScrollView>
     );
@@ -270,7 +300,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
    // marginRight: 200,
     backgroundColor:'white',
-    marginLeft:100
+    marginLeft:100,
+    flexDirection:'row'
   },
 
   titleHeader:{

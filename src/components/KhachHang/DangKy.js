@@ -1,11 +1,16 @@
 
-
-
-
-
 import React, {Component, useState} from 'react';
-import {Platform, StyleSheet, Text,Alert, View,TouchableOpacity, TextInput,Image,Dimensions, ImageBackground} from 'react-native';
-//import { TouchableOpacity } from 'react-native-gesture-handler';
+import {Platform, 
+        StyleSheet, 
+        Text,Alert, 
+        View,TouchableOpacity, 
+        TextInput,
+        Image,
+        Dimensions, 
+        ImageBackground,
+        ScrollView
+      } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { URL } from '../../../Ip';
 
 var URL_DK=URL.localhost+"/App_API/dangky.php"
@@ -26,6 +31,27 @@ export default class DangKy extends Component{
 
   dangky(){
 
+    if (!this.state.Email.trim() && !this.state.MatKhau.trim() && !this.state.TenKH.trim() && !this.state.SoDienThoai.trim()){
+      alert('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+    else if (!this.state.Email.trim()) {
+      alert('Vui lòng nhập Email');
+      return;
+    }
+    else if (!this.state.MatKhau.trim()) {
+      alert('Vui lòng nhập mật khẩu');
+      return;
+    }
+    else if (!this.state.TenKH.trim()) {
+      alert('Vui lòng nhập tên khách hàng');
+      return;
+    }
+    else if (!this.state.SoDienThoai.trim()) {
+      alert('Vui lòng nhập số điện thoại');
+      return;
+    }
+
     const {navigation} = this.props;
    
     fetch(URL_DK, {
@@ -36,8 +62,8 @@ export default class DangKy extends Component{
       },
       body: JSON.stringify({
         "email":this.state.Email,
-		"hoten":this.state.TenKH,
-		"sdt":this.state.SoDienThoai,
+        "hoten":this.state.TenKH,
+        "sdt":this.state.SoDienThoai,
         "matkhau":this.state.MatKhau
       })
     })
@@ -55,7 +81,11 @@ export default class DangKy extends Component{
  
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
+      Alert.alert(
+        'Thông báo!',
+        `Vui lòng kiểm tra lại thông tin đăng ký!`,
+      );
 
     })
   } 
@@ -69,42 +99,40 @@ export default class DangKy extends Component{
     const {navigation} = this.props;
 
     return (
-      <View style={styles.container}>
-        <View style={{flex: 30, backgroundColor: 'red'}}>
+      <ScrollView style={styles.container}>
+        {/* <View style={{flex: 30, backgroundColor: 'red'}}>
           <ImageBackground
             source={require('../../images/logo.png')}
             resizeMode="cover"
             style={{flex: 30}}></ImageBackground>
-        </View>
-        <View style={{flex: 70, alignItems: 'center'}}>
+        </View> */}
+
+        <View style={{ alignItems: 'center'}}>
           <Text style={styles.title}>Đăng Ký</Text>
           <TextInput
             placeholder="Email"
             placeholderTextColor="#cc0000"
             underlineColorAndroid="transparent"
             style={styles.txtInput}
-            
-            onChangeText={(Email) => this.setState({Email})}
+            onChangeText={Email => this.setState({Email})}
             value={this.state.Email}
           />
 
-			<TextInput
+          <TextInput
             placeholder="Họ và tên"
             placeholderTextColor="#cc0000"
             underlineColorAndroid="transparent"
             style={styles.txtInput}
-            
-            onChangeText={(TenKH) => this.setState({TenKH})}
+            onChangeText={TenKH => this.setState({TenKH})}
             value={this.state.TenKH}
           />
 
-			<TextInput
+          <TextInput
             placeholder="Số điện thoại"
             placeholderTextColor="#cc0000"
             underlineColorAndroid="transparent"
             style={styles.txtInput}
-            
-            onChangeText={(SoDienThoai) => this.setState({SoDienThoai})}
+            onChangeText={SoDienThoai => this.setState({SoDienThoai})}
             value={this.state.SoDienThoai}
           />
 
@@ -114,21 +142,29 @@ export default class DangKy extends Component{
             placeholderTextColor="#cc0000"
             secureTextEntry={true}
             style={styles.txtInput}
-            
-            onChangeText={(MatKhau) => this.setState({MatKhau})}
+            onChangeText={MatKhau => this.setState({MatKhau})}
             value={this.state.MatKhau}
           />
-          <TouchableOpacity onPress={() =>this.dangky() } style={styles.btnLogin}>
+          <TouchableOpacity
+            onPress={() => this.dangky()}
+            style={styles.btnLogin}>
             <Text style={styles.txtLogin}>Đăng ký</Text>
           </TouchableOpacity>
 
           <View>
-            <Text style={{color:'white'}}>{this.state.result}</Text>
+            <Text style={{color: 'white'}}>{this.state.result}</Text>
           </View>
 
-          {/* <Text>Bạn chưa có tài khoản?</Text> */}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => {
+              navigation.pop();
+            }}>
+              <Text style={{ fontSize:16}}>Trở về</Text>
+            {/* //<Icon name="angle-left" color="#cc0000" size={30} /> */}
+          </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -137,6 +173,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:70
    // justifyContent: 'center',
   //  alignItems: 'center',
    // backgroundColor: '#F5FCFF',
@@ -176,7 +213,10 @@ const styles = StyleSheet.create({
   text:{
     fontSize:16,
     
-  }
+  },
+
+  
+
   
 });
 

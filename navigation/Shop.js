@@ -33,6 +33,21 @@ import XacNhanDL from '../src/components/KhachHang/TrangChu/DatLich/XacNhanDL';
 import DanhSachNV from '../src/components/KhachHang/TrangChu/NhanVien/DanhSachNV';
 import DanhSachLH from '../src/components/KhachHang/TrangChu/LichHen/DanhSachLH';
 import DoiLichHen from '../src/components/KhachHang/TrangChu/LichHen/DoiLichHen';
+import TimKiemNV from '../src/components/KhachHang/TrangChu/NhanVien/TimKiemNV';
+import LichLamViec from '../src/components/NhanVien/TrangChu/LichLamViec/LichLamViec';
+import KhachHangCuaToi from '../src/components/NhanVien/TrangChu/KhachHangCuaToi/KhachHangCuaToi';
+
+import TinNhan from '../src/components/KhachHang/TrangChu/TinNhan/TinNhan';
+import Chat from '../src/components/KhachHang/TrangChu/TinNhan/Chat';
+import ListChat from '../src/components/NhanVien/TrangChu/TinNhan/ListChat';
+
+import ChatNV from '../src/components/NhanVien/Chat/ChatNV';
+import ListThongBao from '../src/components/KhachHang/TrangChu/ThongBao/ListThongBao';
+import ThongBao from '../src/components/NhanVien/TrangChu/ThongBao/ThongBao';
+import ChiTietSP from '../src/components/KhachHang/Shop/SanPham/ChiTietSP';
+import DanhSachSP from '../src/components/KhachHang/Shop/SanPham/DanhSachSP';
+import SanPhamMoiNhat from '../src/components/KhachHang/TrangChu/SanPhamMoiNhat';
+
 
 
 const Stack = createStackNavigator();
@@ -69,6 +84,18 @@ function StackNavigator() {
       <Stack.Screen name={"DanhSachLH"} component={DanhSachLH}  />
       <Stack.Screen name={"DoiLichHen"} component={DoiLichHen}  />
 
+      <Stack.Screen name={"TimKiemNV"} component={TimKiemNV}  />
+
+      <Stack.Screen name={"TinNhan"} component={TinNhan}  />
+      <Stack.Screen name={"Chat"} component={Chat}  />
+
+      <Stack.Screen name={"ListThongBao"} component={ListThongBao}  />
+
+    {/* shop */}
+    <Stack.Screen name={"ChiTietSP"} component={ChiTietSP}  />
+    <Stack.Screen name={"DanhSachSP"} component={DanhSachSP}  />
+    <Stack.Screen name={"SanPhamMoiNhat"} component={SanPhamMoiNhat}  />
+
 
 
 
@@ -80,6 +107,17 @@ function StackNavigator() {
       <Stack.Screen name={"SuaThongTinNV"} component={SuaThongTinNV}  />
       <Stack.Screen name={"DoiMatKhauNV"} component={DoiMatKhauNV}  />
      
+      <Stack.Screen name={"LichLamViec"} component={LichLamViec}  />
+
+      <Stack.Screen name={"KhachHangCuaToi"} component={KhachHangCuaToi}  />
+
+      <Stack.Screen name={"ListChat"} component={ListChat}  />
+
+      <Stack.Screen name={"ChatNV"} component={ChatNV}  />
+
+      <Stack.Screen name={"ThongBao"} component={ThongBao}  />
+
+
       {/* screenOptions={{headerShown:false}} */} 
 
     </Stack.Navigator>

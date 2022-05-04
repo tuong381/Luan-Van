@@ -10,17 +10,15 @@ import {
   StyleSheet,
   ImageBackground,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-
-
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL} from '../../../../Ip';
 
 const TaiKhoan = ({route, navigation}) => {
   // const [TenKH, setTenKH] = useState('');
-   const [id_KhachHang, setid_KhachHang] = useState('');
+  const [id_KhachHang, setid_KhachHang] = useState('');
   // const [HinhAnh, setHinhAnh] = useState('');
   // const [Email, setEmail] = useState('');
   //  const [DiaChi, setDiaChi] = useState('');
@@ -56,49 +54,38 @@ const TaiKhoan = ({route, navigation}) => {
   };
   fetchData();
 
+  const data = [{name: 'Hồ sơ cá nhân'}, {name: 'Lịch sử hoạt động'}];
 
- 
-const data=[
-  {name:'Hồ sơ cá nhân'},
-  {name:'Lịch sử hoạt động'}
-]
-
-const pushView=(name,id)=>{
-  if(name=="Hồ sơ cá nhân"){
-    console.log(id);
-  //  navigation.navigate('vd');
-  fetch(URL.localhost+"/App_API/taiKhoan.php", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      "id_KhachHang":id
-    })
-})
- 
-
-    .then((response) => response.json())
-    .then((json) => {
-    //  const currentKH={data:json};
-   //   console.log(json);
-      
-     // console.log({data:json.TenKH});
-      navigation.navigate('HoSo',{
-        data:json
-        
+  const pushView = (name, id) => {
+    if (name == 'Hồ sơ cá nhân') {
+    //  console.log(id);
+      //  navigation.navigate('vd');
+      fetch(URL.localhost + '/App_API/taiKhoan.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_KhachHang: id,
+        }),
       })
-      
-    })
+        .then(response => response.json())
+        .then(json => {
+          //  const currentKH={data:json};
+          //   console.log(json);
 
-  }else{
-    console.log('sai');
-  }
-}
- 
+          // console.log({data:json.TenKH});
+          navigation.navigate('HoSo', {
+            data: json,
+          });
+        });
+    } else {
+      console.log('lich su');
+    }
+  };
 
   // const suaThongTin = (id)=>{
- 
+
   //   navigation.navigate('SuaThongTin',{
   //     Ten:bio.TenKH,
   //     email:bio.Email,
@@ -115,9 +102,7 @@ const pushView=(name,id)=>{
   // }
 
   return (
-   
     <View style={styles.container}>
-     
       <View style={styles.header}>
         <ImageBackground
           source={require('../../../images/gym.jpg')}
@@ -133,33 +118,25 @@ const pushView=(name,id)=>{
         </ImageBackground>
       </View>
 
-
       <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <View style={styles.listItem}>
-              <TouchableOpacity 
-            onPress={()=>{pushView( item.name, bio.id_KhachHang)}}
-             >
-              
-              
-              <View style={{flexDirection:'row'}}>
-                <Text style={[styles.text, styles.textTen]} >{item.name}</Text>
-               <View style={{marginLeft:140}}>
-               <Icon name="angle-right" color="red" size={30} />
-               </View>
-               
-                 
+        data={data}
+        renderItem={({item}) => (
+          <View style={styles.listItem}>
+            <TouchableOpacity
+              onPress={() => {
+                pushView(item.name, bio.id_KhachHang);
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[styles.text, styles.textTen]}>{item.name}</Text>
+                <View style={{marginLeft: 140}}>
+                  <Icon name="angle-right" color="red" size={30} />
+                </View>
               </View>
-              </TouchableOpacity> 
-
-            </View>
-          )}
-        />
-
-
+            </TouchableOpacity>
+          </View>
+        )}
+      />
     </View>
- 
   );
   // };
 };
@@ -234,7 +211,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#a50000',
     fontSize: 22,
-    width:180
+    width: 180,
   },
 
   textSua: {
@@ -242,7 +219,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontSize: 18,
-    flexDirection:'row'
+    flexDirection: 'row',
   },
 
   image: {

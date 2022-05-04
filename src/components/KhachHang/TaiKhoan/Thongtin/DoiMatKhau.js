@@ -11,7 +11,8 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 
 
@@ -47,6 +48,10 @@ const DoiMatKhau = ({route, navigation}) => {
             // console.log({result:json.kq});
             if(json.kq>0){ 
             //  console.log('xong');
+            Alert.alert(
+              'Thông báo',
+              `Đổi mật khẩu thành công`,
+            );
               navigation.navigate('DangNhap');
            //   navigation.pop();
            }

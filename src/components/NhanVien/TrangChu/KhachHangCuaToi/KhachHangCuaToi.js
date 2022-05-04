@@ -7,37 +7,56 @@ import {View,
         ImageBackground,
         Image,
         Button,
-        TextInput
+        Alert
     } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {URL} from '../../../../../Ip';
 
-var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
+var URL_PT=  URL.localhost+"/App_API/LichHen.php";
 
-export default class DanhSachNV extends Component {
+export default class KhachHangCuaToi extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state={
-         nhanvien:[],
-        }   
+  
+
+
+
+  constructor(props) {
+    super(props);
+    this.state={
+     nhanvien:[],
+     refresh:0
+      
+    }   
+    this.huy= this.huy.bind(this);
+     
+  }
+
+
+  huy(id){
+    
+    fetch(URL.localhost+"/App_API/LichHen/HuyLichHen.php", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "id_LichHen":id,
+      })
+  })
+      .then((response) => response.json())
+      .then((json) => {
+        if(json.kq>0){ 
+          console.log('ok');
+          Alert.alert(
+            'Thông báo!',
+            `Hủy lịch thành công !`,
+          );
+
+       }
         
-      }
-
-    componentDidMount(){
-    
-        fetch(URL_PT)
-        .then((response)=>response.json())
-        .then((responseJSON)=>{
-          this.setState({
-           nhanvien:responseJSON
-    
-          });
-        })
-        .catch((e)=>{console.log(e)});
-    
-      }
+      })
+  }
 
   render() {
 
@@ -46,10 +65,11 @@ export default class DanhSachNV extends Component {
     } = styles;
 
     const {navigation} = this.props;
-    const {idKH}=this.props.route.params;
+    const {data}=this.props.route.params;
+
 
     return (
-        <View style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
@@ -59,59 +79,27 @@ export default class DanhSachNV extends Component {
             <Icon name="angle-left" color="#eee" size={30} />
           </TouchableOpacity>
           <View style={styles.baoTitle}>
-            <Text style={styles.titleHeader}> Đội ngũ PT</Text>
+            <Text style={styles.titleHeader}> Khách hàng của tôi</Text>
           </View>
         </View>
-           
-        <TouchableOpacity style={styles.btnSearch}
-          onPress={()=>{navigation.navigate('TimKiemNV')}}
-        
-        >
-            <TextInput 
-            style={{marginLeft:20}}
-                placeholder="Search"
-                underlineColorAndroid="transparent"
-                placeholderTextColor="#cc0000"
-                // onChangeText={keyword => this.setState({keyword})}
-                // value={this.state.keyword}
-            />
-            <Text style={{marginLeft:240, marginTop:15}}
-               
-            
-            >
-                <Icon name="search" color="#cc0000" size={15} />
-            </Text>
-        </TouchableOpacity>
 
         <FlatList
-          data={this.state.nhanvien}
-          keyExtractor={({id_NhanVien}, index) => id_NhanVien}
+           data={data}
+           keyExtractor={({id_LichHen}, index) => id_LichHen}
           renderItem={({item}) => (
             <TouchableOpacity  style={styles.listItem}
               
-              onPress={()=>navigation.navigate('ThongTinNV',{
-                idNV:item.id_NhanVien,
-                Ten:item.TenNV,
-                email: item.Email,
-                sdt:item.SoDienThoai,
-                anh: item.AnhDaiDien,
-                gioitinh: item.GioiTinh,
-                diachi: item.DiaChi,
-                date: item.NgaySinh,
-                kinhnghiem: item.KinhNghiem,
-                idKH:idKH
-               
-              })}
+             
             >
               <Image
-                source={{uri: item.AnhDaiDien}}
+                source={{uri: item.HinhAnh}}
                 style={styles.coverImage}
               />
               
               <View style={styles.metaInfo}>
-                <Text style={[styles.text, styles.textTen]} >{item.TenNV}</Text>
-                <Text style={styles.text}>{item.Email}</Text>
-                <Text style={styles.text}>Kinh nghiệm: {item.KinhNghiem} năm</Text>
+                <Text style={[styles.text, styles.textTen]} >{item.TenKH}</Text>
+                <Text style={styles.text}>Số điện thoại: {item.SoDienThoai}</Text>
+                <Text style={styles.text}>Ngày đăng ký: {item.NgayDK} </Text>
                          
              
               </View>
@@ -119,9 +107,8 @@ export default class DanhSachNV extends Component {
             </TouchableOpacity>
           )}
         />
-
-      </View> 
-    )
+      </View>
+    );
   }
 }
 
@@ -135,12 +122,12 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
     },
     coverImage: {
+        width: 80,
+        height: 80,
+        borderRadius: 8
         // width: 120,
         // height: 120,
-        // borderRadius: 8
-        width: 120,
-        height: 120,
-        borderRadius: 200 / 2
+        // borderRadius: 200 / 2
       },
       metaInfo: {
         marginLeft: 30,
@@ -209,21 +196,20 @@ const styles = StyleSheet.create({
 
       text: {
         fontSize: 15,
-        color: 'black',
+        color: '#8c8c8c',
         marginTop: 10,
       },
   
       textTen:{
         fontWeight: 'bold',
-        color:'#a50000'
+        color:'black'
       },
 
-      btnSearch: {
-        backgroundColor: '#e6e6e6',
-        marginHorizontal: 20,
-        borderRadius: 20,
-        color: '#cc0000',
-        marginTop: 20,
-        flexDirection:'row'
+      btnHuy:{
+        justifyContent:'center',
+        marginLeft:110,
+        flexDirection:'row',
+        marginTop:10
+       
       },
   });

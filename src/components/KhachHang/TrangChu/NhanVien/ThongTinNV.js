@@ -1,11 +1,63 @@
-import React, { Component } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image} from 'react-native';
-import  Icon  from 'react-native-vector-icons/FontAwesome';
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+  Button,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {URL} from '../../../../../Ip';
 
-const ThongTinNV= ({route,navigation}) => {
-  //const {data}=route.params;
-  const {gioitinh}=route.params;
-  const {Ten}=route.params;
+const ThongTinNV = ({route, navigation}) => {
+  const nhantin = (idNV, idKH, Ten) => {
+    console.log(idKH, idNV, Ten);
+
+    fetch(URL.localhost + '/App_API/Chat/NoiDungChat.php'
+    , {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        id_NhanVien: idNV, 
+        id_KhachHang: idKH,
+      }),
+    })
+      .then(response => response.json())
+      .then(json => {
+        // this.setState({  
+        //   json
+    
+        //  });
+       
+        // if(json){
+        //   console.log({data: json});
+        //   navigation.navigate('ChatNV',{
+        //     data:json, 
+        //     idNV:idNV,
+        //     idKH:idKH,
+        //     Ten:Ten
+        //   })
+        // }
+        console.log(json);
+        navigation.navigate('ChatNV',{
+          data:json, 
+          idNV:idNV,
+          idKH:idKH,
+          Ten:Ten
+        })
+
+        
+      });
+  };
+
+  const {idKH} = route.params;
+  const {idNV} = route.params;
+  const {gioitinh} = route.params;
+  const {Ten} = route.params;
   const {anh} = route.params;
   const {email} = route.params;
   const {sdt} = route.params;
@@ -33,97 +85,98 @@ const ThongTinNV= ({route,navigation}) => {
 
       <Text style={styles.textTen}>{Ten}</Text>
 
-      <View style={{flexDirection: 'row', marginLeft:45, marginTop:20}}>
-        <Icon name="envelope" size={22} />  
-        <Text style={styles.text}>{email}</Text>  
-      </View> 
-
-      <View style={{flexDirection: 'row', marginLeft:45, marginTop:10}}>
-        <Icon name="phone" size={22} />  
-        <Text style={styles.text}>{sdt}</Text>  
+      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 20}}>
+        <Icon name="envelope" size={22} />
+        <Text style={styles.text}>{email}</Text>
       </View>
 
-      <View style={{flexDirection: 'row', marginLeft:45, marginTop:10}}>
-        <Icon name="map-marker" size={22} />  
-        <Text style={styles.text}>{diachi}</Text>  
+      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+        <Icon name="phone" size={22} />
+        <Text style={styles.text}>{sdt}</Text>
       </View>
 
-      <View style={{flexDirection: 'row', marginLeft:45, marginTop:10}}>
-        <Icon name="user" size={22} />  
-        <Text style={styles.text}>{gioitinh}</Text>  
+      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+        <Icon name="map-marker" size={22} />
+        <Text style={styles.text}>{diachi}</Text>
       </View>
 
-      <View style={{flexDirection: 'row', marginLeft:45, marginTop:10}}>
-        <Icon name="birthday-cake" size={22} />  
-        <Text style={styles.text}>{date}</Text>  
+      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+        <Icon name="user" size={22} />
+        <Text style={styles.text}>{gioitinh}</Text>
       </View>
 
-      <View style={{flexDirection: 'row', marginLeft:45, marginTop:10}}>
-        <Icon name="globe" size={22} />  
-        <Text style={styles.text}>Kinh nghiệm: {kinhnghiem} năm</Text>  
+      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+        <Icon name="birthday-cake" size={22} />
+        <Text style={styles.text}>{date}</Text>
       </View>
-      
+
+      <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+        <Icon name="globe" size={22} />
+        <Text style={styles.text}>Kinh nghiệm: {kinhnghiem} năm</Text>
+      </View>
+
+      <View style={styles.btnChat}>
+        <Button
+          onPress={() => nhantin(idNV, idKH, Ten)}
+          color="#a50000"
+          title="nhắn tin"
+        />
+      </View>
     </View>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
- 
   listItem: {
     marginTop: 10,
     paddingVertical: 20,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   coverImage: {
-    borderWidth:5,
-    borderColor:'white',
+    borderWidth: 5,
+    borderColor: 'white',
     width: 150,
     height: 150,
     borderRadius: 200 / 2,
-    marginLeft:135,
-    marginTop:-70,
-    
+    marginLeft: 135,
+    marginTop: -70,
   },
   metaInfo: {
     marginLeft: 30,
-    
   },
 
   container: {
-    flex:1
+    flex: 1,
   },
 
-  header:{
-    flexDirection:'row',
-   // flex:1,
-   // backgroundColor:'#a50000',
-    height:200,
+  header: {
+    flexDirection: 'row',
+    // flex:1,
+    // backgroundColor:'#a50000',
+    height: 200,
   },
 
-  backButton:{
+  backButton: {
     //flex:5,
-    justifyContent:'center',
-   // backgroundColor:'#a50000',
-    marginLeft:10,
-    
+    justifyContent: 'center',
+    // backgroundColor:'#a50000',
+    marginLeft: 10,
   },
 
-  baoTitle:{
-   // flex:6,
-    justifyContent:'center',
-    alignItems:'center',
-   // marginRight: 200,
-  //  backgroundColor:'#a50000',
-    marginLeft:105
+  baoTitle: {
+    // flex:6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginRight: 200,
+    //  backgroundColor:'#a50000',
+    marginLeft: 105,
   },
 
-  titleHeader:{
-    color:'white',
-    fontSize:22,
-
+  titleHeader: {
+    color: 'white',
+    fontSize: 22,
   },
 
   title: {
@@ -132,34 +185,36 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic',
     fontWeight: 'bold',
-    marginTop:40,
+    marginTop: 40,
     fontSize: 16,
   },
 
   text: {
     fontSize: 18,
-   color:'#404040',
-   marginLeft:20
+    color: '#404040',
+    marginLeft: 20,
   },
 
-  textTen:{
+  textTen: {
     fontWeight: 'bold',
-    color:'#a50000',
-    textAlign:'center',
-    fontSize:22
+    color: '#a50000',
+    textAlign: 'center',
+    fontSize: 22,
   },
 
   image: {
     //  marginTop:5,
     height: 140,
     width: 140,
-    borderRadius:10
-  
- 
+    borderRadius: 10,
   },
 
-  
-})
-
+  btnChat: {
+    width: 100,
+    marginLeft: 150,
+    marginTop: 30,
+    borderRadius: 30,
+  },
+});
 
 export default ThongTinNV;

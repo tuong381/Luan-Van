@@ -130,10 +130,10 @@ export default class DangKyDL extends Component {
 
   render() {
     const data = [
-      {time: '6:00', id_time: '1'},
-      {time: '9:00', id_time: '2'},
-      {time: '16:00', id_time: '3'},
-      {time: '18:00', id_time: '4'},
+      {time: '6:00 - 7:30', id_time: '1'},
+      {time: '9:00 - 10:30', id_time: '2'},
+      {time: '16:00 - 17:30', id_time: '3'},
+      {time: '18:00 -19:30', id_time: '4'},
     ];
 
     const {tenve} = this.props.route.params;
@@ -369,12 +369,12 @@ const styles = StyleSheet.create({
 
   time: {
     marginTop: 5,
-    marginLeft: 25,
+    marginLeft: 10,
     //  marginRight:10,
     paddingVertical: 5,
     paddingHorizontal: 5,
   //  backgroundColor: '#fff',
-    width: 70,
+    width: 110,
     height: 45,
 
   //  marginBottom:20

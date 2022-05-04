@@ -57,6 +57,8 @@ import MainNavigator from './navigation/Shop';
 import AppRegistry from 'react-native';
 import App from './src/components/App';
 
+//import io from 'react-native-socket.io-client/socket.io';
+
 
 
 //import Shop from './navigation/Shop';
