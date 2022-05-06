@@ -1,87 +1,69 @@
-import React, { Component } from 'react';
-import {View, 
-        Text, 
-        FlatList, 
-        StyleSheet,
-        TouchableOpacity, 
-        ImageBackground,
-        Image,
-        Button,
-        Alert
-    } from 'react-native';
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+  Button,
+  Alert,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {URL} from '../../../../../Ip';
 
-var URL_PT=  URL.localhost+"/App_API/LichHen.php";
+var URL_PT = URL.localhost + '/App_API/LichHen.php';
 
 export default class LichLamViec extends Component {
-
-  
-
-
-
   constructor(props) {
     super(props);
-    this.state={
-     nhanvien:[],
-     refresh:0
-      
-    }   
-    this.huy= this.huy.bind(this);
-     
+    this.state = {
+      nhanvien: [],
+      refresh: 0,
+    };
+    this.huy = this.huy.bind(this);
   }
 
-
-  huy(id, idNV,idKH){
-    
-    fetch(URL.localhost+"/App_API/LichHen/HuyLichHen.php", {
+  huy(id, idNV, idKH) {
+    fetch(URL.localhost + '/App_API/LichHen/HuyLichHen.php', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "id_LichHen":id,
-      })
-  })
-      .then((response) => response.json())
-      .then((json) => {
-        if(json.kq>0){ 
-          console.log('ok');
-          Alert.alert(
-            'Thông báo!',
-            `Hủy lịch thành công !`,
-          );
-          this.props.navigation.pop();
-
-       }
-        
-      })
-
-      // thong bao 
-      fetch(URL.localhost+"/App_API/NhanVien/ThongBao/ThongBaoHuy.php", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "id_LichHen":id,
-          "id_NhanVien":idNV,
-          "id_KhachHang":idKH,
-        })
+        id_LichHen: id,
+      }),
     })
-        .then((response) => response.json())
+      .then(response => response.json())
+      .then(json => {
+        if (json.kq > 0) {
+          console.log('ok');
+          Alert.alert('Thông báo!', `Hủy lịch thành công !`);
+          this.props.navigation.pop();
+        }
+      });
+
+    // thong bao
+    fetch(URL.localhost + '/App_API/NhanVien/ThongBao/ThongBaoHuy.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id_LichHen: id,
+        id_NhanVien: idNV,
+        id_KhachHang: idKH,
+      }),
+    }).then(response => response.json());
   }
 
   render() {
-
-    const {
-        image, text, flatlist, body,item,title,
-    } = styles;
+    const {image, text, flatlist, body, item, title} = styles;
 
     const {navigation} = this.props;
-    const {data}=this.props.route.params;
-
+    const {data} = this.props.route.params;
 
     return (
       <View style={styles.container}>
@@ -117,10 +99,7 @@ export default class LichLamViec extends Component {
 
               //   })}
             >
-              <Image
-                source={{uri: item.HinhAnh}}
-                style={styles.coverImage}
-              />
+              <Image source={{uri: item.HinhAnh}} style={styles.coverImage} />
 
               <View style={styles.metaInfo}>
                 <Text style={[styles.text, styles.textTen]}>{item.TenKH}</Text>
@@ -158,39 +137,48 @@ export default class LichLamViec extends Component {
                 <Text style={styles.text}>Ngày đặt: {item.NgayDK} </Text>
                 <Text style={styles.text}>Giờ đặt: {item.GioDK} </Text>
                 <Text style={styles.text}>Tổng tiền: {item.TongTien} </Text>
-
+ 
                 {item.TrangThaiLichHen == 1 && (
                   <View style={styles.btnHuy}>
-                    <View >
-                      <Button 
-                      // onPress={()=>navigation.navigate('DoiLichHen',{
-                      //   id:item.id_LichHen,
-                      //   sdt:item.SoDienThoai,
-                      //   tenve:item.TenDichVu,
-                      //   ngay:item.NgayDK,
-                      //   gio:item.GioDK,
-                      //   anh:item.AnhDaiDien,
-                      //   Ten:item.TenNV,
-                      //   gia:item.TongTien,
-                      //   idNV:item.id_NhanVien
+                    <View>
+                      <Button
+                        onPress={()=>navigation.navigate('DoiLichHenNV',{
+                          id:item.id_LichHen,
+                          sdt:item.SoDienThoai,
+                          tenve:item.TenDichVu,
+                          ngay:item.NgayDK,
+                          gio:item.GioDK,
+                          anh:item.HinhAnh,
+                          Ten:item.TenKH,
+                          gia:item.TongTien,
+                          idNV:item.id_NhanVien,
+                          idKH:item.id_KhachHang
 
-                      // })}
-                          title="dời lịch" color="#26734d" />
+                        })}
+                        title="dời lịch"
+                        color="#26734d"
+                      />
                     </View>
 
-                    <View  style={{marginLeft:10}} >
-                      <Button  
-                          onPress={()=>this.huy(item.id_LichHen, item.id_NhanVien,item.id_KhachHang)} 
-                            title="Hủy" color="#a50000" 
-                        
-                            />
+                    <View style={{marginLeft: 10}}>
+                      <Button
+                        onPress={() =>
+                          this.huy(
+                            item.id_LichHen,
+                            item.id_NhanVien,
+                            item.id_KhachHang,
+                          )
+                        }
+                        title="Hủy"
+                        color="#a50000"
+                      />
                     </View>
                   </View>
                 )}
 
                 {item.TrangThaiLichHen == 2 && (
                   <View style={styles.btnHuy}>
-                    <View >
+                    <View>
                       <Button title="còn hạn" color="#3366cc" />
                     </View>
                   </View>
@@ -198,7 +186,7 @@ export default class LichLamViec extends Component {
 
                 {item.TrangThaiLichHen == 0 && (
                   <View style={styles.btnHuy}>
-                    <View >
+                    <View>
                       <Button title="Đang chờ xác nhận" color="#663300" />
                     </View>
                   </View>
@@ -214,12 +202,11 @@ export default class LichLamViec extends Component {
 
                 {item.TrangThaiLichHen == -1 && (
                   <View style={styles.btnHuy}>
-                    <View >
+                    <View>
                       <Button title="đã hủy" color="#55552b" />
                     </View>
                   </View>
-                )} 
-
+                )}
               </View>
             </TouchableOpacity>
           )}
@@ -229,104 +216,98 @@ export default class LichLamViec extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
-    listItem: {
-      marginTop: 10,
-      paddingVertical: 20,
-      paddingHorizontal: 20,
-      backgroundColor: '#fff',
-      flexDirection: 'row',
-    },
-    coverImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 8
-        // width: 120,
-        // height: 120,
-        // borderRadius: 200 / 2
-      },
-      metaInfo: {
-        marginLeft: 30,
-        
-      },
-    metaInfo: {
-      marginLeft: 30,
-    },
-  
-    container: {
-      flex: 1,
-    },
-      
-    header:{
-        flexDirection:'row',
-       // flex:1,
-       backgroundColor:'#a50000',
-        height:60,
-      },
-       
-      baoTitle:{
-       // flex:6,
-        justifyContent:'center',
-        alignItems:'center',
-       // marginRight: 200,
-        backgroundColor:'#a50000',
-        marginLeft:100
-      },
-    
-      titleHeader:{
-        color:'white',
-        fontSize:22,
-        fontWeight:'bold',
-       
-      },
+  listItem: {
+    marginTop: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+  },
+  coverImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    // width: 120,
+    // height: 120,
+    // borderRadius: 200 / 2
+  },
+  metaInfo: {
+    marginLeft: 30,
+  },
+  metaInfo: {
+    marginLeft: 30,
+  },
 
-      backButton:{
-        //flex:5,
-        justifyContent:'center',
-        backgroundColor:'#a50000',
-        marginLeft:10
-      },
+  container: {
+    flex: 1,
+  },
 
-      image: {
-        //  marginTop:5,
-        height: 140,
-        width: 140,
-        borderRadius:10
-     
-      },
-    
-      flatlist: {
-        //  marginTop: 100,
-        paddingLeft: 5,
-        paddingRight: 5,
-        flexDirection: 'row',
-      },
+  header: {
+    flexDirection: 'row',
+    // flex:1,
+    backgroundColor: '#a50000',
+    height: 60,
+  },
 
-      item: {
-        //  borderWidth:0.5,
-        padding: 3,
-        borderRadius: 10,
-        justifyContent: 'center',
-       
-      },
+  baoTitle: {
+    // flex:6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginRight: 200,
+    backgroundColor: '#a50000',
+    marginLeft: 100,
+  },
 
-      text: {
-        fontSize: 15,
-        color: '#8c8c8c',
-        marginTop: 10,
-      },
-  
-      textTen:{
-        fontWeight: 'bold',
-        color:'black'
-      },
+  titleHeader: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 
-      btnHuy:{
-        justifyContent:'center',
-        marginLeft:110,
-        flexDirection:'row',
-        marginTop:10
-       
-      },
-  });
+  backButton: {
+    //flex:5,
+    justifyContent: 'center',
+    backgroundColor: '#a50000',
+    marginLeft: 10,
+  },
+
+  image: {
+    //  marginTop:5,
+    height: 140,
+    width: 140,
+    borderRadius: 10,
+  },
+
+  flatlist: {
+    //  marginTop: 100,
+    paddingLeft: 5,
+    paddingRight: 5,
+    flexDirection: 'row',
+  },
+
+  item: {
+    //  borderWidth:0.5,
+    padding: 3,
+    borderRadius: 10,
+    justifyContent: 'center',
+  },
+
+  text: {
+    fontSize: 15,
+    color: '#8c8c8c',
+    marginTop: 10,
+  },
+
+  textTen: {
+    fontWeight: 'bold',
+    color: 'black',
+  },
+
+  btnHuy: {
+    justifyContent: 'center',
+    marginLeft: 110,
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+});

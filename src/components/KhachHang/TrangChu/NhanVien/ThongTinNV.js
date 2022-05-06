@@ -81,7 +81,8 @@ const ThongTinNV = ({route, navigation}) => {
           </TouchableOpacity>
         </ImageBackground>
       </View>
-      <Image source={{uri: anh}} style={styles.coverImage} />
+      <Image source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+anh}}
+            style={styles.coverImage} />
 
       <Text style={styles.textTen}>{Ten}</Text>
 

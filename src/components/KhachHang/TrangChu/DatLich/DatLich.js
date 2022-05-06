@@ -88,7 +88,7 @@ const DatLich = ({route, navigation}) => {
                
               })}>
               <Image
-                source={{uri: item.AnhDaiDien}}
+                source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                 style={styles.coverImage}
               />
               

@@ -30,7 +30,7 @@ const TaiKhoan = ({route, navigation}) => {
 
   const [token, settoken] = useState('');
   // };
-
+ 
   const [bio, setBio] = useState({});
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const TaiKhoan = ({route, navigation}) => {
 
   const pushView = (name, id) => {
     if (name == 'Hồ sơ cá nhân') {
-    //  console.log(id);
+      //  console.log(id);
       //  navigation.navigate('vd');
       fetch(URL.localhost + '/App_API/taiKhoan.php', {
         method: 'POST',
@@ -79,27 +79,48 @@ const TaiKhoan = ({route, navigation}) => {
             data: json,
           });
         });
-    } else {
-      console.log('lich su');
+    } else { 
+
+      fetch(URL.localhost + '/App_API/LichSuHD.php', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "id_KhachHang": id,
+        }),
+      })
+        .then(response => response.json())
+        .then(json => {
+
+          navigation.navigate('LichSuHoatDong',{
+            data:json
+          });
+        })
+
+
+      // fetch(URL.localhost + '/App_API/LichHen.php', {
+      //   method: 'POST',
+      //   headers: { 
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     "id_KhachHang": id,
+      //   }),
+      // })
+      //   .then(response => response.json())
+      //   .then(json => { 
+      //  //   console.log({data1:json});
+      // navigation.navigate('LichSuHoatDong',{
+      //   data:json
+      // });
+      //   })
+
+      
+
+        
     }
   };
-
-  // const suaThongTin = (id)=>{
-
-  //   navigation.navigate('SuaThongTin',{
-  //     Ten:bio.TenKH,
-  //     email:bio.Email,
-  //     diachi:bio.DiaChi,
-  //     sdt:bio.SoDienThoai,
-  //     date:bio.NgaySinh,
-  //     chieucao:bio.ChieuCao,
-  //     cannang:bio.CanNang,
-  //     anh:bio.HinhAnh,
-  //     gioitinh:bio.GioiTinh,
-  //     id:bio.id_KhachHang
-  //   });
-
-  // }
 
   return (
     <View style={styles.container}>

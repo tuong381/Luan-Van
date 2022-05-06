@@ -13,11 +13,22 @@ import {
   TouchableOpacity,
   Modal
 } from 'react-native';
+import { URL } from '../../../../../Ip';
+
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Redeem, RedeemRounded} from '@material-ui/icons';
-import {URL} from '../../../../Ip';
+var options = {
+  title: 'Select Avatar',
+  customButtons: [
+    {name: 'fb', title: 'Choose Photo from Facebook'},
+  ],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+};
+
 
 const HoSoNV = ({route, navigation}) => {
 
@@ -47,8 +58,11 @@ const HoSoNV = ({route, navigation}) => {
                 </TouchableOpacity>
               </ImageBackground>
             </View>
-
-            <Image source={{uri: item.AnhDaiDien}} style={styles.coverImage} />
+            <TouchableOpacity>
+            <Image  source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                    style={styles.coverImage} />
+            </TouchableOpacity>
+                    
 
             <Text style={styles.textTen}>{item.TenNV}</Text>
 

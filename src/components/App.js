@@ -101,6 +101,8 @@ import ThongBao from './NhanVien/TrangChu/ThongBao/ThongBao';
 import ChiTietSP from './KhachHang/Shop/SanPham/ChiTietSP';
 import DanhSachSP from './KhachHang/Shop/SanPham/DanhSachSP';
 import SanPhamMoiNhat from './KhachHang/TrangChu/SanPhamMoiNhat';
+import DoiLichHenNV from './NhanVien/TrangChu/LichLamViec/DoiLichHenNV';
+import LichSuHoatDong from './KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
 
  export default class App extends Component {
 
@@ -168,6 +170,8 @@ import SanPhamMoiNhat from './KhachHang/TrangChu/SanPhamMoiNhat';
 						case 'DanhSachSP': return  <DanhSachSP navigator={navigator} />;
 						case 'SanPhamMoiNhat': return  <SanPhamMoiNhat navigator={navigator} />;
 
+						// tai khoan
+						case 'LichSuHoatDong': return  <LichSuHoatDong navigator={navigator} />;
 
 
 
@@ -191,6 +195,7 @@ import SanPhamMoiNhat from './KhachHang/TrangChu/SanPhamMoiNhat';
 
 						case 'ThongBao': return  <ThongBao navigator={navigator} />;
 
+						case 'DoiLichHenNV': return  <DoiLichHenNV navigator={navigator} />;
 
 						default: return <Authentication />;
 					}

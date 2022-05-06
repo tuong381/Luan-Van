@@ -17,49 +17,49 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {URL} from '../../../../Ip';
 
-// export default class SanPhamMoiNhat extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       danhmuc: [],
-//       sanpham:[]
-//     };
-//   }
+export default class SanPhamMoiNhat extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      danhmuc: [],
+      sanpham:[]
+    };
+  }
 
-//   componentDidMount() {
+  componentDidMount() {
     
 
-//       fetch(URL.localhost + '/App_API/Shop/SanPham.php')
-//       .then(response => response.json())
-//       .then(responseJSON => {
-//         this.setState({
-//           sanpham: responseJSON,
-//         });
-//         //   console.log(responseJSON);
-//       })
-//       .catch(e => {
-//         console.log(e);
-//       });
+      fetch(URL.localhost + '/App_API/Shop/SanPham.php')
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.setState({
+          sanpham: responseJSON,
+        });
+        //   console.log(responseJSON);
+      })
+      .catch(e => {
+        console.log(e);
+      });
 
-//   }
+  }
 
-//   render() {
-  const SanPhamMoiNhat= ({route,navigation}) => {
+  render() {
+  // const SanPhamMoiNhat= ({route,navigation}) => {
 
-    const [token, settoken] = useState('');
+  //   const [token, settoken] = useState('');
+  // // };
+
+  // const [bio, setBio] = useState({});
+    
+  // const fetchData = async () => {
+  //   const response = await fetch(
+  //     URL.localhost + '/App_API/Shop/SanPham.php'
+  //   );
+  //   const data = await response.json();
+  //   // console.log(data);
+  //   setBio(data);
   // };
-
-  const [bio, setBio] = useState({});
-    
-  const fetchData = async () => {
-    const response = await fetch(
-      URL.localhost + '/App_API/Shop/SanPham.php'
-    );
-    const data = await response.json();
-    // console.log(data);
-    setBio(data);
-  };
-  fetchData();
+  // fetchData();
 
 
     return (
@@ -72,12 +72,12 @@ import {URL} from '../../../../Ip';
             <FlatList
               style={styles.flatlist}
               horizontal
-              data={bio}
-             //  data={this.state.sanpham}
+            //  data={bio}
+               data={this.state.sanpham}
               keyExtractor={({id_SanPham}, index) => id_SanPham}
               renderItem={({item}) => (
                 <TouchableOpacity
-                onPress={() => navigation.navigate('ChiTietSP',{
+                onPress={() => this.props.navigation.navigate('ChiTietSP',{
                   idSP:item.id_SanPham,
                   tenSP:item.TenSanPham,
                   tenDM:item.TenDanhMuc,
@@ -89,7 +89,7 @@ import {URL} from '../../../../Ip';
                   >
                   <View style={styles.item}>
                     <Image
-                      source={{uri: item.HinhAnh_SP}}
+                      source={{uri: URL.localhost +'/LuanVan/public/upload/sanpham/'+item.HinhAnh_SP}}
                       style={styles.image}
                       resizeMode="cover">
  
@@ -105,7 +105,7 @@ import {URL} from '../../../../Ip';
 
         
     );
- //}
+ }
 }
 
 const styles = StyleSheet.create({
@@ -252,4 +252,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SanPhamMoiNhat;
+//export default SanPhamMoiNhat;

@@ -17,37 +17,55 @@ import {URL} from '../../../../../Ip';
 var URL_PT = URL.localhost + '/App_API/LichHen.php';
 
 export default class ThongBao extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.huy = this.huy.bind(this);
+    this.xoa = this.xoa.bind(this);
   }
 
-  huy(id){
-    console.log(id);
-    fetch(URL.localhost+"/App_API/NhanVien/ThongBao/HuyLich.php", {
+  huy(id, idLH) {
+    console.log(id, idLH);
+    fetch(URL.localhost + '/App_API/NhanVien/ThongBao/HuyLich.php', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "id_ThongBao":id,       
-      }) 
-    }) 
-      .then((response) => response.json())
-      .then((json) => {
-     //console.log({data:json});
-     if(json.kq>0){ 
-      Alert.alert(
-        'Thông báo!',
-        `Bạn đã hủy lịch thành công !`,
-      );
-       // navigation.navigate('ThongBao');
-        this.props.navigation.pop();
-     }
-       
-    
-      })
+        id_ThongBao: id,
+        id_LichHen: idLH,
+      }),
+    })
+      .then(response => response.json())
+      .then(json => {
+        //console.log({data:json});
+        if (json.kq > 0) {
+          Alert.alert('Thông báo!', `Bạn đã gửi yêu cầu hủy lịch thành công !`);
+          // navigation.navigate('ThongBao');
+          this.props.navigation.pop();
+          //this.props.navigation.pop();
+        }
+      });
+  }
+
+  xoa(idTB){
+    fetch(URL.localhost + '/App_API/NhanVien/ThongBao/XoaThongBao.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "id_ThongBao": idTB 
+      }),
+    })
+      .then(response => response.json())
+      .then(json => {
+        //console.log({data:json});
+        if (json.kq > 0) {
+          Alert.alert('Thông báo!', `Bạn đã xóa thông báo thành công !`);
+          // navigation.navigate('ThongBao');
+          this.props.navigation.pop();
+        }
+      });
   }
   render() {
     const {data} = this.props.route.params;
@@ -80,16 +98,16 @@ export default class ThongBao extends Component {
 
                   <View style={styles.metaInfo}>
                     <Text style={styles.text}>
-                      {item.TenKH} {item.TieuDe}
+                      Khách hàng {item.TenKH} gửi {item.TieuDe}
                     </Text>
                     <Text style={styles.text}>{item.created_at}</Text>
 
                     <View style={styles.btnHuy}>
                       <Button
                         onPress={() => {
-                          this.huy(item.id_ThongBao);
+                          this.huy(item.id_ThongBao, item.id_LichHen);
                         }}
-                        title="Xử lí"
+                        title="Hủy"
                         color="#a50000"
                       />
                     </View>
@@ -97,7 +115,7 @@ export default class ThongBao extends Component {
                 </View>
               )}
 
-            {item.TrangThai == -4 && (
+              {item.TrangThai == -4 && (
                 <View style={styles.listItem}>
                   <Image
                     source={{uri: item.HinhAnh}}
@@ -106,17 +124,58 @@ export default class ThongBao extends Component {
 
                   <View style={styles.metaInfo}>
                     <Text style={styles.text}>
-                      {item.TenKH} đã chấp nhận {item.TieuDe}
+                      {item.TenKH} đã chấp nhận {item.TieuDe} của bạn
                     </Text>
                     <Text style={styles.text}>{item.created_at}</Text>
 
-                    <View style={styles.btnHuy}>
+                    {/* <View style={styles.btnHuy}>
                       <Text style={{color:'black', fontSize:16}}>Đã xử lý</Text>
-                    </View>
+                    </View> */}
                   </View>
                 </View>
               )}
 
+              {item.TrangThai == -1 && (
+                <View style={styles.listItem}>
+                  <Image
+                    source={{uri: item.HinhAnh}}
+                    style={styles.coverImage}
+                  />
+
+                  <View style={styles.metaInfo}>
+                    <Text style={styles.text}>
+                      {item.TenKH} đã đồng ý yêu cầu {item.TieuDe} của bạn
+                    </Text>
+                    <Text style={styles.text}>{item.created_at}</Text>
+
+                    {/* <View style={styles.btnHuy}>
+                      <Text style={{color:'black', fontSize:16}}>Đã xử lý</Text>
+                    </View> */}
+                  </View>
+                </View>
+              )}
+
+              {item.TrangThai == 2 && (
+                <View style={styles.listItem}>
+                  <Image
+                    source={{uri: item.HinhAnh}}
+                    style={styles.coverImage}
+                  />
+
+                  <View style={styles.metaInfo}>
+                    <Text style={styles.text}>
+                      Khách hàng {item.TenKH} {item.TieuDe}
+                    </Text>
+                    <Text style={styles.text}>{item.created_at}</Text>
+
+                    <TouchableOpacity style={styles.btnIcon}
+                      onPress={()=> this.xoa(item.id_ThongBao)}
+                    >
+                      <Icon name="trash" color="#ff6666" size={30} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
             </View>
           )}
         />
@@ -206,6 +265,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#8c8c8c',
     marginTop: 10,
+    width: 270,
   },
 
   textTen: {
@@ -213,12 +273,19 @@ const styles = StyleSheet.create({
     color: '#a50000',
   },
 
-  btnHuy:{
-    justifyContent:'center',
-    marginLeft:200,
-    flexDirection:'row',
-    marginTop:5,
-    marginBottom:5
-   
+  btnHuy: {
+    justifyContent: 'center',
+    marginLeft: 200,
+    flexDirection: 'row',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+
+  btnIcon: {
+    justifyContent: 'center',
+    marginLeft: 200,
+    flexDirection: 'row',
+
+    marginBottom: 5,
   },
 });

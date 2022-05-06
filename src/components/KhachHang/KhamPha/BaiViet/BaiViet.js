@@ -4,6 +4,8 @@ import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 import {View , Text, FlatList, Image, Button,
          StyleSheet, TouchableOpacity} from 'react-native';
+      
+import { URL } from "../../../../../Ip";
 
 
 const BaiViet= ({route,navigation}) => {
@@ -42,7 +44,9 @@ const BaiViet= ({route,navigation}) => {
                     noidung: item.NoiDungBaiViet
                    
                   })}}>
-                <Image source={{uri: item.HinhAnh}} style={styles.image} />
+                <Image source={{uri: URL.localhost +'/LuanVan/public/upload/baiviet/'+item.HinhAnh}}
+                      style={styles.image} />
+              
             
               <View style={styles.metaInfo}>
                 <Text style={[styles.text, styles.textTen]}>

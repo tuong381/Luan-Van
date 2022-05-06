@@ -47,6 +47,8 @@ import ThongBao from '../src/components/NhanVien/TrangChu/ThongBao/ThongBao';
 import ChiTietSP from '../src/components/KhachHang/Shop/SanPham/ChiTietSP';
 import DanhSachSP from '../src/components/KhachHang/Shop/SanPham/DanhSachSP';
 import SanPhamMoiNhat from '../src/components/KhachHang/TrangChu/SanPhamMoiNhat';
+import DoiLichHenNV from '../src/components/NhanVien/TrangChu/LichLamViec/DoiLichHenNV';
+import LichSuHoatDong from '../src/components/KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
 
 
 
@@ -96,6 +98,10 @@ function StackNavigator() {
     <Stack.Screen name={"DanhSachSP"} component={DanhSachSP}  />
     <Stack.Screen name={"SanPhamMoiNhat"} component={SanPhamMoiNhat}  />
 
+    {/* tai khoan */}
+    <Stack.Screen name={"LichSuHoatDong"} component={LichSuHoatDong}  />
+
+
 
 
 
@@ -116,6 +122,8 @@ function StackNavigator() {
       <Stack.Screen name={"ChatNV"} component={ChatNV}  />
 
       <Stack.Screen name={"ThongBao"} component={ThongBao}  />
+
+      <Stack.Screen name={"DoiLichHenNV"} component={DoiLichHenNV}  />
 
 
       {/* screenOptions={{headerShown:false}} */} 

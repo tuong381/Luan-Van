@@ -20,7 +20,34 @@ export default class ListThongBao extends Component {
 
   constructor(props){
     super(props);
+    this.huy= this.huy.bind(this);
     this.xuly= this.xuly.bind(this);
+  }
+
+  huy(id){
+    fetch(URL.localhost+"/App_API/ThongBao/Huy.php", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "id_ThongBao":id,       
+      }) 
+    }) 
+      .then((response) => response.json())
+      .then((json) => {
+     //console.log({data:json});
+     if(json.kq>0){ 
+      Alert.alert(
+        'Thông báo!',
+        `Bạn đã đồng ý hủy lịch hẹn thành công !`,
+      );
+       // navigation.navigate('ThongBao');
+        this.props.navigation.pop();
+     }
+       
+    
+      })
   }
 
   xuly(id){
@@ -39,7 +66,7 @@ export default class ListThongBao extends Component {
      if(json.kq>0){ 
       Alert.alert(
         'Thông báo!',
-        `Bạn đã hủy lịch thành công !`,
+        `Bạn đã đồng ý cập nhật lịch hẹn thành công !`,
       );
        // navigation.navigate('ThongBao');
         this.props.navigation.pop();
@@ -74,26 +101,26 @@ export default class ListThongBao extends Component {
               {item.TrangThai == -3 && (
                 <TouchableOpacity style={styles.listItem}>
                   <Image
-                    source={{uri: item.AnhDaiDien}}
+                     source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                     style={styles.coverImage}
                   />
 
                   <View style={styles.metaInfo}>
-                    <Text style={styles.text}>{item.TenNV} đã xác nhận {item.TieuDe}</Text>
+                    <Text style={styles.text}>Nhân viên {item.TenNV} đã xác nhận {item.TieuDe} của bạn</Text>
                     <Text style={styles.text}>{item.created_at}</Text>
                   </View>
                 </TouchableOpacity>
               )}
 
-            {item.TrangThai == 4 && (
+            {item.TrangThai == 1 && (
                 <TouchableOpacity style={styles.listItem}>
                   <Image
-                    source={{uri: item.AnhDaiDien}}
+                     source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                     style={styles.coverImage}
                   />
 
                   <View style={styles.metaInfo}>
-                    <Text style={styles.text}>{item.TenNV} đã gửi {item.TieuDe}</Text>
+                    <Text style={styles.text}>Nhân viên {item.TenNV} {item.TieuDe}</Text>
                     <Text style={styles.text}>{item.created_at}</Text>
 
                     <View style={styles.btnHuy}>
@@ -102,6 +129,30 @@ export default class ListThongBao extends Component {
                     this.xuly(item.id_ThongBao);
                   }}
                   title="Xử lí"
+                  color="#a50000"
+                />
+              </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+
+            {item.TrangThai == 4 && (
+                <TouchableOpacity style={styles.listItem}>
+                  <Image
+                    source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                    style={styles.coverImage}
+                  />
+
+                  <View style={styles.metaInfo}>
+                    <Text style={styles.text}>Nhân viên {item.TenNV} đã gửi {item.TieuDe}</Text>
+                    <Text style={styles.text}>{item.created_at}</Text>
+
+                    <View style={styles.btnHuy}>
+                <Button
+                  onPress={() => {
+                    this.huy(item.id_ThongBao);
+                  }}
+                  title="hủy"
                   color="#a50000"
                 />
               </View>

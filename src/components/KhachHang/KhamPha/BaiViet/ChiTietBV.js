@@ -9,7 +9,9 @@ import {
   ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { URL } from '../../../../../Ip';
 
+// impo  URL
 const ChiTietBV = ({route, navigation}) => {
   const {Ten} = route.params;
   const {anh} = route.params;
@@ -33,7 +35,7 @@ const ChiTietBV = ({route, navigation}) => {
 
       <View style={{height: 250}}>
         <Image
-          source={{uri: anh}}
+           source={{uri: URL.localhost +'/LuanVan/public/upload/baiviet/'+anh}}
           resizeMode="cover"
           style={styles.image}></Image>
       </View>

@@ -68,7 +68,7 @@ export default class DoiLichHen extends Component {
   showDateTimePicker = () => {
     this.setState({
       isVisible: true,
-    });
+    }); 
   }; 
 
   doilich( idLH,idNV, ngaymoi,giomoi,  idKH) {
@@ -94,13 +94,14 @@ export default class DoiLichHen extends Component {
      if(responseJson.id ==0){
       Alert.alert(
         'Warning!',
-        `Vui lòng chọn giờ !`,
+        `Vui lòng chọn lại giờ do nhân viên bận !`,
       );
      }else{
       Alert.alert(
         'Thông báo!',
-        `Đã gửi yêu cầu dời lịch thành công !`,
+        `Đã cập nhật lịch hẹn thành công !`,
       );
+      this.props.navigation.pop();
       this.props.navigation.pop();
      }
 
@@ -110,7 +111,7 @@ export default class DoiLichHen extends Component {
       console.error(error);
 
     })
-
+ 
 
     // thong bao
     fetch(URL.localhost+"/App_API/LichHen/ThongBaoDoiLich.php", {
@@ -119,7 +120,7 @@ export default class DoiLichHen extends Component {
           'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "id_LichHen":idLH,
+        "id_LichHen":idLH, 
         "id_NhanVien":idNV,
         "id_KhachHang":idKH,
       })
@@ -130,10 +131,10 @@ export default class DoiLichHen extends Component {
 
   render() {
     const data = [
-      {time: '6:00', id_time: '1'},
-      {time: '9:00', id_time: '2'},
-      {time: '16:00', id_time: '3'},
-      {time: '18:00', id_time: '4'},
+      {time: '6:00 - 7:30', id_time: '1'},
+      {time: '9:00 - 10:30', id_time: '2'},
+      {time: '16:00 - 17:30', id_time: '3'},
+      {time: '18:00 -19:30', id_time: '4'},
     ];
 
     const {tenve} = this.props.route.params;
@@ -174,7 +175,8 @@ export default class DoiLichHen extends Component {
         </View>
 
         <View style={styles.listItem}>
-          <Image source={{uri: anh}} style={styles.image} />
+          <Image  source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+anh}} 
+                style={styles.image} />
           <View style={styles.metaInfo}>
             <Text style={[styles.textTen]}>{Ten}</Text>
             <Text style={[styles.text]}>Số điện thoại: {sdt} </Text>
@@ -368,12 +370,12 @@ const styles = StyleSheet.create({
 
   time: {
     marginTop: 5,
-    marginLeft: 25,
+    marginLeft: 10,
     //  marginRight:10,
     paddingVertical: 5,
     paddingHorizontal: 5,
   //  backgroundColor: '#fff',
-    width: 70,
+    width: 110,
     height: 45,
 
   //  marginBottom:20

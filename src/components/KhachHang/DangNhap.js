@@ -79,7 +79,7 @@ export default class DangNhap extends Component{
        
      result:responseJson.token
                  
-      }) 
+      })  
 
   if(responseJson.token!='ERROR'){
   console.log(responseJson.token);

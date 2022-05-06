@@ -17,6 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {URL} from '../../../../Ip';
 
+
+
 export default class Shop extends React.Component {
   constructor(props) {
     super(props);
@@ -104,10 +106,19 @@ export default class Shop extends React.Component {
                   onPress={()=> this.danhmuc(item.id_DanhMuc, item.TenDanhMuc)}
                   >
                   <View style={styles.item}>
-                    <Image
+                    {/* <Image
                       source={{uri: item.HinhAnh}}
                       style={styles.image}
                       resizeMode="cover">
+ 
+                      </Image> */}
+
+                      
+                      
+                      <Image
+                      source={{uri: URL.localhost +'/LuanVan/public/upload/danhmucsanpham/'+item.HinhAnh}}
+                      style={styles.image}
+                      resizeMode="cover"> 
  
                       </Image>
                       <Text style={styles.textPT}>{item.TenDanhMuc}</Text>
@@ -141,7 +152,7 @@ export default class Shop extends React.Component {
                   >
                   <View style={styles.item}>
                     <Image
-                      source={{uri: item.HinhAnh_SP}}
+                      source={{uri: URL.localhost +'/LuanVan/public/upload/sanpham/'+item.HinhAnh_SP}}
                       style={styles.image}
                       resizeMode="cover">
  

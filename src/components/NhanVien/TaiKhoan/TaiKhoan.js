@@ -83,7 +83,7 @@ const pushView=(name,id)=>{
     //  const currentKH={data:json};
       console.log(json);
       
-     // console.log({data:json.TenKH});
+      console.log({data:json});
       navigation.navigate('HoSoNV',{
         data:json
         

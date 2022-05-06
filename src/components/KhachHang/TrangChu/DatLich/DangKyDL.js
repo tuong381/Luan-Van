@@ -21,6 +21,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
+
 //  const DangKyDL = ({route, navigation}) => {
 export default class DangKyDL extends Component {
   constructor() {
@@ -175,7 +176,8 @@ export default class DangKyDL extends Component {
         </View>
 
         <View style={styles.listItem}>
-          <Image source={{uri: anh}} style={styles.image} />
+          <Image source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+anh}}
+                style={styles.image} />
           <View style={styles.metaInfo}>
             <Text style={[styles.textTen]}>{Ten}</Text>
             <Text style={[styles.text]}>Giới tính: {gioitinh}</Text>
@@ -226,7 +228,7 @@ export default class DangKyDL extends Component {
                     onPress={()=>{this.handleClickButton(item.time)}}
                     style={{color:'black'}}
                     color='#ff8080'
-                    title={item.time} 
+                    title={item.time}
 
                  />
                  </View>

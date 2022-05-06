@@ -42,11 +42,11 @@ useEffect(() => {
     // console.log(data);
     setBio(data);
   };
-  fetchData();
+  fetchData(); 
+ 
 
-
-  const muangay = (idSP, idKH, gia) =>{
-   // console.log(idSP,idKH);
+  const muangay = (idSP, idKH, gia, tenSP) =>{
+ //   console.log(idSP,idKH, gia);
     fetch(URL.localhost+"/App_API/Shop/DatHang.php", {
       method: 'POST',
       headers: {
@@ -55,7 +55,8 @@ useEffect(() => {
       body: JSON.stringify({
         "id_SanPham":idSP,
         "id_KhachHang":idKH,
-        "Gia":gia     
+        "Gia":gia,
+        "TenSanPham":tenSP
       })
     }) 
       .then((response) => response.json())
@@ -88,7 +89,10 @@ useEffect(() => {
             <View style={{marginLeft: 20, marginTop: 10}}>
               <Icon name="angle-left" color="#a50000" size={30} />
             </View>
-            <Image source={{uri: anh}} style={styles.coverImage} />
+            <Image 
+            //source={{uri: anh}} 
+            source={{uri: URL.localhost +'/LuanVan/public/upload/sanpham/'+anh}}
+            style={styles.coverImage} />
           </TouchableOpacity>
 
           <Text style={styles.textTen}>{tenSP}</Text>
@@ -103,7 +107,7 @@ useEffect(() => {
 
           <View style={{width: 100, marginLeft: 270}}>
             <Button
-              onPress={() => {muangay(idSP, bio.id_KhachHang, gia)}}
+              onPress={() => {muangay(idSP, bio.id_KhachHang, gia, tenSP)}}
               color="#a50000"
               title="Mua ngay"
             />

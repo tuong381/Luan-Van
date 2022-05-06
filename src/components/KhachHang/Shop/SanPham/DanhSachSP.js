@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { URL } from '../../../../../Ip';
 
 export default class DanhSachSP extends Component {
   render() {
@@ -53,7 +54,7 @@ export default class DanhSachSP extends Component {
                 })}
                 >
                 <Image
-                  source={{uri: item.HinhAnh_SP}}
+                  source={{uri: URL.localhost +'/LuanVan/public/upload/sanpham/'+item.HinhAnh_SP}}
                   style={styles.productImage}
                 />
                 <Text style={styles.produceName}>

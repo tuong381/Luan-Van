@@ -130,7 +130,7 @@ console.log(id,idNV,idKH);
               //   })}
             >
               <Image
-                source={{uri: item.AnhDaiDien}}
+                 source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                 style={styles.coverImage}
               />
               {/* <Text>{item.id_KhachHang}</Text> */}
@@ -167,7 +167,7 @@ console.log(id,idNV,idKH);
                   <View
                     style={{flex: 1, height: 1, backgroundColor: 'black'}}
                   />
-                </View>
+                </View> 
 
                 <Text style={styles.text}>Loại vé: {item.TenDichVu} </Text>
                 <Text style={styles.text}>Ngày đặt: {item.NgayDK} </Text>
