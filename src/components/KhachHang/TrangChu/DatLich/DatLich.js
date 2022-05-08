@@ -76,17 +76,18 @@ const DatLich = ({route, navigation}) => {
           renderItem={({item}) => (
             <TouchableOpacity  style={styles.listItem}
               
-              onPress={()=>navigation.navigate('ThongTinNV',{
-                Ten:item.TenNV,
-                email: item.Email,
-                sdt:item.SoDienThoai,
-                anh: item.AnhDaiDien,
-                gioitinh: item.GioiTinh,
-                diachi: item.DiaChi,
-                date: item.NgaySinh,
-                kinhnghiem: item.KinhNghiem
+              // onPress={()=>navigation.navigate('ThongTinNV',{
+              //   Ten:item.TenNV,
+              //   email: item.Email,
+              //   sdt:item.SoDienThoai,
+              //   anh: item.AnhDaiDien,
+              //   gioitinh: item.GioiTinh,
+              //   diachi: item.DiaChi,
+              //   date: item.NgaySinh,
+              //   kinhnghiem: item.KinhNghiem
                
-              })}>
+              // })}
+              >
               <Image
                 source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                 style={styles.coverImage}

@@ -47,7 +47,7 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
 
 
     const lichhen= (id) =>{
-      console.log(id);
+      console.log(id); 
    // values.roleId = 4;
   //  let req = JSON.stringify({id_KhachHang:id});
    fetch(URL.localhost+"/App_API/LichHen.php", {
@@ -58,7 +58,7 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
     body: JSON.stringify({
       "id_KhachHang":id,      
     })
-})  
+})    
 
     .then((response) => response.json())
     .then((json) => {
@@ -67,7 +67,7 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
         data:json ,
      //   idKH:id
       })
-    }) 
+    })  
     }
 
     const tinnhan= (id) =>{
@@ -85,7 +85,8 @@ var URL_PT=  URL.localhost+"/App_API/nhanvien.php";
     .then((json) => {
    console.log({data:json});
       navigation.navigate('TinNhan',{
-        data:json
+        data:json, 
+        idKH:id
       }) 
      
    

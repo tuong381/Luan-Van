@@ -82,7 +82,7 @@ export default class DanhSachNV extends Component {
                 <Icon name="search" color="#cc0000" size={15} />
             </Text>
         </TouchableOpacity>
-
+            
         <FlatList
           data={this.state.nhanvien}
           keyExtractor={({id_NhanVien}, index) => id_NhanVien}

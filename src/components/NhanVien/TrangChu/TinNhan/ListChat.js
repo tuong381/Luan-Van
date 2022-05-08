@@ -15,6 +15,19 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { URL } from '../../../../../Ip';
+
+
+class NodeChat extends Component{
+  render(){
+      return(
+        <View style={styles.chatLineView} >
+            <Text style={styles.itemUserName}>{this.props.sender}</Text>
+            <Text style={styles.itemText}>{this.props.chatContent}</Text>
+        </View>
+      );
+  }
+}
 
 
 export default class ListChat extends Component {
@@ -25,35 +38,36 @@ export default class ListChat extends Component {
          
       }
 
-     nhantin(idKH, idNV, Ten) {
+     nhantin(idKH, idNV, Ten, anh) {
         console.log(idKH, idNV, Ten);
-    //  fetch(URL.localhost+"/App_API/LichHen.php", {
-    //   method: 'POST',
-    //   headers: {
-    //       'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     "id_KhachHang":id,      
-    //   })
-    // }) 
+     fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "id_KhachHang":idKH, 
+        "id_NhanVien":idNV     
+      })
+    }) 
      
     
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //  console.log({data:json});
-    //     // navigation.navigate('DanhSachLH',{
-    //     //   data:json
-    //     // })
-      
-        
-    //   })
-
-
+      .then((response) => response.json())
+      .then((json) => {
+    // console.log({data:json});
         this.props.navigation.navigate('ChatNV',{
           Ten:Ten,
           idKH:idKH,
-          idNV:idNV
+          idNV:idNV,
+          data:json,
+          anh:anh
         });
+      
+        
+      })
+
+
+        
       }
 
     render(){
@@ -84,11 +98,25 @@ export default class ListChat extends Component {
           keyExtractor={({id_Chat}, index) => id_Chat}
           renderItem={({item}) => (
             <TouchableOpacity  style={styles.listItem} 
-            onPress={()=>{this.nhantin(item.id_KhachHang, id_NhanVien,item.TenKH)}}
+            onPress={()=>this.nhantin(item.id_KhachHang, id_NhanVien,item.TenKH, item.HinhAnh)}
+              
+              
+          //     this.props.navigation.navigate('Chat',{
+          //     // Ten:Ten,
+          //     // idKH:idKH,
+          //     // idNV:idNV,
+          //    // data:json
+          //    Ten:item.TenKH,
+          //    idKH:item.id_KhachHang,
+          //    idNV:id_NhanVien
+          //   })
+          // }
+
+              //
             >
                 <Image
                 source={{uri: item.HinhAnh}}
-                style={styles.coverImage}
+                style={styles.coverImage} 
               />
               
               <View style={styles.metaInfo}>
@@ -98,7 +126,7 @@ export default class ListChat extends Component {
                 </View>
                 <Text style={[styles.text, styles.textChat]} >{item.TinNhan}</Text>
                          
-             
+            
               </View>
   
             </TouchableOpacity>

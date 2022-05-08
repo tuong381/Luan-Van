@@ -15,13 +15,54 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { URL } from '../../../../../Ip';
+import moment from 'moment';
 
 
 export default class TinNhan extends Component {
 
+  constructor(props) {
+    super(props);
+    this.nhantin= this.nhantin.bind(this);
+     
+  }
+
+  nhantin(idKH, Ten, idNV, anh) {
+    console.log(idKH,  idNV);
+ fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    "id_KhachHang":idKH, 
+    "id_NhanVien":idNV     
+  })
+}) 
+ 
+
+  .then((response) => response.json())
+  .then((json) => {
+ console.log({data:json});
+    this.props.navigation.navigate('Chat',{
+      Ten:Ten,
+      idNV:idNV,
+      idKH:idKH,
+      data:json,
+      anh:anh
+    });
+  
+    
+  })
+
+
+    
+  }
+
     render(){
 
     const {data}=this.props.route.params;
+    const {idKH}=this.props.route.params;
 
   return (
     <View style={styles.container}>
@@ -45,16 +86,27 @@ export default class TinNhan extends Component {
           keyExtractor={({id_Chat}, index) => id_Chat}
           renderItem={({item}) => (
             <TouchableOpacity  style={styles.listItem} 
+            onPress={()=>this.nhantin(idKH ,item.TenNV, item.id_NhanVien, item.AnhDaiDien)}
+              // this.props.navigation.navigate('Chat',{
+              //           // Ten:Ten,
+              //           // idNV:idNV,
+              //           // idKH:idKH,
+              //         // data:json
+              //         Ten:item.TenNV,
+              //           idNV:item.id_NhanVien,
+              //           idKH:idKH,
+              //     })}
+            //  
             >
                 <Image
-                source={{uri: item.AnhDaiDien}}
+                source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                 style={styles.coverImage}
               />
               
               <View style={styles.metaInfo}>
                 <View style={{flexDirection:'row'}}>
                     <Text style={[styles.text, styles.textTen]} >{item.TenNV}</Text>
-                    <Text style={{margin:10, }}>{item.created_at}</Text>
+                    <Text style={{margin:10, }}>{moment(item.created_at).format('h:mm DD-MM-YYYY')}</Text>
                 </View>
                 <Text style={[styles.text, styles.textChat]} >{item.TinNhan}</Text>
                          

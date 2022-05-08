@@ -15,22 +15,52 @@ import {
 } from 'react-native';
 import { URL } from '../../../../../Ip';
 
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+ import ImagePicker from 'react-native-image-crop-picker';
 
 
-var options = {
-  title: 'Select Avatar',
-  customButtons: [
-    {name: 'fb', title: 'Choose Photo from Facebook'},
-  ],
-  storageOptions: {
-    skipBackup: true,
-    path: 'images'
-  }
-};
+
+//import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
 const HoSoNV = ({route, navigation}) => {
+
+
+  // const options = {
+  // customButtons: [
+  //   {name: 'fb', title: 'Choose Photo from Facebook'},
+  // ],
+  // storageOptions: {
+  //   skipBackup: true,
+  //   path: 'images'
+  // }
+  // };
+
+//  const show = () => {
+//   ImagePicker . openPicker ( { 
+//     multiple : true 
+//   } ) . then ( images  =>  { 
+//     console . log ( images ) ; 
+//   } ) ;
+//   }
+
+const show = () => {
+    
+  
+    name:'Choose from Gallery',
+   
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+        freeStyleCropEnabled:true,
+      }).then(image => {
+        console.log(image);
+      });
+
+    
+  }
+
+
 
     const {data}=route.params;
   
@@ -58,7 +88,7 @@ const HoSoNV = ({route, navigation}) => {
                 </TouchableOpacity>
               </ImageBackground>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>show()}>
             <Image  source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
                     style={styles.coverImage} />
             </TouchableOpacity>

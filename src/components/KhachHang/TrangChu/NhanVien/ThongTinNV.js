@@ -9,50 +9,34 @@ import {
   Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {URL} from '../../../../../Ip';
+import { URL } from '../../../../../Ip';
 
 const ThongTinNV = ({route, navigation}) => {
-  const nhantin = (idNV, idKH, Ten) => {
-    console.log(idKH, idNV, Ten);
-
-    fetch(URL.localhost + '/App_API/Chat/NoiDungChat.php'
-    , {
+  const nhantin = (idNV, idKH, Ten, anh) => {
+    console.log(idNV, idKH, Ten, anh);
+    fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 
-        id_NhanVien: idNV, 
-        id_KhachHang: idKH,
-      }),
-    })
-      .then(response => response.json())
-      .then(json => {
-        // this.setState({  
-        //   json
-    
-        //  });
-       
-        // if(json){
-        //   console.log({data: json});
-        //   navigation.navigate('ChatNV',{
-        //     data:json, 
-        //     idNV:idNV,
-        //     idKH:idKH,
-        //     Ten:Ten
-        //   })
-        // }
-        console.log(json);
-        navigation.navigate('ChatNV',{
-          data:json, 
+      body: JSON.stringify({
+        "id_KhachHang":idKH, 
+        "id_NhanVien":idNV     
+      }) 
+  })    
+  
+      .then((response) => response.json())
+      .then((json) => {
+      //  console.log(json.id);
+        navigation.navigate('Chat',{
+          Ten:Ten,
           idNV:idNV,
           idKH:idKH,
-          Ten:Ten
-        })
-
-        
-      });
-  };
+          data:json,
+          anh:anh
+        });
+      })  
+  }
 
   const {idKH} = route.params;
   const {idNV} = route.params;
@@ -118,9 +102,9 @@ const ThongTinNV = ({route, navigation}) => {
 
       <View style={styles.btnChat}>
         <Button
-          onPress={() => nhantin(idNV, idKH, Ten)}
+          onPress={() => nhantin(idNV, idKH, Ten, anh)}
           color="#a50000"
-          title="nhắn tin"
+          title="nhắn tin" 
         />
       </View>
     </View>
