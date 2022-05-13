@@ -23,6 +23,8 @@ var URL_PT = URL.localhost + '/App_API/LichHen.php';
 const ChiTietSP= ({route,navigation}) => {
 
   const [token, settoken] = useState('');
+
+  const[SoLuong_SP, setSoLuong_SP]=useState('1');
 // };
 
 const [bio, setBio] = useState({});
@@ -105,7 +107,19 @@ useEffect(() => {
             <Text style={{color: '#333333', fontSize: 18}}> {soluong}</Text>
           </View>
 
-          <View style={{width: 100, marginLeft: 270}}>
+          <View style={{width: 100, marginLeft:270 }}>
+
+          {/* <View style={styles.numberOfProduct}>
+            <TouchableOpacity onPress={() => this.incrQuantity(idSP)}>
+                <Text>+</Text>
+            </TouchableOpacity>
+            <Text>{SoLuong_SP}</Text>
+            <TouchableOpacity onPress={() => this.decrQuantity(idSP)}>
+                <Text>-</Text>
+            </TouchableOpacity>
+        </View> */}
+
+
             <Button
               onPress={() => {muangay(idSP, bio.id_KhachHang, gia, tenSP)}}
               color="#a50000"
@@ -174,6 +188,16 @@ const styles = StyleSheet.create({
     color: '#a50000',
     marginLeft: 40,
   },
+
+  numberOfProduct: {
+  //  flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: 80,
+    marginRight:20,
+    
+},
+
 });
 
 export default ChiTietSP;

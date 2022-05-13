@@ -22,6 +22,10 @@ import { URL } from '../../../../../Ip';
 import DoiMatKhau from './DoiMatKhau';
 import { red } from '@mui/material/colors';
 
+import ImagePicker from 'react-native-image-crop-picker';
+
+
+
 
 
 
@@ -39,6 +43,18 @@ const HoSo = ({route, navigation}) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
 
+  // const [image, setImage]=useState('');
+
+  // const show = () => {
+    
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then(image => {
+  //     console.log(image);
+  //   });
+  // }
  
 
  
@@ -83,12 +99,25 @@ const HoSo = ({route, navigation}) => {
                     cannang:item.CanNang,
                     anh:item.HinhAnh,
                     gioitinh:item.GioiTinh,
-                    id:item.id_KhachHang
+                    id:item.id_KhachHang,
+                    anh:item.HinhAnh
                 })}
                 >
                 <Text style={styles.textSua}>Thông tin chi tiết  </Text>
                 <Icon name="edit" size={22} color='black'/>
             </TouchableOpacity>
+
+
+            {/* /// */}
+
+            {/* <TouchableOpacity onPress={()=>show()}>
+              <Text>show image</Text>
+            </TouchableOpacity> */}
+
+
+
+
+            {/* ///// */}
 
             <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 20}}>
               <Icon name="envelope" size={22} />
@@ -143,7 +172,7 @@ const HoSo = ({route, navigation}) => {
                 width: 150,
                 marginLeft: 130,
                 marginBottom: 70,
-                
+                 
               }}>
               <Button
                  style={{color: 'red', borderRadius: 20, fontWeight: 'bold'}}

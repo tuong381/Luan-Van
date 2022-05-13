@@ -11,10 +11,12 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL} from '../../../../Ip';
+// import { Alert } from '@mui/material';
 
 const TaiKhoan = ({route, navigation}) => {
   // const [TenKH, setTenKH] = useState('');
@@ -54,7 +56,9 @@ const TaiKhoan = ({route, navigation}) => {
   };
   fetchData();
 
-  const data = [{name: 'Hồ sơ cá nhân'}, {name: 'Lịch sử hoạt động'}];
+  const data = [{name: 'Hồ sơ cá nhân'},
+                 {name: 'Lịch sử hoạt động'},
+                 {name: 'Đăng xuất'}];
 
   const pushView = (name, id) => {
     if (name == 'Hồ sơ cá nhân') {
@@ -79,7 +83,7 @@ const TaiKhoan = ({route, navigation}) => {
             data: json,
           });
         });
-    } else { 
+    } else if(name == 'Lịch sử hoạt động') { 
 
       fetch(URL.localhost + '/App_API/LichSuHD.php', {
         method: 'POST',
@@ -97,28 +101,15 @@ const TaiKhoan = ({route, navigation}) => {
             data:json
           });
         })
-
-
-      // fetch(URL.localhost + '/App_API/LichHen.php', {
-      //   method: 'POST',
-      //   headers: { 
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     "id_KhachHang": id,
-      //   }),
-      // })
-      //   .then(response => response.json())
-      //   .then(json => { 
-      //  //   console.log({data1:json});
-      // navigation.navigate('LichSuHoatDong',{
-      //   data:json
-      // });
-      //   })
-
       
-
         
+    }
+    else{
+      Alert.alert(
+        'Thông báo',
+        `Đăng xuất tài khoản thành công`,
+      );
+      navigation.navigate('Home');
     }
   };
 

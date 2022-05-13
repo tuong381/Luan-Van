@@ -11,8 +11,12 @@ import {View ,
        TextInput,
        Dimensions,
        ScrollView,
-       Alert
+       Alert,
+       Image,
+       ImageBackground
       } from 'react-native';
+
+import ImagePicker from 'react-native-image-crop-picker';
 
 const SuaThongTin= ({route,navigation}) => {
 
@@ -27,6 +31,7 @@ const SuaThongTin= ({route,navigation}) => {
     const {cannang}=route.params;
     const {gioitinh}=route.params;
     const {id}=route.params;
+    const {anh}=route.params;
 
     const [TenKH, setTenKH] = useState(ten);
     const [Email, setEmail] = useState(email);
@@ -37,6 +42,22 @@ const SuaThongTin= ({route,navigation}) => {
     const [DiaChi, setDiaChi] = useState(diachi);
 
     const [result, setResult] = useState('0'); 
+
+    const[HinhAnh, setHinhAnh]=useState(anh);
+  
+
+    const show = () => {
+    
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      }).then(image => {
+        console.log(image);
+
+        setHinhAnh(image.path);
+      });
+    }
 
 
   const capnhat = (id) => { 
@@ -56,7 +77,8 @@ const SuaThongTin= ({route,navigation}) => {
       "Email":Email,
       "ChieuCao":ChieuCao,
       "GioiTinh":GioiTinh,
-      "CanNang":CanNang 
+      "CanNang":CanNang ,
+      "HinhAnh":HinhAnh
      
     })
 })
@@ -101,8 +123,18 @@ const SuaThongTin= ({route,navigation}) => {
         <View style={{flex: 70, marginTop: 20}}>
           
           
-            <Text style={{color:'red'}}>{id}</Text>
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+            <Text style={styles.text}>Ảnh đại diện</Text>
+            <TouchableOpacity onPress={()=>show()} 
+                style={{flexDirection: 'row',}}>
+              <Image source={{uri: HinhAnh}} style={styles.coverImage} />
+              <View style={styles.icon}>
+                <Icon name="camera" color="#666666" size={20} />
+              </View>
+            </TouchableOpacity>
+          </View>
 
+            
 
           <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={styles.text}>Họ tên</Text>
@@ -284,6 +316,23 @@ const SuaThongTin= ({route,navigation}) => {
       color:'black',
       width:100,
       marginLeft:20
+      
+    },
+
+    coverImage: {
+      borderWidth:2,
+      borderColor:'white',
+      width: 100,
+      height: 100,
+      borderRadius: 200 / 2,
+      marginLeft:20,
+    //  marginTop:10,
+      
+    },
+
+    icon:{
+      marginTop:70, 
+      marginLeft: -20, 
       
     }
     
