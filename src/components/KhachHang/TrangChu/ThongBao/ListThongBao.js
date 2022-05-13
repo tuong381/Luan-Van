@@ -22,6 +22,7 @@ export default class ListThongBao extends Component {
     super(props);
     this.huy= this.huy.bind(this);
     this.xuly= this.xuly.bind(this);
+    this.xoa= this.xoa.bind(this);
   }
 
   huy(id){
@@ -76,6 +77,27 @@ export default class ListThongBao extends Component {
       })
   }
 
+  xoa(idTB){
+    fetch(URL.localhost + '/App_API/NhanVien/ThongBao/XoaThongBao.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "id_ThongBao": idTB 
+      }),
+    })
+      .then(response => response.json())
+      .then(json => {
+        //console.log({data:json});
+        if (json.kq > 0) {
+          Alert.alert('Thông báo!', `Bạn đã xóa thông báo thành công !`);
+          // navigation.navigate('ThongBao');
+          this.props.navigation.pop();
+        }
+      });
+  }
+
   render() {
     const {data} = this.props.route.params;
     return (
@@ -107,8 +129,16 @@ export default class ListThongBao extends Component {
 
                   <View style={styles.metaInfo}>
                     <Text style={styles.text}>Nhân viên {item.TenNV} đã xác nhận {item.TieuDe} của bạn</Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
+                    <TouchableOpacity style={styles.btnIcon}
+                      onPress={()=> this.xoa(item.id_ThongBao)}
+                    >
+                      <Icon name="trash" color="#ff6666" size={30} />
+                    </TouchableOpacity>
                   </View>
+
+                  
+
                 </TouchableOpacity>
               )}
 
@@ -121,7 +151,9 @@ export default class ListThongBao extends Component {
 
                   <View style={styles.metaInfo}>
                     <Text style={styles.text}>Nhân viên {item.TenNV} {item.TieuDe}</Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text}>Ngày cập nhật: {item.NgayDK} </Text>
+                    <Text style={styles.text}>Giờ cập nhật: {item.GioDK} </Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
 
                     <View style={styles.btnHuy}>
                 <Button
@@ -145,7 +177,7 @@ export default class ListThongBao extends Component {
 
                   <View style={styles.metaInfo}>
                     <Text style={styles.text}>Nhân viên {item.TenNV} đã gửi {item.TieuDe}</Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
 
                     <View style={styles.btnHuy}>
                 <Button
@@ -250,6 +282,12 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 15,
+    color: 'black',
+    marginTop: 10,
+  },
+
+  text1: {
+    fontSize: 15,
     color: '#8c8c8c',
     marginTop: 10,
   },
@@ -275,5 +313,13 @@ const styles = StyleSheet.create({
     marginTop:5,
     marginBottom:5
    
+  },
+
+  btnIcon: {
+    justifyContent: 'center',
+    marginLeft: 200,
+    flexDirection: 'row',
+
+    marginBottom: 5,
   },
 });

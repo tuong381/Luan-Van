@@ -23,12 +23,23 @@ export default class TinNhan extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      dulieu:[], 
+     };
     this.nhantin= this.nhantin.bind(this);
+  //  this.vd= this.vd.bind(this);
      
   }
 
   nhantin(idKH, Ten, idNV, anh) {
-    console.log(idKH,  idNV);
+  //  console.log(idKH,  idNV);
+  // setTimeout(() => {
+  // clearInterval(
+   let timerId= setInterval(()=>{
+  //  setTimeout(() => { 
+    
+      
+
  fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
   method: 'POST',
   headers: {
@@ -43,7 +54,14 @@ export default class TinNhan extends Component {
 
   .then((response) => response.json())
   .then((json) => {
- console.log({data:json});
+ //console.log({data:json});
+
+ this.setState({
+  dulieu:json
+});
+//console.log(this.state.dulieu);
+//this.vd(idKH, Ten, idNV, anh,this.state.dulieu);
+ 
     this.props.navigation.navigate('Chat',{
       Ten:Ten,
       idNV:idNV,
@@ -54,10 +72,36 @@ export default class TinNhan extends Component {
   
     
   })
+  
 
 
-    
+},2000);
+
+setTimeout(() => { clearInterval(timerId);  }, 25000);
+
+
   }
+
+  // vd(idKH, Ten, idNV, anh,data){
+  // //  console.log(idKH, Ten, idNV, anh,data);
+   
+  //   this.props.navigation.navigate('ChatVD',{
+  //     Ten:Ten,
+  //     idNV:idNV,
+  //     idKH:idKH,
+  //     data1:data,
+  //     anh:anh
+  //   });
+
+  // }
+
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state,callback)=>{
+        return;
+    };
+}
+
 
     render(){
 
@@ -83,11 +127,11 @@ export default class TinNhan extends Component {
 
       <FlatList
           data={data}
-          keyExtractor={({id_Chat}, index) => id_Chat}
+           keyExtractor={({id_Chat}, index) => id_Chat}
           renderItem={({item}) => (
             <TouchableOpacity  style={styles.listItem} 
             onPress={()=>this.nhantin(idKH ,item.TenNV, item.id_NhanVien, item.AnhDaiDien)}
-              // this.props.navigation.navigate('Chat',{
+              // this.props.navigation.navigate('ChatVD',{
               //           // Ten:Ten,
               //           // idNV:idNV,
               //           // idKH:idKH,
@@ -95,6 +139,7 @@ export default class TinNhan extends Component {
               //         Ten:item.TenNV,
               //           idNV:item.id_NhanVien,
               //           idKH:idKH,
+              //           anh:item.AnhDaiDien
               //     })}
             //  
             >

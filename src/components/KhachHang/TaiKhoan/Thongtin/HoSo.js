@@ -44,7 +44,7 @@ const HoSo = ({route, navigation}) => {
  
   return (
    
-    <View>
+    <View style={{backgroundColor:'white'}}>
  
 
       <FlatList
@@ -66,7 +66,7 @@ const HoSo = ({route, navigation}) => {
                 </TouchableOpacity>
               </ImageBackground>
             </View>
-
+          
             <Image source={{uri: item.HinhAnh}} style={styles.coverImage} />
 
             <Text style={styles.textTen}>{item.TenKH}</Text>

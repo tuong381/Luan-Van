@@ -167,7 +167,7 @@ export default class DoiLichHen extends Component {
           <View style={styles.baoTitle}>
             <Text style={styles.titleHeader}> Dời lịch hẹn</Text>
           </View>
-        </View>
+        </View> 
 
         <View style={{flexDirection: 'row', margin: 10}}>
           <Icon name="user" color="#a50000" size={20} />
@@ -181,6 +181,8 @@ export default class DoiLichHen extends Component {
             <Text style={[styles.textTen]}>{Ten}</Text>
             <Text style={[styles.text]}>Số điện thoại: {sdt} </Text>
             <Text style={[styles.text]}>Kinh nghiệm: {kinhnghiem} năm</Text>
+            <Text style={[styles.text]}>Ngày đã đăng ký: {ngay} </Text>
+            <Text style={[styles.text]}>Giờ đã đăng ký: {gio} </Text>
           </View>
         </View>
 

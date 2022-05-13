@@ -1,6 +1,6 @@
 
 
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   View,
   Text,
@@ -46,9 +46,14 @@ export default class Chat extends Component {
       id: '',
       ten: '',
       chat: [],
-      trangthai:1
+      trangthai:1,
+      nuberRefresh:0
+
     };
   }
+
+
+
 
   componentDidMount() {
     this.socket = io(URL.localhost + ':3000');
@@ -57,12 +62,44 @@ export default class Chat extends Component {
         chatMessages: [...this.state.chatMessages, data],
       });
     });
+
+
+    this.socket.on('client-sent-dulieu', data => {
+      this.setState({
+        chatMessages: [...this.state.chatMessages, data],
+      });
+      console.log(this.state.chatMessages);
+     
+    });
+
+
+  //   fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
+  //     method: 'POST',
+  //     headers: {
+  //         'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       "id_KhachHang":idKH, 
+  //       "id_NhanVien":idNV     
+  //     })
+  //   }) 
+     
+    
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //    //console.log({data:json});
+    
+  //    this.setState({
+  //     chat:json
+  //   });
+  // })
+
+
+
+
+
   }
 
-  // clickMe() {
-  //   // this.socket.emit('client-sent-data', this.state.text);
-  //   this.socket.emit('client-sent-data', "Hello");
-  // }
 
   submitChatMessage(idKH, idNV) {
     var chatMessages = this.state.chatMessage;
@@ -120,6 +157,8 @@ export default class Chat extends Component {
     const {data} = this.props.route.params;
     const {anh} = this.props.route.params;
 
+    setInterval(()=>{ data},2000)
+
     // const {data} = this.props.route.params;
     return (
       // <View style={{flex: 1, padding: 50, backgroundColor: this.state.maunen}}>
@@ -172,9 +211,12 @@ export default class Chat extends Component {
           style={styles.imgBackground}>
           <FlatList
             data={data}
-            keyExtractor={({id_Chat}, index) => id_Chat}
+             keyExtractor={({id_Chat}, index) => id_Chat}
+           // keyExtractor={(item) => item.id_Chat.toString()}
             renderItem={({item}, index) => this._renderChatLine(item)}
           />
+
+          <Text>{chatMessages}</Text>
 
           {/* <View style={styles.chatLineView}>
             <Text style={{color: 'red'}}>
@@ -216,6 +258,8 @@ export default class Chat extends Component {
               <TouchableOpacity
                 onPress={() => {
                   this.submitChatMessage(idKH, idNV);
+                  
+
                 }}>
                 <View style={styles.button}>
                   <Icon name="paper-plane" color="white" size={30} />

@@ -68,7 +68,7 @@ const show = () => {
 
 
   return (
-    <View>
+    <View style={{backgroundColor:'white'}}>
       <FlatList
         data={data}
         keyExtractor={({id_NhanVien}, index) => id_NhanVien}
@@ -134,7 +134,7 @@ const show = () => {
 
             <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
               <Icon name="globe" size={22} />
-              <Text style={styles.text}>Kinh nghiem: {item.KinhNghiem} nam</Text>
+              <Text style={styles.text}>Kinh nghiệm: {item.KinhNghiem} năm</Text>
              
             </View>
 

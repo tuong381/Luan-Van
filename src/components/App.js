@@ -103,6 +103,7 @@ import DanhSachSP from './KhachHang/Shop/SanPham/DanhSachSP';
 import SanPhamMoiNhat from './KhachHang/TrangChu/SanPhamMoiNhat';
 import DoiLichHenNV from './NhanVien/TrangChu/LichLamViec/DoiLichHenNV';
 import LichSuHoatDong from './KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
+import ChatVD from './KhachHang/TrangChu/TinNhan/ChatVD';
 
  export default class App extends Component {
 
@@ -172,6 +173,8 @@ import LichSuHoatDong from './KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
 
 						// tai khoan
 						case 'LichSuHoatDong': return  <LichSuHoatDong navigator={navigator} />;
+
+						case 'ChatVD': return  <ChatVD navigator={navigator} />;
 
 
 

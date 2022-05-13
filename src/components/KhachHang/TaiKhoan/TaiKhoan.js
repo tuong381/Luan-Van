@@ -38,10 +38,10 @@ const TaiKhoan = ({route, navigation}) => {
       settoken(responseJson);
     });
 
-    // lay id
-    // AsyncStorage.getItem('id_KhachHang').then(responseJSON => {
-    //   setid_KhachHang(responseJSON);
-    // });
+   // lay id
+    AsyncStorage.getItem('id_KhachHang').then(responseJSON => {
+      setid_KhachHang(responseJSON);
+    });
   }, []);
 
   const fetchData = async () => {
@@ -137,8 +137,9 @@ const TaiKhoan = ({route, navigation}) => {
               <Icon name="angle-left" color="#808080" size={30} />
             </TouchableOpacity> */}
         </ImageBackground>
+       
       </View>
-
+      {/* <Text>{id_KhachHang}</Text> */}
       <FlatList
         data={data}
         renderItem={({item}) => (

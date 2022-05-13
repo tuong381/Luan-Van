@@ -100,7 +100,7 @@ export default class ThongBao extends Component {
                     <Text style={styles.text}>
                       Khách hàng {item.TenKH} gửi {item.TieuDe}
                     </Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
 
                     <View style={styles.btnHuy}>
                       <Button
@@ -126,7 +126,7 @@ export default class ThongBao extends Component {
                     <Text style={styles.text}>
                       {item.TenKH} đã chấp nhận {item.TieuDe} của bạn
                     </Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
 
                     {/* <View style={styles.btnHuy}>
                       <Text style={{color:'black', fontSize:16}}>Đã xử lý</Text>
@@ -146,7 +146,7 @@ export default class ThongBao extends Component {
                     <Text style={styles.text}>
                       {item.TenKH} đã đồng ý yêu cầu {item.TieuDe} của bạn
                     </Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
 
                     {/* <View style={styles.btnHuy}>
                       <Text style={{color:'black', fontSize:16}}>Đã xử lý</Text>
@@ -166,7 +166,7 @@ export default class ThongBao extends Component {
                     <Text style={styles.text}>
                       Khách hàng {item.TenKH} {item.TieuDe}
                     </Text>
-                    <Text style={styles.text}>{item.created_at}</Text>
+                    <Text style={styles.text1}>{item.created_at}</Text>
 
                     <TouchableOpacity style={styles.btnIcon}
                       onPress={()=> this.xoa(item.id_ThongBao)}
@@ -260,10 +260,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
   },
+  
+  text1: {
+    fontSize: 15,
+    color: '#8c8c8c',
+    marginTop: 10,
+  },
+
 
   text: {
     fontSize: 15,
-    color: '#8c8c8c',
+    color: 'black',
     marginTop: 10,
     width: 270,
   },

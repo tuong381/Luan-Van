@@ -47,10 +47,10 @@ export default class XacNhanDL extends Component {
         "id_KhachHang":id_KH,
         "id_NhanVien":id_NV,
         "id_DichVu":id_DV,
-        "NgayDK":ngay,
-        "GioDK":time,
+        "NgayDK":ngay, 
+        "GioDK":time, 
         "TongTien":gia,
-        "TenVe":tenve,
+        "TenVe":tenve, 
       })
     })
     .then((response)=>response.json())
@@ -59,7 +59,7 @@ export default class XacNhanDL extends Component {
       
      console.log(responseJson.id);
 
-     Alert.alert(
+     Alert.alert(  
       'Success!',
       `Đặt lịch thành công!`,
     );

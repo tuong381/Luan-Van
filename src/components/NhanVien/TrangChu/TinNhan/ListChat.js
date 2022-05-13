@@ -40,6 +40,8 @@ export default class ListChat extends Component {
 
      nhantin(idKH, idNV, Ten, anh) {
         console.log(idKH, idNV, Ten);
+        // setTimeout(() =>
+   let timerId= setInterval(()=>{
      fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
       method: 'POST',
       headers: {
@@ -49,9 +51,8 @@ export default class ListChat extends Component {
         "id_KhachHang":idKH, 
         "id_NhanVien":idNV     
       })
-    }) 
-     
-    
+    })  
+      
       .then((response) => response.json())
       .then((json) => {
     // console.log({data:json});
@@ -65,6 +66,10 @@ export default class ListChat extends Component {
       
         
       })
+
+    },2000);
+
+    setTimeout(() => { clearInterval(timerId);  }, 25000);
 
 
         

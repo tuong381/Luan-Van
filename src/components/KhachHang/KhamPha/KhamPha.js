@@ -70,7 +70,7 @@ export default class KhamPha extends Component {
             <Icon name="angle-left" color="#eee" size={30} />
           </TouchableOpacity> */}
           <View style={styles.baoTitle}>
-            <Text style={styles.titleHeader}> Bai Tap The Duc</Text>
+            <Text style={styles.titleHeader}> Bài Tập Thể Dục</Text>
           </View>
         </View>
 

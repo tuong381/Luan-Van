@@ -1,6 +1,6 @@
 
 
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ import {
 
 import io from 'socket.io-client';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { URL } from '../../../../Ip';
+import {URL} from '../../../../../Ip';
 import moment from 'moment';
 
 var e;
@@ -24,29 +24,40 @@ var e;
 class NodeChat extends Component {
   render() {
     return (
-      <View style={styles.chatLineView}>
-        <Text style={styles.itemUserName}>{this.props.sender}</Text>
+      
+        <View style={styles.chatLineView}>
+          <Text style={styles.itemUserName}>{this.props.sender}</Text>
         <Text style={styles.itemText}>{this.props.chatContent}</Text>
+        <Text style={styles.itemText}>{this.props.chatContentm}</Text>
         <Text style={styles.itemTextgio}>{this.props.gio}</Text>
-      </View>
+        
+        </View>
+      
     );
   }
 }
 
-export default class ChatNV extends Component {
+export default class Chat extends Component {
    
   constructor(props) {
     super(props);
     this.state = {
       chatMessage: '',
       chatMessages: [],
-      id: '',
-      ten: '',
-      chat: [],
-      trangthai:-1,
+    //   id: '',
+    //   ten: '',
+    //   chat: [],
+      trangthai:1,
+    //   nuberRefresh:0,
       trangthais: [],
+      dulieu:[],
+      tinnhan:[]
+
     };
   }
+
+
+
 
   componentDidMount() {
     this.socket = io(URL.localhost + ':3000');
@@ -56,55 +67,89 @@ export default class ChatNV extends Component {
       });
     });
 
+
     this.socket.on('client-sent-trangthai', trangthai => {
       this.setState({
-         trangthais: [...this.state.trangthais, trangthai],
-       // trangthai:trangthai
+        trangthais: [...this.state.trangthais, trangthai],
       });
    //   console.log(this.state.chatMessages);
      
     });
 
 
+  //   fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
+  //     method: 'POST',
+  //     headers: {
+  //         'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       "id_KhachHang":idKH, 
+  //       "id_NhanVien":idNV     
+  //     })
+  //   }) 
+     
+    
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //    //console.log({data:json});
+    
+  //    this.setState({
+  //     chat:json
+  //   });
+  // })
+
+
+
+
 
   }
 
-  // clickMe() {
-  //   // this.socket.emit('client-sent-data', this.state.text);
-  //   this.socket.emit('client-sent-data', "Hello");
-  // }
 
-  submitChatMessage(idKH, idNV) {
+  submitChatMessage(id_KhachHang, id_NhanVien) {
+
     var chatMessages = this.state.chatMessage;
     var trangthai = this.state.trangthai;
-    //  this.socket.emit('client-sent-data', {chatMessages, Ten});
-    this.socket.emit('client-sent-data', chatMessages);
-    this.setState({chatMessage: ''});
+   ///////
+    // this.socket.emit('client-sent-data', chatMessages);
+    // this.setState({chatMessage: ''});
 
-    this.socket.emit('client-sent-idKH', idKH);
-    this.socket.emit('client-sent-trangthai', trangthai);
-    this.socket.emit('client-sent-idNV', idNV);
-    
-    // this.socket.emit('ten-nv',Ten);
-    // this.setState({id: ""})
+    // this.socket.emit('client-sent-idKH', idKH);
+    // this.socket.emit('client-sent-trangthai', trangthai);
+    // this.socket.emit('client-sent-idNV', idNV);
+
+    const mess = {
+      id_KhachHang: id_KhachHang,
+      id_NhanVien:id_NhanVien,
+      TrangThai: thí.state.trangthai,
+      TinNhan: messages[0].text
+    }
+    socketRef.current.emit('sendDataClient', mess)
+
+
+  
   }
 
 
 
   _renderChatLine = (item) =>
   {
-    if(item.TrangThai === '-1')
+      if(item.TrangThai === '1')
       {
           return(
-              <View style= { { alignItems: 'flex-end'}} >
-                      <NodeChat chatContent={item.TinNhan} 
+              
+                <View style= { { alignItems: 'flex-end', }} >
+                    <NodeChat chatContent={item.TinNhan} chatContentm={chatContentm}
                         gio={moment(item.created_at).format('h:mm')}/>
+                    
               </View>
+
+              
+              
           );
       }
       return(
-          <NodeChat sender={item.TenKH} chatContent={item.TinNhan} 
-            gio={moment(item.created_at).format('h:mm')}/>
+          <NodeChat sender={item.TenNV} chatContent={item.TinNhan}
+              gio={moment(item.created_at).format('h:mm')} />
       );
   };
 
@@ -119,15 +164,16 @@ export default class ChatNV extends Component {
     ));
 
     const trangthais = this.state.trangthais.map(trangthai=> (
-      <Text key={trangthai}> {trangthai}</Text>
-    ));
-
-
+        <Text key={trangthai}> {trangthai}</Text>
+      ));
 
     const {idKH} = this.props.route.params;
     const {idNV} = this.props.route.params;
-    const {data} = this.props.route.params;
+    const {data1} = this.props.route.params;
     const {anh} = this.props.route.params;
+
+    // setInterval(()=>{ data},2000)
+
     // const {data} = this.props.route.params;
     return (
       // <View style={{flex: 1, padding: 50, backgroundColor: this.state.maunen}}>
@@ -163,35 +209,31 @@ export default class ChatNV extends Component {
             <Icon name="angle-left" color="#eee" size={30} />
           </TouchableOpacity>
           <View style={styles.baoTitle}>
+
           <Image
-                source={{uri: anh}}
+                source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+anh}}
                 style={styles.coverImage}
               />
+
+
             <Text style={styles.titleHeader}> {Ten}</Text>
           </View>
         </View>
 
         <ImageBackground
           imageStyle={{opacity: 0.4}}
-          source={require('../../../images/background_chat.jpg')}
+          source={require('../../../../images/background_chat.jpg')}
           style={styles.imgBackground}>
           <FlatList
-            data={data}
-            keyExtractor={({id_Chat}, index) => id_Chat}
+            data={data1}
+             keyExtractor={({id_Chat}, index) => id_Chat}
+           // keyExtractor={(item) => item.id_Chat.toString()}
             renderItem={({item}, index) => this._renderChatLine(item)}
           />
 
-          
-         
+            
 
-{/* {trangthais ==-1 &&
-            <View>
-              <Text style={{color:'blue'}}>{chatMessages}</Text>
-            </View>
-          } */}
-
-
-{/* <Text>{chatMessages}</Text>
+          {/* <Text>{chatMessages}</Text>
           <Text>{trangthais}</Text> */}
 
           {/* <View style={styles.chatLineView}>
@@ -234,6 +276,8 @@ export default class ChatNV extends Component {
               <TouchableOpacity
                 onPress={() => {
                   this.submitChatMessage(idKH, idNV);
+                  
+
                 }}>
                 <View style={styles.button}>
                   <Icon name="paper-plane" color="white" size={30} />
@@ -262,7 +306,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 200 / 2,
-    
   },
   metaInfo: {
     marginLeft: 30,
@@ -328,7 +371,8 @@ const styles = StyleSheet.create({
     width: '50%',
     alignItems: 'flex-start',
     padding: 8,
-    backgroundColor: '#ffffff',
+     backgroundColor: '#ffffff',
+   
     borderRadius: 8,
     marginBottom: 10,
     marginTop: 10,
@@ -339,6 +383,7 @@ const styles = StyleSheet.create({
     color: '#a50000',
     padding: 5,
     fontSize: 14,
+    
   },
   itemText: {
     color: '#000000',
