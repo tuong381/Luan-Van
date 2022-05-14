@@ -14,11 +14,14 @@ import {View ,
       } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
+
+
 const SuaThongTinNV= ({route,navigation}) => {
 
-  const {
-    image, text, flatlist, body,item,title,
-} = styles;
+  const [isVisible, setisVisible] = useState(false);
+
     const {ten}= route.params;
     const {email}= route.params; 
     const {sdt}=route.params;
@@ -27,6 +30,7 @@ const SuaThongTinNV= ({route,navigation}) => {
     const {gioitinh}=route.params;
     const {id}=route.params;
     const {anh}=route.params;
+    const {ngay}=route.params;
 
     const [TenNV, setTenNV] = useState(ten);
     const [Email, setEmail] = useState(email);
@@ -37,7 +41,8 @@ const SuaThongTinNV= ({route,navigation}) => {
 
     const [result, setResult] = useState('0'); 
 
-    const[AnhDaiDien, setAnhDaiDien]=useState(anh);
+    const[AnhDaiDien, setAnhDaiDien]=useState(anh); 
+    const[NgaySinh, setNgaySinh]=useState(ngay);
 
     const show = () => {
     
@@ -70,7 +75,8 @@ const SuaThongTinNV= ({route,navigation}) => {
       "Email":Email,
       "KinhNghiem":KinhNghiem,
       "GioiTinh":GioiTinh,
-      "AnhDaiDien":AnhDaiDien
+      "AnhDaiDien":AnhDaiDien,
+      "NgaySinh":NgaySinh
      
     })
 })
@@ -95,6 +101,30 @@ const SuaThongTinNV= ({route,navigation}) => {
 
     
 }
+
+const handlePicked = date => {
+  setisVisible(
+  
+  false,
+  setNgaySinh(moment(date).format('YYYY.MM.DD'))
+    
+ );
+ 
+};
+
+
+
+const hidePicker = () => {
+  setisVisible(
+    false
+  );
+};
+
+const showDateTimePicker = () => {
+  setisVisible({
+    isVisible: true,
+  }); 
+}; 
 
     return (
       <ScrollView>
@@ -165,6 +195,29 @@ const SuaThongTinNV= ({route,navigation}) => {
               value={DiaChi}
             />
           </View>
+
+          <View style={{flexDirection: 'row', marginTop: 5}}>
+          <Text style={styles.text}>Ngày sinh</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={showDateTimePicker}>
+            <Text style={styles.textbutton}>Chọn ngày</Text>
+          </TouchableOpacity>
+          <DateTimePicker
+            isVisible={isVisible}
+            onConfirm={handlePicked}
+            onCancel={hidePicker}
+            mode={'date'}
+            is24Hour={true}
+            minimumDate={new Date()}
+          />
+
+    
+          <Text style={{marginTop:16, color:'black', marginLeft:20}} >{NgaySinh}</Text>
+         
+          
+        </View>
+
 
           <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={styles.text}>Giới tính</Text>
@@ -315,7 +368,25 @@ const SuaThongTinNV= ({route,navigation}) => {
       marginTop:70, 
       marginLeft: -20, 
       
-    }
+    },
+
+    button: {
+      width: 100,
+      height: 30,
+      backgroundColor: '#ff8080',
+      justifyContent: 'center',
+      marginLeft: 20,
+      shadowColor: 'white',
+      borderRadius: 50,
+      marginTop:10
+    },
+
+    textbutton: {
+      fontSize: 16,
+      color: 'white',
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
     
   })
   

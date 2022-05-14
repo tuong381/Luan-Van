@@ -106,7 +106,8 @@ const show = () => {
                     kinhnghiem:item.KinhNghiem,
                     id:item.id_NhanVien,
                     gioitinh:item.GioiTinh,
-                    anh:item.AnhDaiDien
+                    anh:item.AnhDaiDien,
+                    ngay:item.NgaySinh
                 })}
                 >
                 <Text style={styles.textSua}>Thông tin chi tiết  </Text>
@@ -134,12 +135,17 @@ const show = () => {
             </View>
 
             <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+              <Icon name="calendar" size={22} />
+              <Text style={styles.text}>{item.NgaySinh}</Text>
+            </View>
+
+            <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
               <Icon name="globe" size={22} />
               <Text style={styles.text}>Kinh nghiệm: {item.KinhNghiem} năm</Text>
              
             </View>
 
-            <View
+            <View 
               style={{
                 marginTop: 20,
                 width: 150,

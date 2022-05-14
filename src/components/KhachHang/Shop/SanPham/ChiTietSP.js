@@ -29,6 +29,36 @@ const ChiTietSP= ({route,navigation}) => {
 
 const [bio, setBio] = useState({});
 
+
+const giamQuantity = ( soluong) =>{
+ // console.log(soluong);
+  if(soluong >0 ){
+    setSoLuong_SP(soluong);
+  }
+  else{
+    Alert.alert(
+      'Thông báo!',
+      `Số lượng sản phẩm không hợp lệ!`,
+    );
+  }
+}
+
+
+const tangQuantity = ( soluong) =>{
+  //console.log(soluong);
+  if( soluong >0){
+    setSoLuong_SP(soluong-2+3);
+  }
+  else{
+    Alert.alert(
+      'Thông báo!',
+      `Số lượng sản phẩm không hợp lệ!`,
+    );
+  }
+}
+
+
+
 useEffect(() => {
   AsyncStorage.getItem('token').then(responseJson => {
     settoken(responseJson);
@@ -47,7 +77,7 @@ useEffect(() => {
   fetchData(); 
  
 
-  const muangay = (idSP, idKH, gia, tenSP) =>{
+  const muangay = (idSP, idKH, gia, tenSP, soluongmua) =>{
  //   console.log(idSP,idKH, gia);
     fetch(URL.localhost+"/App_API/Shop/DatHang.php", {
       method: 'POST',
@@ -57,8 +87,10 @@ useEffect(() => {
       body: JSON.stringify({
         "id_SanPham":idSP,
         "id_KhachHang":idKH,
-        "Gia":gia,
-        "TenSanPham":tenSP
+        // "Gia":gia,
+        "Gia":gia*soluongmua,
+        "TenSanPham":tenSP,
+        "SoLuongMua":soluongmua
       })
     }) 
       .then((response) => response.json())
@@ -67,6 +99,8 @@ useEffect(() => {
           'Thông báo!',
           `Đặt hàng thành công!`,
         );
+        navigation.pop();
+        navigation.pop();
 
       })
 
@@ -107,21 +141,22 @@ useEffect(() => {
             <Text style={{color: '#333333', fontSize: 18}}> {soluong}</Text>
           </View>
 
-          <View style={{width: 100, marginLeft:270 }}>
+          <View style={{width: 100, marginLeft:200 , flexDirection:'row'}}>
 
-          {/* <View style={styles.numberOfProduct}>
-            <TouchableOpacity onPress={() => this.incrQuantity(idSP)}>
-                <Text>+</Text>
+          <View style={styles.numberOfProduct}>
+            
+            <TouchableOpacity onPress={() => giamQuantity( SoLuong_SP-1)}>
+                <Text style={{color: '#333333', fontSize: 20}}>-</Text>
             </TouchableOpacity>
-            <Text>{SoLuong_SP}</Text>
-            <TouchableOpacity onPress={() => this.decrQuantity(idSP)}>
-                <Text>-</Text>
+            <Text style={{color: '#333333', fontSize: 18}}>{SoLuong_SP}</Text>
+            <TouchableOpacity onPress={() => tangQuantity( SoLuong_SP )}>
+                <Text style={{color: '#333333', fontSize: 18}}>+</Text>
             </TouchableOpacity>
-        </View> */}
+        </View>
 
 
             <Button
-              onPress={() => {muangay(idSP, bio.id_KhachHang, gia, tenSP)}}
+              onPress={() => {muangay(idSP, bio.id_KhachHang, gia, tenSP, SoLuong_SP)}}
               color="#a50000"
               title="Mua ngay"
             />
