@@ -9,8 +9,10 @@ import {View ,
        TouchableOpacity, 
        TextInput,
        Dimensions,
-       ScrollView, Alert
+       ScrollView, Alert,
+       Image
       } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const SuaThongTinNV= ({route,navigation}) => {
 
@@ -24,6 +26,7 @@ const SuaThongTinNV= ({route,navigation}) => {
     const {kinhnghiem}=route.params;
     const {gioitinh}=route.params;
     const {id}=route.params;
+    const {anh}=route.params;
 
     const [TenNV, setTenNV] = useState(ten);
     const [Email, setEmail] = useState(email);
@@ -34,8 +37,23 @@ const SuaThongTinNV= ({route,navigation}) => {
 
     const [result, setResult] = useState('0'); 
 
+    const[AnhDaiDien, setAnhDaiDien]=useState(anh);
 
-  const capnhat = (id) => { 
+    const show = () => {
+    
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      }).then(image => {
+        console.log(image);
+
+        setAnhDaiDien(image.path);
+      });
+    }
+
+
+  const capnhat = (id) => {  
     console.log(id);
    // values.roleId = 4;
   //  let req = JSON.stringify({id_KhachHang:id});
@@ -52,6 +70,7 @@ const SuaThongTinNV= ({route,navigation}) => {
       "Email":Email,
       "KinhNghiem":KinhNghiem,
       "GioiTinh":GioiTinh,
+      "AnhDaiDien":AnhDaiDien
      
     })
 })
@@ -94,6 +113,17 @@ const SuaThongTinNV= ({route,navigation}) => {
         </View>
 
         <View style={{flex: 70, marginTop: 20}}>
+
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+            <Text style={styles.text}>Ảnh đại diện</Text>
+            <TouchableOpacity onPress={()=>show()} 
+                style={{flexDirection: 'row',}}>
+              <Image source={{uri: AnhDaiDien}} style={styles.coverImage} />
+              <View style={styles.icon}>
+                <Icon name="camera" color="#666666" size={20} />
+              </View>
+            </TouchableOpacity>
+          </View>
 
 
           <View style={{flexDirection: 'row', marginTop: 5}}>
@@ -267,6 +297,23 @@ const SuaThongTinNV= ({route,navigation}) => {
       color:'black',
       width:100,
       marginLeft:20
+      
+    },
+
+    coverImage: {
+      borderWidth:2,
+      borderColor:'white',
+      width: 100,
+      height: 100,
+      borderRadius: 200 / 2,
+      marginLeft:20,
+    //  marginTop:10,
+      
+    },
+
+    icon:{
+      marginTop:70, 
+      marginLeft: -20, 
       
     }
     

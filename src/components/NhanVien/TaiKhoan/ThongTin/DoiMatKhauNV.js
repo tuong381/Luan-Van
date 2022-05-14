@@ -11,7 +11,8 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 
 
@@ -46,9 +47,12 @@ const DoiMatKhauNV = ({route, navigation}) => {
           //  console.log(json);
             // console.log({result:json.kq});
             if(json.kq>0){ 
-              console.log('xong');
-              navigation.navigate('Login');
-           //   navigation.pop();
+              Alert.alert(
+                'Thông báo',
+                `Đổi mật khẩu thành công`,
+              );
+                navigation.navigate('Login');
+             //   navigation.pop();
            }
             
           })
@@ -68,7 +72,7 @@ const DoiMatKhauNV = ({route, navigation}) => {
       <TouchableOpacity style={styles.body}>
         <Text style={styles.title}>Đổi mật khẩu</Text>
         <TextInput
-          placeholder="Mat khau"
+          placeholder="Nhập mật khẩu mới"
           placeholderTextColor="#a50000"
           underlineColorAndroid="transparent"
           style={styles.txtInput}

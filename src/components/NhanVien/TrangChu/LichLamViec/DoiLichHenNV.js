@@ -100,7 +100,7 @@ export default class DoiLichHenNV extends Component {
       Alert.alert(
         'Thông báo!',
         `Bạn đã gửi yêu cầu cập nhật lịch hẹn thành công !`,
-      );
+      ); 
       this.props.navigation.pop();
       this.props.navigation.pop();
      }

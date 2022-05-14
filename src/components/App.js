@@ -104,6 +104,7 @@ import SanPhamMoiNhat from './KhachHang/TrangChu/SanPhamMoiNhat';
 import DoiLichHenNV from './NhanVien/TrangChu/LichLamViec/DoiLichHenNV';
 import LichSuHoatDong from './KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
 import ChatVD from './KhachHang/TrangChu/TinNhan/ChatVD';
+import ThongTinKH from './NhanVien/TrangChu/KhachHangCuaToi/ThongTinKH';
 
  export default class App extends Component {
 
@@ -199,6 +200,8 @@ import ChatVD from './KhachHang/TrangChu/TinNhan/ChatVD';
 						case 'ThongBao': return  <ThongBao navigator={navigator} />;
 
 						case 'DoiLichHenNV': return  <DoiLichHenNV navigator={navigator} />;
+
+						case 'ThongTinKH': return  <ThongTinKH navigator={navigator} />;
 
 						default: return <Authentication />;
 					}

@@ -89,7 +89,7 @@ const show = () => {
               </ImageBackground>
             </View>
             <TouchableOpacity onPress={()=>show()}>
-            <Image  source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+            <Image  source={{uri: item.AnhDaiDien}}
                     style={styles.coverImage} />
             </TouchableOpacity>
                     
@@ -105,7 +105,8 @@ const show = () => {
                     sdt:item.SoDienThoai,
                     kinhnghiem:item.KinhNghiem,
                     id:item.id_NhanVien,
-                    gioitinh:item.GioiTinh
+                    gioitinh:item.GioiTinh,
+                    anh:item.AnhDaiDien
                 })}
                 >
                 <Text style={styles.textSua}>Thông tin chi tiết  </Text>

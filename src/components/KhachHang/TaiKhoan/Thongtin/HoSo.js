@@ -100,7 +100,8 @@ const HoSo = ({route, navigation}) => {
                     anh:item.HinhAnh,
                     gioitinh:item.GioiTinh,
                     id:item.id_KhachHang,
-                    anh:item.HinhAnh
+                    anh:item.HinhAnh,
+                    ngay: item.NgaySinh
                 })}
                 >
                 <Text style={styles.textSua}>Thông tin chi tiết  </Text>
@@ -137,6 +138,11 @@ const HoSo = ({route, navigation}) => {
             <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
               <Icon name="user" size={22} />
               <Text style={styles.text}>{item.GioiTinh}</Text>
+            </View>
+
+            <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>
+              <Icon name="calendar" size={22} />
+              <Text style={styles.text}>{item.NgaySinh}</Text>
             </View>
 
             <View style={{flexDirection: 'row', marginLeft: 45, marginTop: 10}}>

@@ -60,7 +60,7 @@ const TaiKhoan = ({route, navigation}) => {
  
 const data=[
   {name:'Hồ sơ cá nhân'},
-  {name:'Lịch sử hoạt động'}
+  {name:'Đăng xuất'}
 ]
 
 const pushView=(name,id)=>{
@@ -92,7 +92,7 @@ const pushView=(name,id)=>{
     })
 
   }else{
-    console.log('sai');
+    navigation.navigate('Home', {});
   }
 }
 

@@ -1,71 +1,42 @@
-import React, { Component } from 'react';
-import {View, 
-        Text, 
-        FlatList, 
-        StyleSheet,
-        TouchableOpacity, 
-        ImageBackground,
-        Image,
-        Button,
-        Alert
-    } from 'react-native';
+import React, {Component, useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  Image,
+  Button,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {URL} from '../../../../../Ip';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { URL } from '../../../../../Ip';
 
-var URL_PT=  URL.localhost+"/App_API/LichHen.php";
+const KhachHangCuaToi= ({route,navigation}) => {
 
-export default class KhachHangCuaToi extends Component {
+  const {data}=route.params;
 
-  
+  const [token, settoken] = useState('');
+  const [id_NhanVien, setid_NhanVien] = useState('');
+  const [bio, setBio] = useState({});
+  useEffect(() => {
+
+    AsyncStorage.getItem('token').then(responseJson => {
+      settoken(responseJson);
+    });
+
+    // lay id
+    AsyncStorage.getItem('id_NhanVien').then(responseJSON => {
+      setid_NhanVien(responseJSON);
+    });
+  }, []);
 
 
-
-  constructor(props) {
-    super(props);
-    this.state={
-     nhanvien:[],
-     refresh:0
-      
-    }   
-    this.huy= this.huy.bind(this);
-     
-  }
-
-
-  huy(id){
-    
-    fetch(URL.localhost+"/App_API/LichHen/HuyLichHen.php", {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "id_LichHen":id,
-      })
-  })
-      .then((response) => response.json())
-      .then((json) => {
-        if(json.kq>0){ 
-          console.log('ok');
-          Alert.alert(
-            'Thông báo!',
-            `Hủy lịch thành công !`,
-          );
-
-       }
-        
-      })
-  }
-
-  render() {
-
-    const {
-        image, text, flatlist, body,item,title,
-    } = styles;
-
-    const {navigation} = this.props;
-    const {data}=this.props.route.params;
 
 
     return (
@@ -88,7 +59,20 @@ export default class KhachHangCuaToi extends Component {
            keyExtractor={({id_LichHen}, index) => id_LichHen}
           renderItem={({item}) => (
             <TouchableOpacity  style={styles.listItem}
-              
+              onPress={()=>navigation.navigate('ThongTinKH',{
+                  idKH: item.id_KhachHang,
+                  gioitinh: item.GioiTinh,
+                  Ten: item.TenKH,
+                  anh: item.HinhAnh,
+                  sdt: item.SoDienThoai,
+                  email: item.Email,
+                  diachi: item.DiaChi,
+                  ngay:item.NgaySinh,
+                  cannang: item.CanNang,
+                  chieucao: item.ChieuCao
+
+              })
+              }
              
             >
               <Image
@@ -110,7 +94,7 @@ export default class KhachHangCuaToi extends Component {
       </View>
     );
   }
-}
+
 
 
 const styles = StyleSheet.create({
@@ -168,7 +152,8 @@ const styles = StyleSheet.create({
         //flex:5,
         justifyContent:'center',
         backgroundColor:'#a50000',
-        marginLeft:10
+     //   marginLeft:10,
+        margin:12
       },
 
       image: {
@@ -213,3 +198,5 @@ const styles = StyleSheet.create({
        
       },
   });
+
+export default KhachHangCuaToi;
