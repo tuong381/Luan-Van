@@ -101,10 +101,7 @@ const LichSuHoatDong = ({route, navigation}) => {
                 <TouchableOpacity style={styles.listItem}>
                   <Image 
                     source={{
-                      uri:
-                        URL.localhost +
-                        '/LuanVan/public/upload/nhanvien/' +
-                        item.AnhDaiDien,
+                      uri: item.AnhDaiDien,
                     }}
                     style={styles.coverImage}
                   />

@@ -144,7 +144,7 @@ setTimeout(() => { clearInterval(timerId);  }, 25000);
             //  
             >
                 <Image
-                source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                source={{uri: item.AnhDaiDien}}
                 style={styles.coverImage}
               />
               

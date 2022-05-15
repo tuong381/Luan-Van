@@ -147,7 +147,8 @@ export default class Shop extends React.Component {
                     gia:item.Gia,
                     soluong:item.SoLuong_SP,
                     mota:item.MoTaSanPham,
-                    anh:item.HinhAnh_SP
+                    anh:item.HinhAnh_SP,
+                    sodaban:item.SoLuong_SPDaBan
                   })}
                   >
                   <View style={styles.item}>

@@ -50,7 +50,8 @@ export default class DanhSachSP extends Component {
                     gia:item.Gia,
                     soluong:item.SoLuong_SP,
                     mota:item.MoTaSanPham,
-                    anh:item.HinhAnh_SP
+                    anh:item.HinhAnh_SP,
+                    sodaban:item.SoLuong_SPDaBan
                 })}
                 >
                 <Image

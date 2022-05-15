@@ -123,7 +123,7 @@ export default class ListThongBao extends Component {
               {item.TrangThai == -3 && (
                 <TouchableOpacity style={styles.listItem}>
                   <Image
-                     source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                     source={{uri:item.AnhDaiDien}}
                     style={styles.coverImage}
                   />
 
@@ -145,7 +145,7 @@ export default class ListThongBao extends Component {
             {item.TrangThai == 1 && (
                 <TouchableOpacity style={styles.listItem}>
                   <Image
-                     source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                     source={{uri:item.AnhDaiDien}}
                     style={styles.coverImage}
                   />
 
@@ -171,7 +171,7 @@ export default class ListThongBao extends Component {
             {item.TrangThai == 4 && (
                 <TouchableOpacity style={styles.listItem}>
                   <Image
-                    source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                    source={{uri:item.AnhDaiDien}}
                     style={styles.coverImage}
                   />
 

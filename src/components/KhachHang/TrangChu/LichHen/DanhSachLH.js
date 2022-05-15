@@ -130,7 +130,7 @@ console.log(id,idNV,idKH);
               //   })}
             >
               <Image
-                 source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                 source={{uri:item.AnhDaiDien}}
                 style={styles.coverImage}
               />
               {/* <Text>{item.id_KhachHang}</Text> */}

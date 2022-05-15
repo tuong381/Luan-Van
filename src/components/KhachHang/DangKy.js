@@ -107,7 +107,7 @@ export default class DangKy extends Component{
             style={{flex: 30}}></ImageBackground>
         </View> */}
 
-        <View style={{ alignItems: 'center'}}>
+        <View style={{ alignItems: 'center', marginTop:70,}}>
           <Text style={styles.title}>Đăng Ký</Text>
           <TextInput
             placeholder="Email"
@@ -173,10 +173,10 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:70
+   // marginTop:70,
    // justifyContent: 'center',
   //  alignItems: 'center',
-   // backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   title:{
     fontSize:30,

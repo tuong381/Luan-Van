@@ -196,7 +196,7 @@ export default class Chat extends Component {
           <View style={styles.baoTitle}>
 
           <Image
-                source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+anh}}
+                source={{uri: anh}}
                 style={styles.coverImage}
               />
 

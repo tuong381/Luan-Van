@@ -100,7 +100,7 @@ useEffect(() => {
           `Đặt hàng thành công!`,
         );
         navigation.pop();
-        navigation.pop();
+      //  navigation.pop();
 
       })
 
@@ -113,6 +113,8 @@ useEffect(() => {
     const {soluong} = route.params;
     const {mota} = route.params;
     const {anh} =route.params;
+
+    const {sodaban} =route.params;
 
     return (
       <ScrollView>
@@ -139,6 +141,13 @@ useEffect(() => {
               Số lượng :
             </Text>
             <Text style={{color: '#333333', fontSize: 18}}> {soluong}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginLeft: 40, color: '#333333', fontSize: 18}}>
+              Đã bán :
+            </Text>
+            <Text style={{color: '#333333', fontSize: 18}}> {sodaban}</Text>
           </View>
 
           <View style={{width: 100, marginLeft:200 , flexDirection:'row'}}>

@@ -104,7 +104,7 @@ export default class DanhSachNV extends Component {
               })}
             >
               <Image
-                source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+item.AnhDaiDien}}
+                source={{uri:item.AnhDaiDien}}
                 style={styles.coverImage}
               />
               

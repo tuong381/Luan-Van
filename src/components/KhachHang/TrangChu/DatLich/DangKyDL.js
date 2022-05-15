@@ -176,7 +176,7 @@ export default class DangKyDL extends Component {
         </View>
 
         <View style={styles.listItem}>
-          <Image source={{uri: URL.localhost +'/LuanVan/public/upload/nhanvien/'+anh}}
+          <Image source={{uri: anh}}
                 style={styles.image} />
           <View style={styles.metaInfo}>
             <Text style={[styles.textTen]}>{Ten}</Text>
