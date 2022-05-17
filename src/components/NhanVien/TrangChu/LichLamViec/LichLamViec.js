@@ -21,7 +21,7 @@ export default class LichLamViec extends Component {
     super(props);
     this.state = {
       nhanvien: [],
-      refresh: 0,
+    //  refresh: 0,
     };
     this.huy = this.huy.bind(this);
   }
@@ -138,7 +138,7 @@ export default class LichLamViec extends Component {
                 <Text style={styles.text}>Giờ đặt: {item.GioDK} </Text>
                 <Text style={styles.text}>Tổng tiền: {item.TongTien} </Text>
  
-                {item.TrangThaiLichHen == 1 && (
+                {item.TrangThaiLichHen ==1 && (
                   <View style={styles.btnHuy}>
                     <View>
                       <Button

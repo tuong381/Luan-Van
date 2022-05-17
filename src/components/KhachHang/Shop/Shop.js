@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   Image, 
+  TextInput
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -92,6 +93,29 @@ export default class Shop extends React.Component {
             style={{flex: 30}}></ImageBackground>
         </View>
 
+
+        <TouchableOpacity style={styles.btnSearch}
+          onPress={()=>{this.props.navigation.navigate('TimKiemSP')}}
+        
+        >
+            <TextInput 
+            style={{marginLeft:20}}
+                placeholder="Search"
+                underlineColorAndroid="transparent"
+                placeholderTextColor="#cc0000"
+                // onChangeText={keyword => this.setState({keyword})}
+                // value={this.state.keyword}
+            />
+            <Text style={{marginLeft:240, marginTop:15}}
+               
+            
+            >
+                <Icon name="search" color="#cc0000" size={15} />
+            </Text>
+        </TouchableOpacity>
+
+
+
         <View style={{flex:70}}>
           <Text style={styles.title}>Danh mục sản phẩm </Text>
 
@@ -159,7 +183,7 @@ export default class Shop extends React.Component {
  
                       </Image>
                       <Text style={styles.textPT}>{item.TenSanPham}</Text>
-                   
+                      {/* <Text style={styles.text}>{item.Gia}</Text> */}
                     </View>
                 </TouchableOpacity>
                 
@@ -316,4 +340,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
   },
+
+  btnSearch: {
+    backgroundColor: '#e6e6e6',
+    marginHorizontal: 20,
+    borderRadius: 20,
+    color: '#cc0000',
+    marginTop: 20,
+    flexDirection:'row'
+  },
+
 });

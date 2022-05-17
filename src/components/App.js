@@ -105,6 +105,7 @@ import DoiLichHenNV from './NhanVien/TrangChu/LichLamViec/DoiLichHenNV';
 import LichSuHoatDong from './KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
 import ChatVD from './KhachHang/TrangChu/TinNhan/ChatVD';
 import ThongTinKH from './NhanVien/TrangChu/KhachHangCuaToi/ThongTinKH';
+import TimKiemSP from './KhachHang/Shop/SanPham/TimKiemSP';
 
  export default class App extends Component {
 
@@ -176,6 +177,8 @@ import ThongTinKH from './NhanVien/TrangChu/KhachHangCuaToi/ThongTinKH';
 						case 'LichSuHoatDong': return  <LichSuHoatDong navigator={navigator} />;
 
 						case 'ChatVD': return  <ChatVD navigator={navigator} />;
+
+						case 'TimKiemSP': return  <TimKiemSP navigator={navigator} />;
 
 
 

@@ -56,7 +56,7 @@ const TrangChu = ({route, navigation}) => {
       .then(json => {
         navigation.navigate('LichLamViec', {
           data: json,
-          id_NhanVien: id,
+          // id_NhanVien: id,
         });
       });
   };

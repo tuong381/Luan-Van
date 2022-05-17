@@ -160,10 +160,20 @@ export default class ListThongBao extends Component {
                   onPress={() => {
                     this.xuly(item.id_ThongBao);
                   }}
-                  title="Xử lí"
+                  title="Xử lý"
+                  color="#339966"
+                />
+                <Text>   </Text>
+                <Button
+                  onPress={() => {
+                    this.huy(item.id_ThongBao);
+                  }}
+                  title="Hủy"
                   color="#a50000"
                 />
               </View>
+
+             
                   </View>
                 </TouchableOpacity>
               )}

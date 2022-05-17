@@ -73,7 +73,25 @@ export default class DangKyDL extends Component {
   };
 
   datlich( id_KH, id_NV, id_DV,ngay, time,Ten,email,sdt,anh,gioitinh,diachi,date,kinhnghiem,tenve,gia) {
-    console.log( ngay, time);
+    console.log(  ngay, time);
+    if(ngay==''){
+      Alert.alert(
+        'Warning!',
+        `Vui lòng chọn ngày !`,
+      );
+      return;
+    }
+
+    if(time==''){
+      Alert.alert(
+        'Warning!',
+        `Vui lòng chọn giờ !`,
+      );
+      return;
+    }
+
+
+
     fetch(URL.localhost+"/App_API/KiemTraDL.php", {
       method:"POST",
       headers:{
@@ -93,10 +111,10 @@ export default class DangKyDL extends Component {
       this.setState({result:responseJson.id}) 
       
      console.log(responseJson.id);
-     if(responseJson.id ==0){
+     if(this.state.result==0){
       Alert.alert(
         'Warning!',
-        `Vui lòng chọn giờ !`,
+        `Vui lòng chọn ngày và giờ lại Ngày và giờ bạn chọn trùng với lịch bận của nhân viên!`,
       );
      }else{
     

@@ -51,6 +51,7 @@ import DoiLichHenNV from '../src/components/NhanVien/TrangChu/LichLamViec/DoiLic
 import LichSuHoatDong from '../src/components/KhachHang/TaiKhoan/LichSuHoatDong/LichSuHoatDong';
 import ChatVD from '../src/components/KhachHang/TrangChu/TinNhan/ChatVD';
 import ThongTinKH from '../src/components/NhanVien/TrangChu/KhachHangCuaToi/ThongTinKH';
+import TimKiemSP from '../src/components/KhachHang/Shop/SanPham/TimKiemSP';
 
 
 
@@ -104,6 +105,8 @@ function StackNavigator() {
     <Stack.Screen name={"LichSuHoatDong"} component={LichSuHoatDong}  />
     
     <Stack.Screen name={"ChatVD"} component={ChatVD}  />
+    <Stack.Screen name={"TimKiemSP"} component={TimKiemSP}  />
+
 
 
 
