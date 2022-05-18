@@ -10,7 +10,7 @@ import {
   FlatList,
   Dimensions,
   ScrollView,
-  Alert
+  Alert,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,243 +22,211 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
 //  const DangKyDL = ({route, navigation}) => {
-export default class DoiLichHenNV extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isVisible: false,
-      ngay: '',
-      mang: [],
-      gio:'',
+const DoiLichHenNV = ({route, navigation}) => {
+  const {tenve} = route.params;
+  const {gia} = route.params;
+  const {id} = route.params;
+  const {idNV} = route.params;
 
-      result:'...'
-    
-    };
+  const {Ten} = route.params;
+  const {anh} = route.params;
+  const {sdt} = route.params;
+  const {kinhnghiem} = route.params;
+  const {ngay} = route.params;
+  const {gio} = route.params;
+  const {idKH} = route.params;
+  const {id_LichHen} = route.params;
 
-    this.doilich = this.doilich.bind(this);
-  }
+  const [isVisible, setisVisible] = useState(false);
+  const [Ngay, setNgay] = useState(ngay);
+  const [Gio, setGio] = useState(gio);
+  const [result, setresult] = useState('');
 
-  handlePicked = date => {
-    this.setState({
-      isVisible: false,
-      // ngay: moment(date).format('DD.MM.YYYY'),
-      ngay: moment(date).format('YYYY.MM.DD'),
-      
-      // .format()
-    });
+  // handlePicked = date => {
+  //   this.setState({
+  //     isVisible: false,
+  //     // ngay: moment(date).format('DD.MM.YYYY'),
+  //     ngay: moment(date).format('YYYY.MM.DD'),
 
-   
-  };
+  //     // .format()
+  //   });
 
-  handleClickButton=(time)=>{
+  // };
+
+  const handleClickButton = time => {
     //  console.log(time);
-      this.setState({
-        gio: time
-        
-      });
-  
-  }
+    setGio(time);
+  };
 
-  hidePicker = () => {
-    this.setState({
-      isVisible: false,
+  const handlePicked = date => {
+    setisVisible(false, setNgay(moment(date).format('YYYY.MM.DD')));
+  };
+
+  const hidePicker = () => {
+    setisVisible(false);
+  };
+
+  const showDateTimePicker = () => {
+    setisVisible({
+      isVisible: true,
     });
   };
 
-  showDateTimePicker = () => {
-    this.setState({
-      isVisible: true,
-    }); 
-  }; 
-
-  doilich( idLH,idNV, ngaymoi,giomoi,  idKH) {
-    console.log(idLH, idNV, ngaymoi,giomoi,  idKH);
-    fetch(URL.localhost+"/App_API/NhanVien/LichLamViec/DoiLichNV.php", {
-      method:"POST",
-      headers:{ 
-       "Accept": "application/json",
-        "Content-Type": "application/json" 
-      },
-      body: JSON.stringify({
-        "id_LichHen":idLH, 
-        "NgayDK":ngaymoi,  
-        "GioDK":giomoi,
-        "id_NhanVien":idNV
-      })
-    })
-    .then((response)=>response.json())
-    .then((responseJson)=>{
-      this.setState({result:responseJson.id}) 
-      
-     console.log(responseJson.id);
-     if(responseJson.id ==0){
-      Alert.alert(
-        'Warning!',
-        `Vui lòng chọn lại giờ do nhân viên bận !`,
-      );
-     }else{
-      Alert.alert(
-        'Thông báo!',
-        `Bạn đã gửi yêu cầu cập nhật lịch hẹn thành công !`,
-      ); 
-      this.props.navigation.pop();
-      this.props.navigation.pop();
-     }
-
- 
-    })
-    .catch((error) => {
-      console.error(error);
-
-    }) 
- 
-
-    // thong bao
-    fetch(URL.localhost+"/App_API/NhanVien/ThongBao/ThongBaoDoiLichNV.php", {
+  const doilich = (idLH, idNV, ngaymoi, giomoi, idKH) => {
+    console.log(idLH, idNV, ngaymoi, giomoi, idKH);
+    fetch(URL.localhost + '/App_API/NhanVien/LichLamViec/DoiLichNV.php', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "id_LichHen":idLH,
-        "id_NhanVien":idNV,
-        "id_KhachHang":idKH,
+        id_LichHen: idLH,
+        NgayDK: ngaymoi,
+        GioDK: giomoi,
+        id_NhanVien: idNV,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        setresult(responseJson.id);
+
+        console.log(responseJson.id);
+        if (responseJson.id == 0) {
+          Alert.alert('Warning!', `Vui lòng chọn lại giờ do nhân viên bận !`);
+        } else {
+          Alert.alert(
+            'Thông báo!',
+            `Bạn đã gửi yêu cầu cập nhật lịch hẹn thành công !`,
+          );
+          navigation.pop();
+          navigation.pop();
+        }
       })
-  })
-      .then((response) => response.json())
+      .catch(error => {
+        console.error(error);
+      });
 
-  }
+    // thong bao
+    fetch(URL.localhost + '/App_API/NhanVien/ThongBao/ThongBaoDoiLichNV.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id_LichHen: idLH,
+        id_NhanVien: idNV,
+        id_KhachHang: idKH,
+      }),
+    }).then(response => response.json());
+  };
 
-  render() {
-    const data = [
-        {time: '6:00 - 7:30', id_time: '1'},
-        {time: '9:00 - 10:30', id_time: '2'},
-        {time: '16:00 - 17:30', id_time: '3'},
-        {time: '18:00 -19:30', id_time: '4'},
-    ];
+  // render() {
+  const data = [
+    {time: '6:00 - 7:30', id_time: '1'},
+    {time: '9:00 - 10:30', id_time: '2'},
+    {time: '16:00 - 17:30', id_time: '3'},
+    {time: '18:00 -19:30', id_time: '4'},
+  ];
 
-    const {tenve} = this.props.route.params;
-    const {gia} = this.props.route.params;
-    const {id} = this.props.route.params;
-    const {idNV} = this.props.route.params;
-
-    const {Ten} = this.props.route.params;
-    const {anh} = this.props.route.params;
-    const {sdt} = this.props.route.params;
-    const {kinhnghiem} = this.props.route.params;
-    const {ngay} = this.props.route.params;
-    const {gio} = this.props.route.params;
-    const {idKH}=this.props.route.params;
-    const {id_LichHen}= this.props.route.params;
- 
-
-    
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => {
-              this.props.navigation.pop();
-            }}>
-            <Icon name="angle-left" color="#eee" size={30} />
-          </TouchableOpacity>
-          <View style={styles.baoTitle}>
-            <Text style={styles.titleHeader}> Dời lịch hẹn</Text>
-          </View>
-        </View>
-
-        <View style={{flexDirection: 'row', margin: 10}}>
-          <Icon name="user" color="#a50000" size={20} />
-          <Text style={styles.title}>Khách hàng của bạn : </Text>
-        </View>
-
-        <View style={styles.listItem}>
-          <Image source={{uri: anh}} style={styles.image} />
-          <View style={styles.metaInfo}>
-            <Text style={[styles.textTen]}>{Ten}</Text>
-            <Text style={[styles.text]}>Số điện thoại: {sdt} </Text>
-            <Text style={[styles.text]}>Ngày đã đăng ký: {ngay} </Text>
-            <Text style={[styles.text]}>Giờ đã đăng ký: {gio} </Text>
-          </View>
-        </View>
-
-        <View style={{flexDirection: 'row', marginTop: 30, marginLeft: 10}}>
-          <Icon name="calendar" color="#a50000" size={20} />
-          <Text style={styles.title}>Thời gian đặt lịch : </Text>
-        </View>
-
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={this.showDateTimePicker}>
-            <Text style={styles.textbutton}>Click vào để chọn ngày</Text>
-          </TouchableOpacity>
-          <DateTimePicker
-            isVisible={this.state.isVisible}
-            onConfirm={this.handlePicked}
-            onCancel={this.hidePicker}
-            mode={'date'}
-            is24Hour={true}
-            minimumDate={new Date()}
-          />
-
-    
-          <Text style={[styles.textve]}>{this.state.ngay}</Text>
-         
-          
-        </View>
-
-        <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 30}}>
-          <Icon name="hourglass" color="#a50000" size={20} />
-          <Text style={styles.title}>Chọn giờ : </Text>  
-          <Text style={[styles.textve]}>{this.state.gio}</Text>
-        </View>
-        <View style={{height: 70}}>
-          <FlatList
-            style={{marginTop: 15}}
-            horizontal
-            data={data}
-            keyExtractor={({id_time}, index) => id_time}
-            renderItem={({item}) => (
-                <View style={styles.time}>
-                 {/* <Text style={[styles.text, styles.textTen]}>{item.time}</Text> */}
-                 <Button  
-                    onPress={()=>{this.handleClickButton(item.time)}}
-                    style={{color:'black'}}
-                    color='#ff8080'
-                    title={item.time} 
-
-                 />
-                 </View>
-
-
-            )}
-          />
-        </View>
-        
-
-        <View style={{flexDirection: 'row', margin: 10}}>
-          <Icon name="thumbs-up" color="#a50000" size={20} />
-          <Text style={styles.title}>Loại dịch vụ được chọn : </Text>
-          <Text style={[styles.textve]}>{tenve} / {gia} vnđ</Text>
-        </View>
-
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
         <TouchableOpacity
-          style={styles.btnLogin}
-          onPress={() => { 
-            this.doilich(id,idNV,this.state.ngay, this.state.gio,idKH);
-          }}
-          
-          >
-          <Text style={styles.txtLogin}>Dời lịch</Text>
+          style={styles.backButton}
+          onPress={() => {
+            navigation.pop();
+          }}>
+          <Icon name="angle-left" color="#eee" size={30} />
         </TouchableOpacity>
-        <Text style={{color:'white'}}>{this.state.result}</Text>
+        <View style={styles.baoTitle}>
+          <Text style={styles.titleHeader}> Dời lịch hẹn</Text>
+        </View>
       </View>
-    );
-  }
-}
+
+      <View style={{flexDirection: 'row', margin: 10}}>
+        <Icon name="user" color="#a50000" size={20} />
+        <Text style={styles.title}>Khách hàng của bạn : </Text>
+      </View>
+
+      <View style={styles.listItem}>
+        <Image source={{uri: anh}} style={styles.image} />
+        <View style={styles.metaInfo}>
+          <Text style={[styles.textTen]}>{Ten}</Text>
+          <Text style={[styles.text]}>Số điện thoại: {sdt} </Text>
+          <Text style={[styles.text]}>Ngày đã đăng ký: {ngay} </Text>
+          <Text style={[styles.text]}>Giờ đã đăng ký: {gio} </Text>
+        </View>
+      </View>
+
+      <View style={{flexDirection: 'row', marginTop: 30, marginLeft: 10}}>
+        <Icon name="calendar" color="#a50000" size={20} />
+        <Text style={styles.title}>Thời gian đặt lịch : </Text>
+      </View>
+
+      <View style={{flexDirection: 'row', marginTop: 10}}>
+        <TouchableOpacity style={styles.button} onPress={showDateTimePicker}>
+          <Text style={styles.textbutton}>Click vào để chọn ngày</Text>
+        </TouchableOpacity>
+        <DateTimePicker
+          isVisible={isVisible}
+          onConfirm={handlePicked}
+          onCancel={hidePicker}
+          mode={'date'}
+          is24Hour={true}
+          minimumDate={new Date()}
+        />
+
+        <Text style={[styles.textve]}>{Ngay}</Text>
+      </View>
+
+      <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 30}}>
+        <Icon name="hourglass" color="#a50000" size={20} />
+        <Text style={styles.title}>Chọn giờ : </Text>
+        <Text style={[styles.textve]}>{Gio}</Text>
+      </View>
+      <View style={{height: 70}}>
+        <FlatList
+          style={{marginTop: 15}}
+          horizontal
+          data={data}
+          keyExtractor={({id_time}, index) => id_time}
+          renderItem={({item}) => (
+            <View style={styles.time}>
+              {/* <Text style={[styles.text, styles.textTen]}>{item.time}</Text> */}
+              <Button
+                onPress={() => {
+                  handleClickButton(item.time);
+                }}
+                style={{color: 'black'}}
+                color="#ff8080"
+                title={item.time}
+              />
+            </View>
+          )}
+        />
+      </View>
+
+      <View style={{flexDirection: 'row', margin: 10}}>
+        <Icon name="thumbs-up" color="#a50000" size={20} />
+        <Text style={styles.title}>Loại dịch vụ được chọn : </Text>
+        <Text style={[styles.textve]}>
+          {tenve} / {gia} vnđ
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        style={styles.btnLogin}
+        onPress={() => {
+          doilich(id, idNV, Ngay, Gio, idKH);
+        }}>
+        <Text style={styles.txtLogin}>Dời lịch</Text>
+      </TouchableOpacity>
+      <Text style={{color: 'white'}}>{result}</Text>
+    </View>
+  );
+};
+// }
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -374,11 +342,11 @@ const styles = StyleSheet.create({
     //  marginRight:10,
     paddingVertical: 5,
     paddingHorizontal: 5,
-  //  backgroundColor: '#fff',
+    //  backgroundColor: '#fff',
     width: 110,
     height: 45,
 
-  //  marginBottom:20
+    //  marginBottom:20
   },
 
   btnLogin: {
@@ -399,3 +367,4 @@ const styles = StyleSheet.create({
 });
 
 // export default DangKyDL;
+export default DoiLichHenNV;

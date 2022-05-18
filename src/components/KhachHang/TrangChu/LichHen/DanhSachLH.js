@@ -180,7 +180,7 @@ console.log(id,idNV,idKH);
                       <Button onPress={()=>navigation.navigate('DoiLichHen',{
                         id:item.id_LichHen,
                         sdt:item.SoDienThoai,
-                        kinhnghien:item.KinhNghiem,
+                        kinhnghiem:item.KinhNghiem,
                         tenve:item.TenDichVu,
                         ngay:item.NgayDK,
                         gio:item.GioDK,

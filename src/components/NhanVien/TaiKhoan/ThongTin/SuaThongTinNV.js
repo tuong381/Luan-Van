@@ -94,7 +94,7 @@ const SuaThongTinNV= ({route,navigation}) => {
         `Cập nhật thông tin thành công`,
       );
         navigation.pop();
-        navigation.pop();
+       // navigation.pop();
      }
       
     })
@@ -209,7 +209,7 @@ const showDateTimePicker = () => {
             onCancel={hidePicker}
             mode={'date'}
             is24Hour={true}
-            minimumDate={new Date()}
+           // minimumDate={new Date()}
           />
 
     
@@ -333,7 +333,8 @@ const showDateTimePicker = () => {
        borderRadius: 20,
        marginTop:30,
        width:200,
-       marginLeft:100
+       marginLeft:100,
+       marginBottom:50
    
     },
     txtLogin:{

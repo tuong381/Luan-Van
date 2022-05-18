@@ -62,27 +62,8 @@ const TaiKhoan = ({route, navigation}) => {
 
   const pushView = (name, id) => {
     if (name == 'Hồ sơ cá nhân') {
-      //  console.log(id);
-      //  navigation.navigate('vd');
-      fetch(URL.localhost + '/App_API/taiKhoan.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id_KhachHang: id,
-        }),
-      })
-        .then(response => response.json())
-        .then(json => {
-          //  const currentKH={data:json};
-          //   console.log(json);
-
-          // console.log({data:json.TenKH});
-          navigation.navigate('HoSo', {
-            data: json,
-          });
-        });
+     
+      navigation.navigate('HoSo');
     } else if(name == 'Lịch sử hoạt động') { 
 
       fetch(URL.localhost + '/App_API/LichSuHD.php', {

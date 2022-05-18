@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -16,14 +16,12 @@ import {URL} from '../../../../../Ip';
 
 var URL_PT = URL.localhost + '/App_API/LichHen.php';
 
-export default class ThongBao extends Component {
-  constructor(props) {
-    super(props);
-    this.huy = this.huy.bind(this);
-    this.xoa = this.xoa.bind(this);
-  }
+const ThongBao= ({route,navigation}) => {
+  const {data}=route.params;
 
-  huy(id, idLH) {
+  const [thongbao, setthongbao] = useState(data);
+
+  const huy=(id, idLH) => {
     console.log(id, idLH);
     fetch(URL.localhost + '/App_API/NhanVien/ThongBao/HuyLich.php', {
       method: 'POST',
@@ -47,7 +45,9 @@ export default class ThongBao extends Component {
       });
   }
 
-  xoa(idTB){
+  const xoa=(idTB) =>{
+  
+
     fetch(URL.localhost + '/App_API/NhanVien/ThongBao/XoaThongBao.php', {
       method: 'POST',
       headers: {
@@ -63,19 +63,23 @@ export default class ThongBao extends Component {
         if (json.kq > 0) {
           Alert.alert('Thông báo!', `Bạn đã xóa thông báo thành công !`);
           // navigation.navigate('ThongBao');
-          this.props.navigation.pop();
+          navigation.pop();
         }
       });
+    
+   
+
+
   }
-  render() {
-    const {data} = this.props.route.params;
+  // render() {
+    
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
-              this.props.navigation.pop();
+              navigation.pop();
             }}>
             <Icon name="angle-left" color="#eee" size={30} />
           </TouchableOpacity>
@@ -85,7 +89,7 @@ export default class ThongBao extends Component {
         </View>
 
         <FlatList
-          data={data}
+          data={thongbao}
           keyExtractor={({id_ThongBao}, index) => id_ThongBao}
           renderItem={({item}) => (
             <View>
@@ -105,7 +109,7 @@ export default class ThongBao extends Component {
                     <View style={styles.btnHuy}>
                       <Button
                         onPress={() => {
-                          this.huy(item.id_ThongBao, item.id_LichHen);
+                          huy(item.id_ThongBao, item.id_LichHen);
                         }}
                         title="Hủy"
                         color="#a50000"
@@ -127,6 +131,11 @@ export default class ThongBao extends Component {
                       {item.TenKH} đã chấp nhận {item.TieuDe} của bạn
                     </Text>
                     <Text style={styles.text1}>{item.created_at}</Text>
+                    <TouchableOpacity style={styles.btnIcon}
+                      onPress={()=> xoa(item.id_ThongBao)}
+                    >
+                      <Icon name="trash" color="#ff6666" size={30} />
+                    </TouchableOpacity>
 
                     {/* <View style={styles.btnHuy}>
                       <Text style={{color:'black', fontSize:16}}>Đã xử lý</Text>
@@ -147,6 +156,11 @@ export default class ThongBao extends Component {
                       {item.TenKH} đã đồng ý yêu cầu {item.TieuDe} của bạn
                     </Text>
                     <Text style={styles.text1}>{item.created_at}</Text>
+                    <TouchableOpacity style={styles.btnIcon}
+                      onPress={()=> xoa(item.id_ThongBao)}
+                    >
+                      <Icon name="trash" color="#ff6666" size={30} />
+                    </TouchableOpacity>
 
                     {/* <View style={styles.btnHuy}>
                       <Text style={{color:'black', fontSize:16}}>Đã xử lý</Text>
@@ -169,7 +183,7 @@ export default class ThongBao extends Component {
                     <Text style={styles.text1}>{item.created_at}</Text>
 
                     <TouchableOpacity style={styles.btnIcon}
-                      onPress={()=> this.xoa(item.id_ThongBao)}
+                      onPress={()=> xoa(item.id_ThongBao)}
                     >
                       <Icon name="trash" color="#ff6666" size={30} />
                     </TouchableOpacity>
@@ -182,7 +196,7 @@ export default class ThongBao extends Component {
       </View>
     );
   }
-}
+// }
 
 const styles = StyleSheet.create({
   listItem: {
@@ -296,3 +310,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default ThongBao;

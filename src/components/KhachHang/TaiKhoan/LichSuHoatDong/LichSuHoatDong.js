@@ -14,7 +14,7 @@ import {
   FlatList,
   Button,
 } from 'react-native';
-
+import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {URL} from '../../../../../Ip';
 
@@ -146,6 +146,14 @@ const LichSuHoatDong = ({route, navigation}) => {
                     <Text style={styles.text}>
                       Tổng tiền: {item.TongHoaDon}{' '}
                     </Text>
+
+                    {item.TrangThaiHoaDon ==0 ?
+                         <Text style={styles.text}>Trạng thái hóa đơn:chưa thanh toán</Text>  
+                      
+                      :
+                      <Text style={styles.text}>Trạng thái hóa đơn: Đã thanh toán</Text> 
+                  } 
+
                   </View>
                 </TouchableOpacity>
               )}
@@ -321,15 +329,20 @@ const SanPhamComponent = ({}) => {
                       />
                     </View>
 
-                    <Text style={styles.text}>Ngày đặt: {item.Ngay} </Text>
-                    {item.TrangThaiHoaDon ==0 ?
-                         <Text style={styles.text}>Trạng thái: chưa thanh toán</Text>  
-                      :
-                      <Text style={styles.text}>Trạng thái: Đã thanh toán</Text> 
-                  } 
+                    
+
+                    <Text style={styles.text}>Ngày đặt: {(moment(item.Ngay).format('YYYY.MM.DD'))} </Text>
                     <Text style={styles.text}>
                       Tổng tiền: {item.TongHoaDon}{' '}
                     </Text>
+                    {item.TrangThaiHoaDon ==0 ?
+                         <Text style={styles.text}>Trạng thái hóa đơn:chưa thanh toán</Text>  
+                      : item.TrangThaiHoaDon ==1 ?
+                      <Text style={styles.text}>Trạng thái hóa đơn: Đã xác nhận</Text> 
+                      :
+                      <Text style={styles.text}>Trạng thái hóa đơn: Đã thanh toán</Text> 
+                  } 
+                    
                   </View>
                 </TouchableOpacity>
               )}
@@ -394,6 +407,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#fff', 
     flexDirection: 'row',
+   // width: 270,
   },
   coverImage: {
     // width: 120,
@@ -412,15 +426,17 @@ const styles = StyleSheet.create({
 
   metaInfo: {
     marginLeft: 30,
+    width: 270,
   },
-  metaInfo: {
-    marginLeft: 30,
-  },
+  // metaInfo: {
+  //   marginLeft: 30,
+  // },
 
   text: {
     fontSize: 15,
     color: 'black',
     marginTop: 10,
+    width: 245,
   },
 
   textTen: {

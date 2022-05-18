@@ -65,31 +65,8 @@ const data=[
 
 const pushView=(name,id)=>{
   if(name=="Hồ sơ cá nhân"){
-    console.log(id);
-  //  navigation.navigate('vd');
-  fetch(URL.localhost+"/App_API/NhanVien/TaiKhoanNV.php", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      "id_NhanVien":id
-    })
-})
- 
-
-    .then((response) => response.json())
-    .then((json) => {
-    //  const currentKH={data:json};
-      console.log(json);
-      
-      console.log({data:json});
-      navigation.navigate('HoSoNV',{
-        data:json
-        
-      })
-      
-    })
+    
+    navigation.navigate('HoSoNV');
 
   }else{
     navigation.navigate('Home', {});

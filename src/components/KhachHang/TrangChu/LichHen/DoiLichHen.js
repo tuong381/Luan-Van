@@ -21,57 +21,46 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
-//  const DangKyDL = ({route, navigation}) => {
-export default class DoiLichHen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isVisible: false,
-      ngay: '',
-      mang: [],
-      gio:'',
+  const DoiLichHen = ({route, navigation}) => {
+    const {tenve} = route.params;
+    const {gia} = route.params;
+    const {id} = route.params;
+    const {idNV} =route.params;
 
-      result:'...'
-    
+    const {Ten} =route.params;
+    const {anh} = route.params;
+    const {sdt} = route.params;
+    const {kinhnghiem} = route.params;
+    const {ngay} = route.params;
+    const {gio} = route.params;
+    const {id_KhachHang}=route.params;
+    const {id_LichHen}= route.params;
+
+    const [isVisible, setisVisible] = useState(false);
+    const [Ngay, setNgay] = useState(ngay);
+    const [Gio, setGio] = useState(gio);
+    const [result, setresult] = useState('');
+
+    const handleClickButton = time => {
+      //  console.log(time);
+      setGio(time);
+    };
+  
+    const handlePicked = date => {
+      setisVisible(false, setNgay(moment(date).format('YYYY.MM.DD')));
+    };
+  
+    const hidePicker = () => {
+      setisVisible(false);
+    };
+  
+    const showDateTimePicker = () => {
+      setisVisible({
+        isVisible: true,
+      });
     };
 
-    this.doilich = this.doilich.bind(this);
-  }
-
-  handlePicked = date => {
-    this.setState({
-      isVisible: false,
-      // ngay: moment(date).format('DD.MM.YYYY'),
-      ngay: moment(date).format('YYYY.MM.DD'),
-      
-      // .format()
-    });
-
-   
-  };
-
-  handleClickButton=(time)=>{
-    //  console.log(time);
-      this.setState({
-        gio: time
-        
-      });
-  
-  }
-
-  hidePicker = () => {
-    this.setState({
-      isVisible: false,
-    });
-  };
-
-  showDateTimePicker = () => {
-    this.setState({
-      isVisible: true,
-    }); 
-  }; 
-
-  doilich( idLH,idNV, ngaymoi,giomoi,  idKH) {
+  const doilich= ( idLH,idNV, ngaymoi,giomoi,  idKH) => {
     console.log(idLH, idNV, ngaymoi,giomoi,  idKH);
     fetch(URL.localhost+"/App_API/LichHen/DoiLich.php", {
       method:"POST",
@@ -88,7 +77,7 @@ export default class DoiLichHen extends Component {
     })
     .then((response)=>response.json())
     .then((responseJson)=>{
-      this.setState({result:responseJson.id}) 
+      setresult(responseJson.id);
       
      console.log(responseJson.id);
      if(responseJson.id ==0){
@@ -101,8 +90,8 @@ export default class DoiLichHen extends Component {
         'Thông báo!',
         `Đã cập nhật lịch hẹn thành công !`,
       );
-      this.props.navigation.pop();
-      this.props.navigation.pop();
+      navigation.pop();
+      navigation.pop();
      }
 
  
@@ -129,7 +118,7 @@ export default class DoiLichHen extends Component {
 
   }
 
-  render() {
+
     const data = [
       {time: '6:00 - 7:30', id_time: '1'},
       {time: '9:00 - 10:30', id_time: '2'},
@@ -137,19 +126,7 @@ export default class DoiLichHen extends Component {
       {time: '18:00 -19:30', id_time: '4'},
     ];
 
-    const {tenve} = this.props.route.params;
-    const {gia} = this.props.route.params;
-    const {id} = this.props.route.params;
-    const {idNV} = this.props.route.params;
-
-    const {Ten} = this.props.route.params;
-    const {anh} = this.props.route.params;
-    const {sdt} = this.props.route.params;
-    const {kinhnghiem} = this.props.route.params;
-    const {ngay} = this.props.route.params;
-    const {gio} = this.props.route.params;
-    const {id_KhachHang}=this.props.route.params;
-    const {id_LichHen}= this.props.route.params;
+  
  
 
     
@@ -160,7 +137,7 @@ export default class DoiLichHen extends Component {
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
-              this.props.navigation.pop();
+              navigation.pop();
             }}>
             <Icon name="angle-left" color="#eee" size={30} />
           </TouchableOpacity>
@@ -194,20 +171,20 @@ export default class DoiLichHen extends Component {
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <TouchableOpacity
             style={styles.button}
-            onPress={this.showDateTimePicker}>
+            onPress={showDateTimePicker}>
             <Text style={styles.textbutton}>Click vào để chọn ngày</Text>
           </TouchableOpacity>
           <DateTimePicker
-            isVisible={this.state.isVisible}
-            onConfirm={this.handlePicked}
-            onCancel={this.hidePicker}
+            isVisible={isVisible}
+            onConfirm={handlePicked}
+            onCancel={hidePicker}
             mode={'date'}
             is24Hour={true}
             minimumDate={new Date()}
           />
 
     
-          <Text style={[styles.textve]}>{this.state.ngay}</Text>
+          <Text style={[styles.textve]}>{Ngay}</Text>
          
           
         </View>
@@ -215,7 +192,7 @@ export default class DoiLichHen extends Component {
         <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 30}}>
           <Icon name="hourglass" color="#a50000" size={20} />
           <Text style={styles.title}>Chọn giờ : </Text>  
-          <Text style={[styles.textve]}>{this.state.gio}</Text>
+          <Text style={[styles.textve]}>{Gio}</Text>
         </View>
         <View style={{height: 70}}>
           <FlatList
@@ -227,7 +204,7 @@ export default class DoiLichHen extends Component {
                 <View style={styles.time}>
                  {/* <Text style={[styles.text, styles.textTen]}>{item.time}</Text> */}
                  <Button  
-                    onPress={()=>{this.handleClickButton(item.time)}}
+                    onPress={()=>{handleClickButton(item.time)}}
                     style={{color:'black'}}
                     color='#ff8080'
                     title={item.time} 
@@ -250,17 +227,17 @@ export default class DoiLichHen extends Component {
         <TouchableOpacity
           style={styles.btnLogin}
           onPress={() => { 
-            this.doilich(id,idNV,this.state.ngay, this.state.gio,id_KhachHang);
+            doilich(id,idNV,Ngay, Gio,id_KhachHang);
           }}
           
           >
           <Text style={styles.txtLogin}>Dời lịch</Text>
         </TouchableOpacity>
-        <Text style={{color:'white'}}>{this.state.result}</Text>
+        <Text style={{color:'white'}}>{result}</Text>
       </View>
     );
   }
-}
+
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -400,4 +377,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// export default DangKyDL;
+export default DoiLichHen;

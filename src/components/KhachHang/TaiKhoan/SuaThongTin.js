@@ -92,7 +92,7 @@ const SuaThongTin = ({route, navigation}) => {
           // navigation.navigate('HoSo');
           Alert.alert('Thông báo', `Cập nhật thông tin thành công`);
           navigation.pop();
-          navigation.pop();
+       //   navigation.pop();
         }
       });
   };
@@ -193,7 +193,7 @@ const SuaThongTin = ({route, navigation}) => {
               onCancel={hidePicker}
               mode={'date'}
               is24Hour={true}
-              minimumDate={new Date()}
+             // minimumDate={new Date()}
             />
 
             <Text style={{marginTop: 16, color: 'black', marginLeft: 20}}>

@@ -164,6 +164,7 @@ export default class ListThongBao extends Component {
                   color="#339966"
                 />
                 <Text>   </Text>
+                <View>
                 <Button
                   onPress={() => {
                     this.huy(item.id_ThongBao);
@@ -171,6 +172,7 @@ export default class ListThongBao extends Component {
                   title="Hủy"
                   color="#a50000"
                 />
+                </View>
               </View>
 
              
