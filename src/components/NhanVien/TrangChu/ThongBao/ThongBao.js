@@ -37,9 +37,9 @@ const ThongBao= ({route,navigation}) => {
       .then(json => {
         //console.log({data:json});
         if (json.kq > 0) {
-          Alert.alert('Thông báo!', `Bạn đã gửi yêu cầu hủy lịch thành công !`);
+          Alert.alert('Thông báo!', `Bạn đã hủy lịch thành công !`);
           // navigation.navigate('ThongBao');
-          this.props.navigation.pop();
+      navigation.pop();
           //this.props.navigation.pop();
         }
       });

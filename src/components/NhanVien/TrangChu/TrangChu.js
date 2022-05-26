@@ -65,7 +65,7 @@ const TrangChu = ({route, navigation}) => {
     console.log(id);
     // values.roleId = 4;
     //  let req = JSON.stringify({id_KhachHang:id});
-    fetch(URL.localhost + '/App_API/NhanVien/LichLamViec/LichLamViec.php', {
+    fetch(URL.localhost + '/App_API/NhanVien/KhachHangCuaToi.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

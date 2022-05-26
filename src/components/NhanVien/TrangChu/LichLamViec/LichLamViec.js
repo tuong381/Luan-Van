@@ -40,7 +40,7 @@ export default class LichLamViec extends Component {
       .then(json => {
         if (json.kq > 0) {
           console.log('ok');
-          Alert.alert('Thông báo!', `Hủy lịch thành công !`);
+          Alert.alert('Thông báo!', `Đã gửi yêu cầu hủy lịch thành công !`);
           this.props.navigation.pop();
         }
       });

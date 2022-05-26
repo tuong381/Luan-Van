@@ -46,7 +46,7 @@ const giamQuantity = ( soluong) =>{
 
 const tangQuantity = ( soluong) =>{
   //console.log(soluong);
-  if( soluong >0){
+  if( 10>soluong >0){
     setSoLuong_SP(soluong-2+3);
   }
   else{

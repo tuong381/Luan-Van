@@ -216,7 +216,7 @@ export default class Chat extends Component {
             renderItem={({item}, index) => this._renderChatLine(item)}
           />
 
-          <Text>{chatMessages}</Text>
+          {/* <Text>{chatMessages}</Text> */}
 
           {/* <View style={styles.chatLineView}>
             <Text style={{color: 'red'}}>

@@ -25,14 +25,16 @@ export default class ListThongBao extends Component {
     this.xoa= this.xoa.bind(this);
   }
 
-  huy(id){
+  huy(id, idLH){
+    console.log(id, idLH);
     fetch(URL.localhost+"/App_API/ThongBao/Huy.php", {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "id_ThongBao":id,       
+        id_ThongBao:id,
+        id_LichHen: idLH,       
       }) 
     }) 
       .then((response) => response.json())
@@ -150,6 +152,7 @@ export default class ListThongBao extends Component {
                   />
 
                   <View style={styles.metaInfo}>
+                    
                     <Text style={styles.text}>Nhân viên {item.TenNV} {item.TieuDe}</Text>
                     <Text style={styles.text}>Ngày cập nhật: {item.NgayDK} </Text>
                     <Text style={styles.text}>Giờ cập nhật: {item.GioDK} </Text>
@@ -167,7 +170,7 @@ export default class ListThongBao extends Component {
                 <View>
                 <Button
                   onPress={() => {
-                    this.huy(item.id_ThongBao);
+                    this.huy(item.id_ThongBao, item.id_LichHen);
                   }}
                   title="Hủy"
                   color="#a50000"
@@ -188,13 +191,14 @@ export default class ListThongBao extends Component {
                   />
 
                   <View style={styles.metaInfo}>
+                    {/* <Text>{item.id_LichHen}</Text> */}
                     <Text style={styles.text}>Nhân viên {item.TenNV} đã gửi {item.TieuDe}</Text>
                     <Text style={styles.text1}>{item.created_at}</Text>
 
                     <View style={styles.btnHuy}>
                 <Button
                   onPress={() => {
-                    this.huy(item.id_ThongBao);
+                    this.huy(item.id_ThongBao, item.id_LichHen);
                   }}
                   title="hủy"
                   color="#a50000"

@@ -153,7 +153,7 @@ export default class DangNhap extends Component{
           </TouchableOpacity>
         </View>
         <View style={{flex: 70, alignItems: 'center'}}>
-          <Text style={styles.title}>Nhan vien</Text>
+          <Text style={styles.title}>Nhân viên</Text>
           <TextInput
             placeholder="Email"
             placeholderTextColor="#cc0000"

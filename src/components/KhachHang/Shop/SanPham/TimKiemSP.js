@@ -95,17 +95,16 @@ export default class TimKiemSP extends Component {
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.listItem}
-            //   onPress={() =>
-            //     navigation.navigate('ThongTinNV', {
-            //       Ten: item.TenNV,
-            //       email: item.Email,
-            //       sdt: item.SoDienThoai,
-            //       anh: item.AnhDaiDien,
-            //       gioitinh: item.GioiTinh,
-            //       diachi: item.DiaChi,
-            //       date: item.NgaySinh,
-            //       kinhnghiem: item.KinhNghiem,
-            //     })}
+              onPress={() => this.props.navigation.navigate('ChiTietSP',{
+                idSP:item.id_SanPham,
+                tenSP:item.TenSanPham,
+               // tenDM:item.TenDanhMuc,
+                gia:item.Gia,
+                soluong:item.SoLuong_SP,
+                mota:item.MoTaSanPham,
+                anh:item.HinhAnh_SP,
+                sodaban:item.SoLuong_SPDaBan
+              })}
               >
               <Image
                 source={{uri: URL.localhost +'/LuanVan/public/upload/sanpham/'+item.HinhAnh_SP}}

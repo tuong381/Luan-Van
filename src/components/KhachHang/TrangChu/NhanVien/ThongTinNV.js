@@ -13,7 +13,10 @@ import { URL } from '../../../../../Ip';
 
 const ThongTinNV = ({route, navigation}) => {
   const nhantin = (idNV, idKH, Ten, anh) => {
-    console.log(idNV, idKH, Ten, anh);
+   // console.log(idNV, idKH, Ten, anh);
+  
+
+   let timerId= setInterval(()=>{
     fetch(URL.localhost+"/App_API/Chat/NoiDungChat.php", {
       method: 'POST',
       headers: {
@@ -22,7 +25,7 @@ const ThongTinNV = ({route, navigation}) => {
       body: JSON.stringify({
         "id_KhachHang":idKH, 
         "id_NhanVien":idNV     
-      }) 
+      })  
   })    
   
       .then((response) => response.json())
@@ -36,6 +39,12 @@ const ThongTinNV = ({route, navigation}) => {
           anh:anh
         });
       })  
+
+    },2000);
+
+    setTimeout(() => { clearInterval(timerId);  }, 25000);
+
+
   }
 
   const {idKH} = route.params;
